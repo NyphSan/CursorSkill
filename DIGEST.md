@@ -1,81 +1,80 @@
-# 技能侦察 DIGEST — 2026-08-05（08:00Z）
+# 技能侦察 DIGEST — 2026-08-05（09:00Z）
 
-- 侦察时间：2026-08-05T08:00Z（cron）
+- 侦察时间：2026-08-05T09:00Z（cron）
 - 方向：游戏设计 / UE·虚幻 / 3D / 2D / UI / 研发工作流
-- 增量基线：2026-08-05T07:00Z（同日上一轮，PR#7）
-- 本仓入库：精选 **93** 个 `SKILL.md`（较上轮 +5；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
-- 关联 PR 分支：`skill-digest-2026-08-05-08`
+- 增量基线：2026-08-05T08:00Z（同日上一轮，PR#8）
+- 本仓入库：精选 **100** 个 `SKILL.md`（较上轮 +7；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
+- 关联 PR 分支：`skill-digest-2026-08-05-09`
 
 ## 本轮结论（一屏）
 
-距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪仓（kevinpbuckley / dcc-python / VibeUE / db-lyon 等）无新实质提交。**实质增量来自 code search 补漏 + 今日新建**：① [Italink/UnrealClientProtocol](https://github.com/Italink/UnrealClientProtocol)（120★ MIT，24 个 UE 编辑器桥 skill，精选传输层）；② [maystudios/claude-skills](https://github.com/maystudios/claude-skills) 的 UE 最佳实践与 PCG Python；③ [ityes22/game-design-document](https://github.com/ityes22/game-design-document) GDD 生成器（skills.sh ~830）；④ **今日 06:31Z 新建** [Extreme11111/unrealsharp-syntax-skill](https://github.com/Extreme11111/unrealsharp-syntax-skill)（UnrealSharp/C#）。`path:.cursor/skills` code search 本轮后期 **429**；今日 `skill` 新建噪声 ≥100。
+距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪仓（kevinpbuckley / VibeUE / db-lyon / Extreme11111 等）无新实质提交。**实质增量来自补漏扫描**：① [toamig/claude-unreal-skills](https://github.com/toamig/claude-unreal-skills)（MIT，Replication / Design Patterns / SOLID 三件套，补多人架构空白）；② [GuangminJu/UnrealSkills](https://github.com/GuangminJu/UnrealSkills)（12★ MIT，自动 `ue-build` / `ue-test` + scripts）；③ [guangyuspace/codex-gamestudio-skill](https://github.com/guangyuspace/codex-gamestudio-skill)（43★ MIT，多角色工作室工作流 + Handoff）；④ 观望晋级 [maystudios/claude-skills](https://github.com/maystudios/claude-skills) 的 `unreal-gas`（深度 GAS C++ + references）。`path:.cursor/skills` code search 仍易 **429**；今日 `skill` 新建噪声 ≥100。
 
 ## 建议引入（本轮增量）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| unreal-client-protocol | UE·工作流 | 经 TCP+JSON 调用运行中 UE 编辑器任意 UFunction（UCP 传输层） | https://github.com/Italink/UnrealClientProtocol | 120★ MIT；24 个配套领域 skill；含 `UCP.py`；与 db-lyon/ue-mcp 路径互补 | **引入** |
-| unreal-best-practices | UE | UE 5.x 现代系统选型（GAS/EIS/StateTree/PCG/CommonUI…）与 research-first | https://github.com/maystudios/claude-skills | MIT；UE 5.7 状态表清晰；含 references/；适合开新功能前选型 | **引入** |
-| unreal-pcg-python | UE·3D | PCG Python 互通（PCGPythonInterop / Execute Python Script） | https://github.com/maystudios/claude-skills | 稀缺的 PCG+Python 指南；与已入库 dcc UE Python 互补 | **引入** |
-| game-design-document | 游戏设计 | 从概念生成 publisher-grade GDD / pitch（docx/pdf/pptx） | https://github.com/ityes22/game-design-document | skills.sh ~830 installs；可执行脚本+模板；策划向强 | **引入** |
-| unrealsharp-operations | UE | UnrealSharp / UE C# 编译热重载、Glue、UMG/EIS 绑定与排错 | https://github.com/Extreme11111/unrealsharp-syntax-skill | **今日新建** MIT；references 完整；补齐 C# 工作流空白 | **引入** |
+| unreal-replication | UE | 服务器权威多人同步设计（状态归属 / RPC / relevancy / GAS 网络） | https://github.com/toamig/claude-unreal-skills | MIT；决策表清晰；含 `references/networking.md`；补齐多人空白 | **引入** |
+| unreal-design-patterns | UE | UE5 C++ 中识别引擎已有模式 vs 手写 GoF/游戏模式 | https://github.com/toamig/claude-unreal-skills | MIT；「先用引擎再手写」纪律强；与 SOLID 成套 | **引入** |
+| unreal-solid | UE | UE5 C++ 的 SOLID 落地（Subsystem / 组件 / Tag 边界） | https://github.com/toamig/claude-unreal-skills | MIT；架构评审时主动触发；与 patterns/replication 互补 | **引入** |
+| ue-build | UE·工作流 | 改 C++ 后自动探测引擎/工程并编译 | https://github.com/GuangminJu/UnrealSkills | 12★ MIT；含 `detect_ue.py`；TDD 闭环入口 | **引入** |
+| ue-test | UE·工作流 | 跑 UE 自动化测试并报告 | https://github.com/GuangminJu/UnrealSkills | 与 ue-build 成对；含 `run_ue_tests.py` | **引入** |
+| unreal-gas-cpp | UE | 深度 GAS C++（ASC/GE/预测复制/陷阱） | https://github.com/maystudios/claude-skills | 从观望晋级；4 份 references；与已入库 kevinpbuckley GAS 互补 | **引入** |
+| gamestudio | 游戏设计·工作流 | 多角色游戏工作室流程 + 手机 UI 门禁 + Handoff/Debug | https://github.com/guangyuspace/codex-gamestudio-skill | 43★ MIT；实机上架展示；流程可迁移 UE | **引入** |
 
 本仓已摘录：
 
-- `skills/unreal/unreal-client-protocol/`（+ `scripts/UCP.py`）
-- `skills/unreal/unreal-best-practices/`（+ references）
-- `skills/unreal/unreal-pcg-python/`
-- `skills/game-design/game-design-document/`（+ scripts/templates/example）
-- `skills/unreal/unrealsharp-operations/`（+ references）
+- `skills/unreal/unreal-replication/`（+ references）
+- `skills/unreal/unreal-design-patterns/`（+ references）
+- `skills/unreal/unreal-solid/`（+ references）
+- `skills/unreal/ue-build/`（+ scripts）
+- `skills/unreal/ue-test/`（+ scripts）
+- `skills/unreal/unreal-gas-cpp/`（+ references）
+- `skills/workflow/gamestudio/`（+ references / NOTICE）
 
 ### 跟踪仓变化（非实质 / 不升级建议）
 
 | 名称 | 变化 | 仓库 | 建议 |
 |---|---|---|---|
-| fenggezaici/dcc-python-skills | 仍停 06:53Z；无后续 commit；★2；无 SPDX | https://github.com/fenggezaici/dcc-python-skills | 继续引入（已入库三件套） |
-| kevinpbuckley/unreal-engine-skills | 仍为 08-04 UE 5.8 retarget | https://github.com/kevinpbuckley/unreal-engine-skills | 继续引入 |
-| kevinpbuckley/VibeUE | 仍 08-04 | https://github.com/kevinpbuckley/VibeUE | 继续引入 |
-| db-lyon/ue-mcp | 仍 08-04 晚 bump | https://github.com/db-lyon/ue-mcp | 继续引入 |
-| 4lian/skills_collector | 06:58Z 仅 frontend-dev + README | https://github.com/4lian/skills_collector | 仍观望 |
-| ch1109/portable-agent-skills | 仍 06:01Z；★10 | https://github.com/ch1109/portable-agent-skills | 仍观望（方向弱） |
-| EpicGames / hkuds / freshtechbro | 仅星标微调 | 各原仓 | 维持上轮档位 |
+| Extreme11111/unrealsharp-syntax-skill | 仍停 06:31Z；★1 | https://github.com/Extreme11111/unrealsharp-syntax-skill | 继续引入（已入库） |
+| kevinpbuckley / VibeUE / db-lyon | 仍为 08-04 | 各原仓 | 继续引入 |
+| frabcd/codex-ai-game-studio | pushed_at 仍指向 08-05 元数据；最近实质 commit 08-02 | https://github.com/frabcd/codex-ai-game-studio | 仍观望 |
+| fenggezaici/dcc-python-skills | 仍停 06:53Z；无 SPDX | https://github.com/fenggezaici/dcc-python-skills | 继续引入（已入库） |
+| hkuds/cli-anything | ★46644（+5）；无新方向 skill | https://github.com/hkuds/cli-anything | 仍观望 |
 
 ### 累计建议引入（仍有效）
 
-1–33. 维持上轮清单（含 gamedev-skills、kevinpbuckley、Epic、dcc-python、omer-metin game-ui、freshtechbro blender-web 等）  
-34. **+ 本轮** https://github.com/Italink/UnrealClientProtocol（精选 `unreal-client-protocol`）  
-35. **+ 本轮** https://github.com/maystudios/claude-skills（精选 `unreal-best-practices` + `unreal-pcg-python`）  
-36. **+ 本轮** https://github.com/ityes22/game-design-document  
-37. **+ 本轮** https://github.com/Extreme11111/unrealsharp-syntax-skill  
+1–37. 维持上轮清单（含 gamedev-skills、kevinpbuckley、Epic、Italink UCP、maystudios best-practices/PCG、UnrealSharp、GDD 等）  
+38. **+ 本轮** https://github.com/toamig/claude-unreal-skills（三件套）  
+39. **+ 本轮** https://github.com/GuangminJu/UnrealSkills（ue-build + ue-test）  
+40. **+ 本轮** https://github.com/guangyuspace/codex-gamestudio-skill  
+41. **+ 本轮晋级** maystudios `unreal-gas` → 精选为 `unreal-gas-cpp`
 
 ## 观望（本轮新增 / 调整）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| Italink 其余 23 领域 skill | UE | modeling/niagara/widget/PIE 等 UCP 领域包 | https://github.com/Italink/UnrealClientProtocol | 入口已引入；按需再精选 modeling/niagara | 观望 |
-| maystudios unreal-gas / blueprint-codegen / thirdparty | UE | GAS C++ 深指南、BP 代码生成、第三方库链接 | https://github.com/maystudios/claude-skills | 与已有 `ue-gameplay-ability-system` 重叠；GAS 可下轮对比 | 观望 |
-| fairypark/unreal-editor-skills-for-codex | UE·工作流 | Codex + Unreal MCP 编辑器控制 | https://github.com/fairypark/unreal-editor-skills-for-codex | 1★ MIT；5 SKILL；与 db-lyon/NAJEMWEHBE 同类 | 观望 |
-| oliver-io/unreal-harness | UE·工作流 | ~300 Editor Actions + 22 skills 全家桶 | https://github.com/oliver-io/unreal-harness | 5★；体量大、许可 NOASSERTION；先抽样 | 观望 |
-| frabcd/codex-ai-game-studio | 游戏设计·3D·工作流 | 95 skills：Unity/Godot/Unreal/Blender 工作室 | https://github.com/frabcd/codex-ai-game-studio | 2★ MIT；今日有推送；偏多引擎脚手架 | 观望 |
-| NAJEMWEHBE/unreal-ai-connection（driving-unreal） | UE·工作流 | MCP 驱动 UE 5.7 关卡/材质/Sequencer | https://github.com/NAJEMWEHBE/unreal-ai-connection | 9★ MIT；强依赖自有 MCP | 观望 |
-| Randroids-Dojo/skills（unreal） | UE·工作流 | PlayUnreal Remote Control 自动化（WIP） | https://github.com/Randroids-Dojo/skills | 43★ MIT；标注 WIP | 观望 |
-| TerminalSkills/skills（unreal/blender/houdini/3dsmax） | UE·3D | 巨型 skill 库中的 DCC/UE 条目 | https://github.com/TerminalSkills/skills | 121★ Apache-2.0；需精选防镜像 | 观望 |
-| pluginagentmarketplace/…/game-design-theory | 游戏设计 | MDA/Bartle/Flow 理论（~1837 installs） | https://github.com/pluginagentmarketplace/custom-plugin-game-developer | 与已有策划 skills 重叠；marketplace bond 格式 | 观望 |
-| omer-metin unreal-engine / game-design-core | UE·游戏设计 | 人设型 UE/策划 skill + patterns | https://github.com/omer-metin/skills-for-antigravity | 已引入 game-ui；其余按需 | 观望 |
-| opusgamelabs/game-creator | 2D·3D·游戏设计 | Phaser/ThreeJS 游戏制作插件 skills | https://github.com/opusgamelabs/game-creator | 305★ 无 SPDX；Web 游戏向 | 观望 |
-| SFKislev/Flue（blender/houdini） | 3D·工作流 | 无 MCP 的桌面 CLI 桥（installs 很高） | https://github.com/SFKislev/Flue | 需本机 Flue；上轮已观望 | 观望 |
-| hkuds/cli-anything（blender/unrealinsights/…） | 3D·UE·工作流 | CLI 桥接桌面软件 harness | https://github.com/hkuds/cli-anything | 46639★；单体巨大 | 观望 |
-| xingtongovo/ui-ux-skill-suite | UI | 今日新建 GSAP/impeccable UX 套件 | https://github.com/xingtongovo/ui-ux-skill-suite | 0★ 无 license；偏 Web 动效非游戏 HUD | 观望 |
-| cowork-os unreal-development | UE | 薄路由型 UE skill | https://github.com/cowork-os/cowork-os | 实质内容在 JSON runtime；弱于专用仓 | 观望 |
+| TomLeeLive/openclaw-unreal-skill | UE·工作流 | OpenClaw 插件远程驱 UE（关卡/Actor/PIE/截图） | https://github.com/TomLeeLive/openclaw-unreal-skill | 5★ Apache-2.0；强依赖自有插件；与 UCP/ue-mcp 同类 | 观望 |
+| gisenberg/unreal-skills | UE·工作流 | AngelScript / Perforce / PIE 验证 / 编辑器自动化 | https://github.com/gisenberg/unreal-skills | 0★ 无 SPDX；AngelScript+P4  niche 可下轮精选 | 观望 |
+| sipherxyz/universal-ue-skills | UE | RenderDoc/内存泄漏/XR/复制审查等专项 | https://github.com/sipherxyz/universal-ue-skills | 1★ 无 SPDX；专项质量尚可，需抽样+许可 | 观望 |
+| NoxDevelopment/unrealgen | UE·游戏设计 | UE 编排器 + primers（GAS/复制/UMG…） | https://github.com/NoxDevelopment/unrealgen | 0★ MIT；与 toamig/maystudios 重叠 | 观望 |
+| petascale4/UnrealSkills | UE·工作流 | 经 UAssetAPI 离线读写 uasset | https://github.com/petascale4/UnrealSkills | 0★ 无 SPDX；资产管线独特 | 观望 |
+| miramocha/blender-skills-and-rules | 3D | VRoid/VRM/ARKit 清理与骨骼重映射 | https://github.com/miramocha/blender-skills-and-rules | 0★ 无 SPDX；08-04 有推送；虚拟形象向 | 观望 |
+| lpf513/gameSkills | 游戏设计 | 11 个策划/数值/关卡/叙事 skill | https://github.com/lpf513/gameSkills | 1★ 无 SPDX；与已有策划库重叠 | 观望 |
+| githuBlijingai/story-to-game-skill | 游戏设计 | 小说→玩家动词/核心循环原型 | https://github.com/githuBlijingai/story-to-game-skill | 2★ Apache-2.0；与已引入 novel-to-game 重叠 | 观望 |
+| opengameapp/OpenGame-skills | 2D·工作流 | 浏览器游戏构建 + OpenGame 发布 | https://github.com/opengameapp/OpenGame-skills | 0★ MIT-0；偏 Web 发布平台 | 观望 |
+| fairypark / oliver-io / Italink 其余领域 | UE·工作流 | MCP/Harness/UCP modeling·niagara | 各原仓 | 维持上轮观望；UCP 入口已引入 | 观望 |
+| maystudios unreal-blueprint-codegen / thirdparty | UE | BP 代码生成、第三方库链接 | https://github.com/maystudios/claude-skills | GAS 已晋级；其余按需 | 观望 |
 
-其余观望（w-zhian 剩余 3、omer-metin 3d-modeling、freshtechbro 其余、davincidreams、ceorkm、zhangxiao6776、4lian、ch1109、affaan blender-motion、mechfaber、babysitter UE 切片等）维持上轮清单。
+其余观望（w-zhian 剩余 3、TerminalSkills、Randroids-Dojo、hkuds/cli-anything、flue、omer-metin 其余、freshtechbro 其余、xingtongovo、cowork-os、pluginagentmarketplace game-design-theory、opusgamelabs 等）维持上轮清单。
 
 ## 可忽略
 
 - 种子仓：JackyST0 仍仅 08-03 star chore；mouadja02 近提交仍为 Qdrant / Terraform / K8s（无关）  
-- `created:>=2026-08-05` 今日新建噪声 **≥100**（Copilot 练习题、简历、SEO、App Store 运营、金融风控 skill 等）  
-- alvinunreal/oh-my-opencode-slim：skills.sh「cartography」实为通用 agent 套件，非 UE  
-- modbender/skill-library-mcp、majiayu000/claude-skill-registry-data：巨型镜像/注册表，不入库  
+- `created:>=2026-08-05` 今日新建噪声 **≥100**（Copilot 练习、简历、SEO、标书格式、Go 风格指南等）  
+- 今日新建含 “Unreal/Blender” 字样但无 SKILL.md：UnrealBattleTest、BlenderNote、Runtime-Gizmo 等  
+- j4flmao/agent-skills：code hit 实为 cocos2d/ecs，非 UE；paxlabs/matrix-core、junainfinity/VibeStudio：通用 agent，非游戏向  
+- modbender / majiayu000 巨型镜像注册表：不入库  
 
 ## 种子仓状态
 
@@ -84,26 +83,28 @@
 | https://github.com/JackyST0/awesome-agent-skills | 613 | 最近实质提交仍为 07-27；08-03 star chore |
 | https://github.com/mouadja02/skills | 9 | 08-04：Qdrant / Terraform（无关）；无游戏/UE/设计向 |
 
-## 本仓入库变化（+5 → 93）
+## 本仓入库变化（+7 → 100）
 
-- 新增 `skills/unreal/unreal-client-protocol/`  
-- 新增 `skills/unreal/unreal-best-practices/`  
-- 新增 `skills/unreal/unreal-pcg-python/`  
-- 新增 `skills/unreal/unrealsharp-operations/`  
-- 新增 `skills/game-design/game-design-document/`  
-- 各含 `SOURCE.md`；承接上轮 88 条精选内容  
+- 新增 `skills/unreal/unreal-replication/`  
+- 新增 `skills/unreal/unreal-design-patterns/`  
+- 新增 `skills/unreal/unreal-solid/`  
+- 新增 `skills/unreal/ue-build/`  
+- 新增 `skills/unreal/ue-test/`  
+- 新增 `skills/unreal/unreal-gas-cpp/`  
+- 新增 `skills/workflow/gamestudio/`  
+- 各含 `SOURCE.md`；承接上轮 93 条精选内容  
 
 ## 今天可行动
 
-1. **UCP 试跑**：在已开 UCP 插件的 UE 编辑器里装 `unreal-client-protocol`，用 `UCP.py` 跑一次 `FindObjectInstances` / 简单 `ExecutePythonScript`；若常用建模，下轮再引入 `unreal-modeling*`。  
-2. **选型+落地**：新功能先问 `unreal-best-practices`「该用 StateTree 还是 BT / CommonUI 还是裸 UMG」，再用已有 kevinpbuckley / Epic skills 写实现。  
-3. **个人 skill 候选**：若你走 UnrealSharp，把 `unrealsharp-operations` 的 hot-reload/modal-gate 规则裁进个人 `/ue-csharp`；或把 `game-design-document` 的 discovery 访谈阶段改成「手游/UE 项目」专用 checklist。
+1. **多人先过 replication 门禁**：做任何「看起来像单机但要上联机」的功能前，先跑 `unreal-replication` 的状态归属表（GameState/PlayerState/PC），再写代码。  
+2. **C++ 改完即编**：把 `ue-build`（+ 可选 `ue-test`）装进 Cursor skills，验证 `detect_ue.py` 能否找到你的引擎路径；失败再裁成个人 `/ue-build-local`。  
+3. **个人 skill 候选**：若主力是 GAS 联机，把 `unreal-gas-cpp` 的 prediction/replication 章节与 `unreal-replication` 合并成一份个人 `/ue-mp-gas`；或把 `gamestudio` 的 `CODEX_HANDOFF.md` 模板改成 UE 项目交接卡。
 
 ## 已尝试查询
 
 1. 种子仓 commits / meta API（JackyST0、mouadja02）  
-2. 跟踪仓 `pushed_at`（dcc-python、kevinpbuckley、VibeUE、db-lyon、w-zhian、hkuds、flue、omer-metin、freshtechbro、UE-AgentFramework、NiagaraSkill、4lian、ch1109 等）  
-3. `gh search repos`：`skill created:>=2026-08-05`；`unreal skill in:name,description`；关键词 unreal/gamedev/blender created≥08-04  
-4. `gh search code`：`Unreal filename:SKILL.md`（成功发现 Italink/maystudios/…）；`path:.cursor/skills` / `.agents/skills` → **HTTP 429**  
-5. skills.sh/api/search：unreal、gamedev、blender、game ui、game design、houdini、niagara、3d modeling、flue、sequencer  
-6. 候选 raw `SKILL.md` + git trees 抽样；CursorSkill 入库 / push / PR  
+2. 跟踪仓 `pushed_at`（kevinpbuckley、VibeUE、db-lyon、Italink、maystudios、Extreme11111、fairypark、oliver-io、frabcd、flue、hkuds、w-zhian、dcc-python、UE-AgentFramework、Randroids、TerminalSkills 等）  
+3. `gh search repos`：`unreal skill`；`skill created:>=2026-08-05`；`game skill` / `blender skill`；关键词 unreal/blender/gamedev/game-design/niagara/umg created≥08-05  
+4. `gh search code`：`Unreal filename:SKILL.md`（间歇 429，成功时见 toamig/maystudios/sipherxyz/NoxDevelopment/…）；`path:.cursor/skills` / `.agents/skills` → **HTTP 429**  
+5. skills.sh/api/search：unreal、gamedev、blender、game ui、game design、houdini、niagara、3d modeling、sequencer、umg  
+6. 候选 raw `SKILL.md` + git clone 抽样入库；CursorSkill 入库 / push / PR  
