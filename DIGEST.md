@@ -1,113 +1,111 @@
-# 技能侦察 DIGEST — 2026-08-05（10:00Z）
+# 技能侦察 DIGEST — 2026-08-05（11:00Z）
 
-- 侦察时间：2026-08-05T10:00Z（cron）
+- 侦察时间：2026-08-05T11:00Z（cron）
 - 方向：游戏设计 / UE·虚幻 / 3D / 2D / UI / 研发工作流
-- 增量基线：2026-08-05T09:00Z（同日上一轮，PR#9）
-- 本仓入库：精选 **108** 个 `SKILL.md`（较上轮 +8；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
-- 关联 PR 分支：`skill-digest-2026-08-05-10`
+- 增量基线：2026-08-05T10:00Z（同日上一轮，PR#10）
+- 本仓入库：精选 **116** 个 `SKILL.md`（较上轮 +8；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
+- 关联 PR 分支：`skill-digest-2026-08-05-11`
 
 ## 本轮结论（一屏）
 
-距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪仓最大实质变化是 [kevinpbuckley/unreal-engine-skills](https://github.com/kevinpbuckley/unreal-engine-skills)（25★，08-04 合并 UE **5.8** retarget，并暴露此前未入库的 **Mover** skill）。本轮以**缺口补齐**为主：① Mover（CMC 继任）；② [gamedev-skills](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) 的 Behavior Trees / Enhanced Input / Packaging；③ [quodsoler](https://github.com/quodsoler/unreal-engine-skills)（301★ MIT）的 Mass / StateTree / Sequencer；④ 观望晋级 Italink `unreal-modeling`。`path:.cursor/skills` 仍易 429；今日 `skill` 新建噪声 ≥100。
+距上轮约 1 小时。种子仓仍无方向相关新 skill（mouadja02 今日新增 SBOM/身份匹配属 DevOps，记数忽略）。跟踪仓无新 push。本轮以**缺口补齐 + 观望晋级**为主：① [quodsoler](https://github.com/quodsoler/unreal-engine-skills)（301★ MIT）补 Audio / SaveGame / World Partition·Streaming / AI Navigation；② [w-zhian/qa-review](https://github.com/w-zhian/game-design-skills) 从观望晋级；③ [gamedev-skills game-ai](https://github.com/gamedev-skills/awesome-gamedev-agent-skills) 跨引擎 AI 纪律；④ [abagames](https://github.com/abagames/agentic-gamedev-skills) 平衡评估与玩法不变量（与已入库 mini-game 设计互补）。新发现 Angelscript / omer-metin UI / teixasalone 等入观望。今日 `skill` 新建噪声仍高；`path:.cursor/skills` 易 429。
 
 ## 建议引入（本轮增量）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| ue-mover-movement-system | UE | UE 5.8 Experimental Mover：模块化/回滚网络移动，CMC 继任 | https://github.com/kevinpbuckley/unreal-engine-skills | 新项目移动架构关键；含 3 份 references；贴合 5.8 retarget | **引入** |
-| unreal-behavior-trees | UE·游戏设计 | NPC AI：BT/Blackboard/Task/Decorator/Service | https://github.com/gamedev-skills/awesome-gamedev-agent-skills | 413★ Apache-2.0；skills.sh 高安装；本仓 AI 空白 | **引入** |
-| unreal-enhanced-input | UE | IA_/IMC_、修饰器/触发器、C++/BP 绑定 | https://github.com/gamedev-skills/awesome-gamedev-agent-skills | 现代 UE5 输入默认路径；含 cpp-setup 参考 | **引入** |
-| unreal-packaging | UE·工作流 | Package/Cook/Shipping + RunUAT BuildCookRun | https://github.com/gamedev-skills/awesome-gamedev-agent-skills | 补齐出包/CI 流程缺口 | **引入** |
-| ue-mass-entity | UE | Mass Entity ECS：人群/大规模实体模拟 | https://github.com/quodsoler/unreal-engine-skills | 301★ MIT；~18KB + patterns；本仓无 Mass 覆盖 | **引入** |
-| ue-state-trees | UE | StateTree 数据驱动状态机（含 Mass 集成） | https://github.com/quodsoler/unreal-engine-skills | 与 BT 互补的现代 AI/逻辑框架 | **引入** |
-| ue-sequencer-cinematics | UE·3D | Sequencer 过场 / 相机 / Movie Render Queue | https://github.com/quodsoler/unreal-engine-skills | 补齐过场与离线渲染工作流 | **引入** |
-| unreal-modeling | UE·3D | 经 UCP + GeometryScript 的程序化网格建模总控 | https://github.com/Italink/UnrealClientProtocol | 从观望晋级；MIT；需编辑器+UCP；入口已入库 | **引入** |
+| ue-audio-system | UE | SoundCue / MetaSound / 衰减 / Submix / 并发 | https://github.com/quodsoler/unreal-engine-skills | 301★ MIT；本仓无独立 UE 音频 skill；含 patterns | **引入** |
+| ue-serialization-savegames | UE | USaveGame / FArchive / 多槽 / 版本化存档 | https://github.com/quodsoler/unreal-engine-skills | 补齐进度持久化缺口；含 architecture 参考 | **引入** |
+| ue-world-level-streaming | UE | World Partition / Data Layer / Seamless Travel / HLOD | https://github.com/quodsoler/unreal-engine-skills | 开放世界与关卡流送核心路径 | **引入** |
+| ue-ai-navigation | UE·游戏设计 | AIController / NavMesh / EQS / Perception（衔接 BT/StateTree） | https://github.com/quodsoler/unreal-engine-skills | 与上轮 BT/StateTree 形成 AI 闭环；含 EQS 参考 | **引入** |
+| qa-review | 游戏设计·工作流 | 设计文档 / 数值 / 系统验收清单 | https://github.com/w-zhian/game-design-skills | 观望晋级；清单清晰可执行；无 SPDX（与系列一致） | **引入** |
+| gamedev-game-ai | 游戏设计 | 跨引擎 AI：感知、决策、寻路、群体（非引擎 API） | https://github.com/gamedev-skills/awesome-gamedev-agent-skills | 413★ Apache-2.0；skills.sh 高安装；补策划层 AI | **引入** |
+| evaluating-gameplay-balance | 游戏设计 | 用单调/探索策略对比评测手感与平衡 | https://github.com/abagames/agentic-gamedev-skills | MIT；可测协议清晰；补「设计→验证」 | **引入** |
+| implementing-gameplay-invariants | 游戏设计 | 把设计意图落成引擎无关的玩法不变量与校验 | https://github.com/abagames/agentic-gamedev-skills | 与已入库 mini-game / 本轮 balance 成套 | **引入** |
 
 本仓已摘录：
 
-- `skills/unreal/ue-mover-movement-system/`（+ references）
-- `skills/unreal/unreal-behavior-trees/`（+ references）
-- `skills/unreal/unreal-enhanced-input/`（+ references）
-- `skills/unreal/unreal-packaging/`
-- `skills/unreal/ue-mass-entity/`（+ references）
-- `skills/unreal/ue-state-trees/`（+ references）
-- `skills/unreal/ue-sequencer-cinematics/`（+ references）
-- `skills/unreal/unreal-modeling/`
+- `skills/unreal/ue-audio-system/`（+ references）
+- `skills/unreal/ue-serialization-savegames/`（+ references）
+- `skills/unreal/ue-world-level-streaming/`（+ references）
+- `skills/unreal/ue-ai-navigation/`（+ references）
+- `skills/game-design/qa-review/`（+ references）
+- `skills/game-design/gamedev-game-ai/`（+ references）
+- `skills/game-design/evaluating-gameplay-balance/`（+ references）
+- `skills/game-design/implementing-gameplay-invariants/`
 
 ### 跟踪仓变化（非实质 / 不升级建议）
 
 | 名称 | 变化 | 仓库 | 建议 |
 |---|---|---|---|
-| kevinpbuckley UE 5.8 retarget | 08-04 合并 #47；全文 citation 审计；本轮已收 Mover | https://github.com/kevinpbuckley/unreal-engine-skills | 已引入子集继续用；其余 core skills 按需 |
-| w-zhian/game-design-skills | 08-04 v2.3.2 curation 规则；无新设计 skill | https://github.com/w-zhian/game-design-skills | 剩余 article-curation / qa-review / skill-evolution 仍观望 |
-| miramocha/blender-skills-and-rules | 仍为 08-04 推送；无 SPDX | https://github.com/miramocha/blender-skills-and-rules | 仍观望 |
-| hkuds/cli-anything | ★46645；无新方向 skill | https://github.com/hkuds/cli-anything | 仍观望 |
-| sipherxyz/universal-ue-skills | 仍无 SPDX；RenderDoc skill 质量尚可 | https://github.com/sipherxyz/universal-ue-skills | 仍观望（待许可） |
+| mouadja02/skills | 11:00Z 前新增 SBOM identity matching（#40） | https://github.com/mouadja02/skills | **忽略**（DevOps，方向无关） |
+| JackyST0/awesome-agent-skills | 仍仅 08-03 star chore | https://github.com/JackyST0/awesome-agent-skills | 无游戏/UE 专区新增 |
+| kevinpbuckley | 仍为 08-04 5.8 retarget；其余 core（audio/save/levels…）未再入 | https://github.com/kevinpbuckley/unreal-engine-skills | 无 SPDX；本轮优先 MIT 的 quodsoler 同主题 |
+| sipherxyz / miramocha / Italink 子包 | 无新 push | 各原仓 | 维持观望 |
 
 ### 累计建议引入（仍有效）
 
-1–41. 维持上轮清单（含 toamig / GuangminJu / gamestudio / unreal-gas-cpp 等）  
-42. **+ 本轮** kevinpbuckley `mover-movement-system`  
-43. **+ 本轮** gamedev-skills：behavior-trees / enhanced-input / packaging  
-44. **+ 本轮** quodsoler：mass-entity / state-trees / sequencer-cinematics  
-45. **+ 本轮晋级** Italink `unreal-modeling`
+1–45. 维持至上轮（含 Mover / BT / Input / Packaging / Mass / StateTree / Sequencer / Modeling 等）  
+46. **+ 本轮** quodsoler：audio / savegames / world-streaming / ai-navigation  
+47. **+ 本轮晋级** w-zhian `qa-review`  
+48. **+ 本轮** gamedev-skills `game-ai`  
+49. **+ 本轮** abagames：evaluating-gameplay-balance / implementing-gameplay-invariants
 
 ## 观望（本轮新增 / 调整）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| quodsoler 其余（game-features / networking / character-movement 等） | UE | 27 skills 中未精选部分 | https://github.com/quodsoler/unreal-engine-skills | 与已有 toamig/kevin/GuangminJu 部分重叠 | 观望 |
-| unrealxu 其余（pcg-building / architecture / performance-packaging…） | UE | 491★ MIT 的 UE5 skill 包剩余项 | https://github.com/unrealxu/unrealengine5-skills | 本仓已有 blueprint/cpp/umg 子集 | 观望 |
-| w-zhian qa-review / article-curation / skill-evolution | 游戏设计·工作流 | 设计验收 / 文章蒸馏 / 技能自演化 | https://github.com/w-zhian/game-design-skills | 无 SPDX；qa-review 清单清晰可下轮精选 | 观望 |
-| sipherxyz renderdoc-gpu-debug 等 | UE·工作流 | RenderDoc/内存/XR/复制审查 | https://github.com/sipherxyz/universal-ue-skills | 质量可，缺 LICENSE | 观望 |
-| gisenberg AngelScript/P4/PIE | UE·工作流 | 编辑器自动化 niche | https://github.com/gisenberg/unreal-skills | 0★ 无 SPDX | 观望 |
-| TomLeeLive OpenClaw / petascale4 UAssetAPI / NoxDevelopment unrealgen | UE·工作流 | 远程驱 UE / 离线 uasset / primers | 各原仓 | 维持上轮观望 | 观望 |
-| Italink niagara-editing + modeling-* 子 skill | UE·3D | Niagara/细分建模操作 | https://github.com/Italink/UnrealClientProtocol | 总控已引入；子包按需 | 观望 |
-| NAJEMWEHBE/unreal-ai-connection / UnrealMCPHub / august-batista bridge | UE·工作流 | MCP/桥接类 | 各原仓 | 与已有 Epic MCP / UCP / VibeUE 重叠 | 观望 |
-| cesiumgs/cesiumjs-skills | 3D | CesiumJS 地理空间 | https://github.com/cesiumgs/cesiumjs-skills | 110★ Apache-2.0；偏地球可视化非游戏核心 | 观望 |
-| sfkislev/flue | 3D·工作流 | CLI 控桌面 DCC（Blender/Houdini…） | https://github.com/sfkislev/flue | 65★ MIT；安装面大但非 SKILL 精选包 | 观望 |
-| alterlab-ieu/alterlab_gameforge | 游戏设计 | 34 个独立游戏工作室 skill | https://github.com/alterlab-ieu/alterlab_gameforge | 23★ MIT；与已有策划库重叠，抽样后再定 | 观望 |
+| flashpoint493/unreal-angelscript | UE | Hazelight UE-AS：语法/网络/GAS/CommonUI + 10 份 references | https://github.com/flashpoint493/unreal-angelscript-skills | 30★；许可 NOASSERTION；仅 AS 栈需要 | 观望 |
+| omer-metin game-ui-design / game-design-core / unreal-engine | UI·游戏设计·UE | 高安装通用设计/UE 入口 skill | https://github.com/omer-metin/skills-for-antigravity | 123★ Apache-2.0；偏 persona，与已有 UI/UE 精选重叠 | 观望 |
+| teixasalone/UnrealEngine5-Skills | UE | 5.6/5.7 BP/C++/UI/PCG/复制工作流 | https://github.com/teixasalone/UnrealEngine5-Skills | 16★ MIT；目录结构与 UnrealXu 高度同构 | 观望 |
+| liuhuagang / mrSutivu UE C++ Expert | UE | 大型 C++/课程式 skill 包 | 各原仓 | 60★/56★；无 LICENSE | 观望 |
+| TerminalSkills / Randroids-Dojo unreal | UE | 通用 skill 库中的 UE 条目 | 各原仓 | Apache/MIT；单文件概览，深度不足 | 观望 |
+| ibrews/ue5-mcp | UE·工作流 | MCP + Pixel Streaming + Python 编辑器 | https://github.com/ibrews/ue5-mcp | 32★；无 SPDX；与 Epic MCP/UCP 重叠 | 观望 |
+| quodsoler 其余（physics / networking / game-features / niagara-effects…） | UE | 27 skills 中未精选部分 | https://github.com/quodsoler/unreal-engine-skills | 本轮已再收 4 个；其余按需 | 观望 |
+| gamedev-skills camera / save / audio / physics / shader 纪律 | 游戏设计 | 跨引擎纪律包剩余项 | https://github.com/gamedev-skills/awesome-gamedev-agent-skills | 高安装；本轮已收 game-ai | 观望 |
+| abagames 其余（最大化 game-feel / 音频 / Godot 脚手架…） | 游戏设计·工作流 | agentic gamedev 研究向 | https://github.com/abagames/agentic-gamedev-skills | 10★ MIT；08-02 有推送 | 观望 |
+| w-zhian article-curation / skill-evolution | 工作流 | 文章蒸馏 / 技能自演化 | https://github.com/w-zhian/game-design-skills | qa-review 已晋级；其余仍观望 | 观望 |
+| sipherxyz / gisenberg / Italink niagara-editing+modeling-* / OpenClaw / UAssetAPI / flue / cesiumjs / alterlab_gameforge | UE·3D·工作流 | 维持上轮观望理由 | 各原仓 | 许可或重叠未变 | 观望 |
 
-其余观望（lpf513、story-to-game、OpenGame、miramocha、fairypark/oliver-io、hkuds、pluginagentmarketplace、opusgamelabs、cowork-os 等）维持上轮清单。
+其余观望（lpf513、story-to-game、OpenGame、miramocha、fairypark/oliver-io、hkuds、pluginagentmarketplace、opusgamelabs、cowork-os、NAJEMWEHBE/UnrealMCPHub 等）维持上轮清单。
 
 ## 可忽略
 
-- 种子仓：JackyST0 仍仅 08-03 star chore；mouadja02 近提交仍为 Qdrant / Terraform / K8s（无关）  
-- `created:>=2026-08-05` 今日新建噪声 **≥100**  
-- code search 噪声：majiayu000 巨型镜像、modbender、j4flmao（cocos 非 UE）、paxlabs/matrix-core、junainfinity/VibeStudio  
-- alvinunreal/oh-my-opencode-slim：通用 agent 套件，非游戏向 skill 包  
-- 含 “Unreal skills” 字样的作业/作品展示仓（非 Agent Skills）
+- 种子仓：JackyST0 无实质新条目；mouadja02 **SBOM identity matching**（方向无关，+1 无关）
+- 今日新建：`mossly/flights-skill`、`raymatos/skills-mcp` 等（无关）
+- code search 噪声：majiayu000 巨型镜像、modbender、j4flmao、paxlabs、VibeStudio、作业/作品展示仓
+- alvinunreal/oh-my-opencode-slim：通用 agent 套件
 
 ## 种子仓状态
 
 | 仓 | stars | 近况 |
 |---|---:|---|
 | https://github.com/JackyST0/awesome-agent-skills | 613 | 最近实质提交仍为 07-27；08-03 star chore |
-| https://github.com/mouadja02/skills | 9 | 08-04：Qdrant / Terraform（无关）；无游戏/UE/设计向 |
+| https://github.com/mouadja02/skills | 9 | **08-05 10:11Z**：SBOM identity matching（无关）；此前 Qdrant/Terraform/K8s |
 
-## 本仓入库变化（+8 → 108）
+## 本仓入库变化（+8 → 116）
 
-- 新增 `skills/unreal/ue-mover-movement-system/`  
-- 新增 `skills/unreal/unreal-behavior-trees/`  
-- 新增 `skills/unreal/unreal-enhanced-input/`  
-- 新增 `skills/unreal/unreal-packaging/`  
-- 新增 `skills/unreal/ue-mass-entity/`  
-- 新增 `skills/unreal/ue-state-trees/`  
-- 新增 `skills/unreal/ue-sequencer-cinematics/`  
-- 新增 `skills/unreal/unreal-modeling/`  
-- 各含 `SOURCE.md`；承接上轮 100 条精选内容  
+- 新增 `skills/unreal/ue-audio-system/`
+- 新增 `skills/unreal/ue-serialization-savegames/`
+- 新增 `skills/unreal/ue-world-level-streaming/`
+- 新增 `skills/unreal/ue-ai-navigation/`
+- 新增 `skills/game-design/qa-review/`
+- 新增 `skills/game-design/gamedev-game-ai/`
+- 新增 `skills/game-design/evaluating-gameplay-balance/`
+- 新增 `skills/game-design/implementing-gameplay-invariants/`
+- 各含 `SOURCE.md`；承接上轮 108 条精选内容
 
 ## 今天可行动
 
-1. **评估是否上 Mover**：新角色/联机移动前先读 `ue-mover-movement-system`（含 networking-and-backends），和现有 CMC 路径做一次「继续 CMC vs 迁 Mover」决策；5.8 Experimental，勿盲目全量迁移。  
-2. **装三件日常高频**：`unreal-enhanced-input` + `unreal-behavior-trees` + `unreal-packaging`（Apache-2.0，可直接进 Cursor skills）。  
-3. **个人 skill 候选**：若做人群/开放世界 AI，把 `ue-mass-entity` + `ue-state-trees` 的 Mass 集成章合并成个人 `/ue-mass-ai`；若已用 UCP，把 `unreal-modeling` 链到已有 `unreal-client-protocol`。
+1. **装 UE 基建四件套（MIT）**：`ue-audio-system` + `ue-serialization-savegames` + `ue-world-level-streaming` + `ue-ai-navigation`，与上轮 BT/StateTree/Mover 拼成「AI + 世界 + 音频 + 存档」日常包。  
+2. **试策划验收闭环**：对一份现有 GDD/数值表跑一遍 `qa-review`，再用 `evaluating-gameplay-balance` 定 1 个可测对比协议。  
+3. **个人 skill 候选**：若做开放世界 AI，把 `ue-ai-navigation` + 已有 `unreal-behavior-trees`/`ue-state-trees` 合成个人 `/ue-npc-ai`；若做原型验证，把 abagames 的 balance + invariants 合成 `/gameplay-validate`。
 
 ## 已尝试查询
 
 1. 种子仓 commits / meta API（JackyST0、mouadja02）  
-2. 跟踪仓 `pushed_at`（kevinpbuckley、w-zhian、miramocha、sipherxyz、gisenberg、OpenClaw、maystudios、Italink、hkuds、flue、quodsoler、unrealxu、gamedev-skills 等）  
-3. `gh search repos`：`unreal skill` created≥08-04；`skill created:>=2026-08-05`；blender/gamedev 关键词  
-4. `gh search code`：`Unreal filename:SKILL.md`（成功一轮，见 Italink modeling 等；`path:.cursor/skills` 仍易 429）  
-5. skills.sh/api/search：unreal、gamedev、blender、game ui/design、houdini、niagara、3d modeling、sequencer、umg、ue5、flue  
-6. 候选 raw `SKILL.md` + 入库 / push / PR  
+2. 跟踪仓 `pushed_at` / trees（kevinpbuckley、quodsoler、gamedev-skills、w-zhian、sipherxyz、Italink、gisenberg、cesiumjs、flue、alterlab、Epic plugin、microsoft/Resource2Skill 等）  
+3. `gh search repos`：`skill` created≥08-05；`unreal skill` updated≥07-29；gamedev/blender/houdini/umg 关键词  
+4. `gh search code`：`Unreal filename:SKILL.md`（成功）；`game design filename:SKILL.md` 一度 429  
+5. skills.sh/api/search：unreal、gamedev、blender、game design、niagara、umg、houdini、3d modeling、sequencer、state tree、mover、angelscript  
+6. 候选 raw/blob `SKILL.md` + 入库 / push / PR  
