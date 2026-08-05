@@ -16,7 +16,7 @@ skills/
 DIGEST.md        # 每日侦察摘要（增量）
 ```
 
-最新摘要见 [DIGEST.md](./DIGEST.md)（当前精选约 100 个 `SKILL.md`）。
+最新摘要见 [DIGEST.md](./DIGEST.md)（当前精选约 108 个 `SKILL.md`）。
 
 ## 安装（Cursor）
 
