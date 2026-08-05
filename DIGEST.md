@@ -1,37 +1,42 @@
-# 技能侦察 DIGEST — 2026-08-05（04:03Z）
+# 技能侦察 DIGEST — 2026-08-05（05:04Z）
 
-- 侦察时间：2026-08-05T04:03Z（cron）
+- 侦察时间：2026-08-05T05:04Z（cron）
 - 方向：游戏设计 / UE·虚幻 / 3D / 2D / UI / 研发工作流
-- 增量基线：2026-08-05T03:03Z（同日上一轮，PR#3）
-- 本仓入库：精选 **73** 个 `SKILL.md`（较上轮 +5；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
-- 关联 PR 分支：`cursor/bc-e015c769-10d5-4c44-af14-a313ebed520a-2026`
+- 增量基线：2026-08-05T04:03Z（同日上一轮，PR#4）
+- 本仓入库：精选 **78** 个 `SKILL.md`（较上轮 +5；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
+- 关联 PR 分支：`cursor/bc-dffa4ae6-0cf5-43c6-afc1-01a6006e2c3b-366a`
 
 ## 本轮结论（一屏）
 
-距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪「建议引入」仓无技能内容实质更新（`novel-to-game` 仅恢复 trailer/玩法链接）。**主增量**：新发现专用 UE Agent 框架仓 [JanVogelsang/UE-AgentFramework](https://github.com/JanVogelsang/UE-AgentFramework)（MIT，13×SKILL.md：Niagara/蓝图/Enhanced Input/PIE·UMG 验证等，依赖其 MCP）。今日新建噪声约 70+；方向擦边观望：`mechfaber-agent`（CAD）、`flowmock-skill`（流程低保真）、`famistudio-compose-skill`（NES 芯片音）。
+距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪 UE 主仓无新 skill 内容；`novel-to-game` / `game-ui-design-workflow` 无新提交。**主增量**：今日新建 [fenggezaici/dcc-python-skills](https://github.com/fenggezaici/dcc-python-skills)（Maya 2024 + Houdini 20.5 Python 官方文档型 skill，可安装）。补录此前未入库的策划向 [w-zhian/game-design-skills](https://github.com/w-zhian/game-design-skills)（精选 2）与 [Hanjo92/roguelike-game-designer-skill](https://github.com/Hanjo92/roguelike-game-designer-skill)。今日新建噪声约 40+；CAD 向 `mechfaber-agent` 升至 0.1.1，仍观望。
 
 ## 建议引入（本轮增量）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| UE-AgentFramework（精选 5） | UE | Antigravity/MCP 驱动的 UE5 编辑器 Agent：Niagara、蓝图 T3D、Enhanced Input、PIE/UMG 验证 | https://github.com/JanVogelsang/UE-AgentFramework | MIT；13 个可定位 SKILL.md；与文档型 Niagara skill 互补（偏工具 SOP）；对齐 UE 5.8 | **引入** |
+| maya-2024-python-commands | 3D·工作流 | Maya 2024.2 `maya.cmds` 命令/参数/示例速查入口 | https://github.com/fenggezaici/dcc-python-skills | 今日新建；结构清晰可安装；补齐 DCC→UE 管线缺口 | **引入** |
+| houdini-20-5-python-scripting | 3D·工作流 | Houdini 20.5 HOM/`hou` 脚本与 Python SOP/COP 参考入口 | https://github.com/fenggezaici/dcc-python-skills | 同上；对程序化/特效管线直接可用 | **引入** |
+| gameplay-design | 游戏设计 | 核心循环/决策密度 GATE 的玩法设计工作流 | https://github.com/w-zhian/game-design-skills | 8×SKILL 策划包；与已有 core-loop 互补；中英触发词 | **引入** |
+| numerical-planning | 游戏设计 | 数值/成长曲线/经济流分析（不做最终配表） | https://github.com/w-zhian/game-design-skills | 填补本仓数值策划空白 | **引入** |
+| roguelike-game-designer | 游戏设计 | Roguelike/Roguelite 族专用设计 skill（跑局/程序生成/平衡） | https://github.com/Hanjo92/roguelike-game-designer-skill | 单文件高密度；frontmatter MIT；品类深 | **引入** |
 
 本仓已摘录：
 
-- `skills/unreal/ue-af-niagara-authoring/`
-- `skills/unreal/ue-af-blueprint-authoring/`
-- `skills/unreal/ue-af-setup-input/`
-- `skills/unreal/ue-af-pie-verifier/`
-- `skills/unreal/ue-af-unreal-instructions/`（含作者本机路径，需改）
+- `skills/3d/maya-2024-python-commands/`
+- `skills/3d/houdini-20-5-python-scripting/`
+- `skills/game-design/gameplay-design/`
+- `skills/game-design/numerical-planning/`
+- `skills/game-design/roguelike-game-designer/`
 
 ### 跟踪仓变化（非实质 / 不升级建议）
 
 | 名称 | 变化 | 仓库 | 建议 |
 |---|---|---|---|
-| worldwonderer/novel-to-game | 03:32Z 恢复 Project Plateau trailer/play link（#12）；非 skill 内容 | https://github.com/worldwonderer/novel-to-game | 继续引入，无新动作 |
-| aigengame/godot-agent | `pushed_at` 有刷新，默认分支近提交仍为 08-03 balancing | https://github.com/aigengame/godot-agent | 仍观望 |
-| guiguiyan930-source/game-ui-design-workflow | 仍停在 02:53Z（8 skills） | https://github.com/guiguiyan930-source/game-ui-design-workflow | 继续引入 |
+| worldwonderer/novel-to-game | 仍为 03:32Z trailer 链接恢复；无新提交 | https://github.com/worldwonderer/novel-to-game | 继续引入 |
+| guiguiyan930-source/game-ui-design-workflow | 仍停在 02:53Z（8 skills，已入库） | https://github.com/guiguiyan930-source/game-ui-design-workflow | 继续引入 |
 | kevinpbuckley/unreal-engine-skills | 仍为 08-04 UE 5.8 retarget | https://github.com/kevinpbuckley/unreal-engine-skills | 继续引入 |
+| JanVogelsang/UE-AgentFramework | 无新推送（仍 07-30） | https://github.com/JanVogelsang/UE-AgentFramework | 继续引入，盯插件可用性 |
+| Argentron-Technologies/mechfaber-agent | 04:33Z → 0.1.1；补安装/授权说明 | https://github.com/Argentron-Technologies/mechfaber-agent | 仍观望（CAD） |
 
 ### 累计建议引入（仍有效）
 
@@ -57,28 +62,29 @@
 20. https://github.com/888wing/game-ui-skill  
 21. https://github.com/zhijianfan/NiagaraSkill  
 22. https://github.com/HabrielStark/brilliant-blender-skill  
-23. **+ 本轮** https://github.com/JanVogelsang/UE-AgentFramework  
+23. https://github.com/JanVogelsang/UE-AgentFramework  
+24. **+ 本轮** https://github.com/fenggezaici/dcc-python-skills  
+25. **+ 本轮** https://github.com/w-zhian/game-design-skills  
+26. **+ 本轮** https://github.com/Hanjo92/roguelike-game-designer-skill  
 
-## 观望（本轮新增）
+## 观望（本轮新增 / 更新）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| mechfaber-agent | 3D·工作流 | 编码 Agent 设计真实机械（skill+MCP+求解器） | https://github.com/Argentron-Technologies/mechfaber-agent | 今日新建；LGPL；需账号；偏 CAD 非游戏 | 观望 |
-| flowmock-skill | UI·工作流 | 从真实代码扫描流程 → 灰盒 lo-fi flow mock | https://github.com/yulonghe97/flowmock-skill | 今日新建；无 license；偏产品 UX | 观望 |
-| famistudio-compose-skill | 游戏音频 | FamiStudio/NES 芯片乐谱驱动作曲与验收 | https://github.com/ROYIANS/famistudio-compose-skill | 今日新建；无 license；扩展音频向 | 观望 |
-| a5c-ai/babysitter（game-development 切片） | 游戏·UE | 巨仓内含 unreal-* / blender / houdini 等百余游戏向 skill | https://github.com/a5c-ai/babysitter | ★1643；2112×SKILL；宜日后按主题摘切片 | 观望 |
-| sonic7881963/gamedev-skills | 工作流·Godot | 分层 gamedev 工作流 + headless 测试 | https://github.com/sonic7881963/gamedev-skills | MIT；Godot 次优先 | 观望 |
-| anatu/ios-gamedev-skills | 游戏·2D | iOS/SpriteKit 14 skills | https://github.com/anatu/ios-gamedev-skills | 无 license；非 UE 主线 | 观望 |
+| miramocha/blender-skills-and-rules | 3D | VRoid/VRM 清理：shapekey、骨骼、MToon、UV | https://github.com/miramocha/blender-skills-and-rules | 11×SKILL；无 license；偏虚拟形象细分 | 观望 |
+| NexTechFusion/media4agents-threejs-skills | 3D·游戏 | Three.js 程序化世界 / 视觉 QA / img2threejs | https://github.com/NexTechFusion/media4agents-threejs-skills | 08-03 新建；0★；无 license；与 mint/cloudai 重叠 | 观望 |
+| mechfaber-agent（更新） | 3D·工作流 | 编码 Agent 设计真实机械（skill+MCP） | https://github.com/Argentron-Technologies/mechfaber-agent | 本轮升 0.1.1；仍需账号；偏 CAD | 观望 |
 
-其余观望（unreal-harness、cli-anything、Godot/Unity 向、blender 薄仓等）维持上轮清单。
+其余观望（babysitter 游戏切片、flowmock、famistudio、sonic7881963、anatu iOS、unreal-harness、cli-anything、Godot/Unity 向等）维持上轮清单。
 
 ## 可忽略
 
 - 种子仓：JackyST0 仍仅 08-03 star chore；mouadja02 仍为 Qdrant/Terraform（无关）  
-- created:>2026-08-04 / 今日新建噪声约 **70+**（社交/法律/健身/GitHub 练习题/空仓等）  
-- aurora1112-j/visual-essay-illustrator-skill：描述像 2D，但仓库为空  
-- chris58530/gamedev-skills：仅 prompts，无 `SKILL.md`  
-- ComeOnOliver/skillshub / majiayu000/claude-skill-registry：镜像聚合巨仓，不整仓收录  
+- `created:>2026-08-05` 今日新建噪声约 **40+**（技能练习题、外贸背调、PPT、读图、短剧提示词、GitHub 练习等）  
+- Dashuwang/zijiren-prompt-skill：AI 短剧提示词，非游戏/UE 主线  
+- yongchaozhao640-crypto/image-reader-skill：通用读图，方向无关  
+- zhouwei251550334/hippt：演示文稿 skill  
+- ComeOnOliver/skillshub / majiayu000/claude-skill-registry：镜像聚合，不整仓收录  
 
 ## 种子仓状态
 
@@ -87,26 +93,26 @@
 | https://github.com/JackyST0/awesome-agent-skills | 613 | 最近实质提交仍为 07-27；08-03 star chore |
 | https://github.com/mouadja02/skills | 9 | 08-04：Qdrant / Terraform（无关） |
 
-## 本仓入库变化（+5 → 73）
+## 本仓入库变化（+5 → 78）
 
-- 新增 `skills/unreal/ue-af-niagara-authoring/`  
-- 新增 `skills/unreal/ue-af-blueprint-authoring/`  
-- 新增 `skills/unreal/ue-af-setup-input/`  
-- 新增 `skills/unreal/ue-af-pie-verifier/`  
-- 新增 `skills/unreal/ue-af-unreal-instructions/`  
-- 各含 `SOURCE.md`；承接上轮 68 条精选内容  
+- 新增 `skills/3d/maya-2024-python-commands/`  
+- 新增 `skills/3d/houdini-20-5-python-scripting/`  
+- 新增 `skills/game-design/gameplay-design/`  
+- 新增 `skills/game-design/numerical-planning/`  
+- 新增 `skills/game-design/roguelike-game-designer/`  
+- 各含 `SOURCE.md`；承接上轮 73 条精选内容  
 
 ## 今天可行动
 
-1. **立刻试用**：装 `skills/unreal/ue-af-pie-verifier` + 已有 `game-ui-*`，用 PIE/UMG 抽取验证一条 HUD 交互（需能连 UE MCP）。  
-2. **对照 Niagara**：同任务并行试 `ue-af-niagara-authoring`（MCP SOP）与已入库 `ue-niagara-authoring`/`niagara-json-generator`（文档/JSON 管线），看哪套贴你的 VFX 工具链。  
-3. **个人 skill 候选**：把 `ue-af-unreal-instructions` 的本机路径段改成你的 UE 5.x 安装与 `.uproject`，作为固定入口 skill。
+1. **立刻试用**：把 `maya-2024-python-commands` / `houdini-20-5-python-scripting` 装进 Cursor skills，用一条「导出 FBX/USD → UE」脚本题验证 DCC 入口是否好用（原仓还有 chapters，需要时再拉）。  
+2. **策划双开**：同题并行 `gameplay-design`（决策密度 GATE）+ 已有 `core-loop-design`，再丢给 `numerical-planning` 做成长/经济审计。  
+3. **个人 skill 候选**：若你做 Roguelite，把 `roguelike-game-designer` 裁成「你的品类支柱 + 跑局验收清单」个人版；DCC 两 skill 建议保留原仓链接、只改激活描述贴合你的 Maya/Houdini 版本。
 
 ## 已尝试查询
 
 1. 种子仓 commits / meta API  
-2. 跟踪「建议引入/观望」仓 `pushed_at` / stars 增量对比  
-3. `gh search repos`：unreal/gamedev/blender/threejs/game UI/UMG/Niagara/PCG；`created:>2026-08-04`；`created:>2026-08-05T03:00:00Z skill`  
-4. `gh search code`：filename SKILL.md + Unreal/UE5（部分 429）；`git/trees?recursive=1` 核验  
-5. skills.sh/api/search：unreal、gamedev、blender  
+2. 跟踪「建议引入/观望」仓 `pushed_at` / stars / commits 增量对比  
+3. `gh search repos`：unreal/gamedev/blender/threejs/game UI/UMG/Niagara/houdini/maya/roguelike；`created:>2026-08-04`；`created:>2026-08-05T00:00:00Z skill`；`created:>2026-08-05T04:00:00Z`  
+4. `gh search code`：filename SKILL.md + Unreal（本轮空/限流）；`git/trees?recursive=1` 核验  
+5. skills.sh/api/search：unreal、gamedev  
 6. 新候选 raw SKILL.md 抽样 + CursorSkill 入库 / push / PR  
