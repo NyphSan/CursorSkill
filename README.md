@@ -11,12 +11,13 @@ skills/
   game-design/   # 玩法、关卡、手感、叙事、小说转游戏…
   unreal/        # UE C++/蓝图/UMG/Niagara/MCP/Shader…
   ui-design/     # 游戏 UI 工作流、Figma、前端设计
-  3d/            # Blender、Three.js
+  2d/            # 像素、角色、AI 游戏美术
+  3d/            # Blender、Three.js、着色/VFX
   workflow/      # 研发工作流（精选）
 DIGEST.md        # 每日侦察摘要（增量）
 ```
 
-最新摘要见 [DIGEST.md](./DIGEST.md)（当前精选约 156 个 `SKILL.md`）。
+最新摘要见 [DIGEST.md](./DIGEST.md)（当前精选约 164 个 `SKILL.md`）。
 
 ## 安装（Cursor）
 
