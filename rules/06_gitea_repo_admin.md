@@ -1,7 +1,7 @@
 # Gitea 仓库管理员（归属主控）
 
 参考：[Gitea Documentation](https://docs.gitea.com/)  
-组织仓库：`http://192.168.3.23:3000/nyph/CursorAiOrg.git`
+组织仓库：`https://git.bddream.site/nyph/CursorAiOrg`
 
 ## 岗位
 
@@ -54,7 +54,7 @@
 
 | 仓 | URL | 谁写 |
 |----|-----|------|
-| 组织 CursorAiOrg | `http://192.168.3.23:3000/nyph/CursorAiOrg.git` | 组织规则/工作流迭代 |
+| 组织 CursorAiOrg | `https://git.bddream.site/nyph/CursorAiOrg` | 组织规则/工作流迭代 |
 | 项目 SCL | `http://192.168.3.23:3000/SCLG/SCL.git`（见 PROJECT.md） | D# 功能改动 |
 
 ## Gitea 侧注意

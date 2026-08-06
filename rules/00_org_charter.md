@@ -25,4 +25,4 @@
 Gitea 提交记录：`records/gitea/` 或 `docs/gitea/`  
 
 仓库规则见 `rules/06_gitea_repo_admin.md`。  
-组织远程：`http://192.168.3.23:3000/nyph/CursorAiOrg.git`
+组织远程：`https://git.bddream.site/nyph/CursorAiOrg`

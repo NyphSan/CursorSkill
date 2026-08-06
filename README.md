@@ -7,7 +7,7 @@
 与具体游戏工程解耦；SCL 等只是 `profiles/` 下的档案。
 
 **主控完善制度：** 见 [rules/05_main_iterates_org.md](rules/05_main_iterates_org.md)；批末 [workflow/BATCH_CLOSEOUT.md](workflow/BATCH_CLOSEOUT.md)。  
-**Gitea：** [rules/06_gitea_repo_admin.md](rules/06_gitea_repo_admin.md) · 组织仓 `http://192.168.3.23:3000/nyph/CursorAiOrg.git`
+**Gitea：** [rules/06_gitea_repo_admin.md](rules/06_gitea_repo_admin.md) · 组织仓 `https://git.bddream.site/nyph/CursorAiOrg`
 
 Cursor 仍通过用户级 skill（`%USERPROFILE%\.cursor\skills\`）发现入口；  
 那些 SKILL 只做薄入口，**读写一律指向本目录**。

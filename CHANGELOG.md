@@ -1,5 +1,9 @@
 # CursorTeam CHANGELOG
 
+## 1.1.2 — 2026-08-06
+
+- 组织仓远程改云端：`https://git.bddream.site/nyph/CursorAiOrg`（替代局域网 `192.168.3.23:3000`）
+
 ## 1.1.1 — 2026-08-06
 
 - `rules/02_subagents.md`：强制「子代理派工」可见块、Task 真派工、agent 链接、默认 background
