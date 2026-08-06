@@ -8,5 +8,7 @@
 - [ ] 刷新项目 `records/main/BOARD.md`  
 - [ ] 薄 skill 入口与 ORG 文案是否仍指向正确路径  
 - [ ] **不**在未裁决时私自开下一游戏刀  
+- [ ] 若本批改动了组织规则/VERSION/CHANGELOG → 主控派 **gitea-repo** 提交推送到 CursorAiOrg（`rules/06`）  
 
-版本职责见 `rules/05_main_iterates_org.md`。
+版本职责见 `rules/05_main_iterates_org.md`。  
+仓库职责见 `rules/06_gitea_repo_admin.md`。

@@ -10,6 +10,7 @@
 | 主程 | `lead-eng` |
 | 审核 | `task-review` |
 | PM | `project-pm` |
+| Gitea 仓库管理员（归属主控） | `gitea-repo` |
 | 进化 | `skill-evolve` |
 
 ## 项目叠加

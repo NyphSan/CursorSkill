@@ -22,7 +22,9 @@
 | 执行 | `projects/SCL/records/exec/` |
 | 审核 | `projects/SCL/records/review/` |
 | PM | `projects/SCL/records/pm/` |
+| Gitea | `projects/SCL/records/gitea/` |
 
+项目远程：`http://192.168.3.23:3000/SCLG/SCL.git`  
 禁止写入已废弃的 `runs/SCL/`。
 
 ## 执行花名册

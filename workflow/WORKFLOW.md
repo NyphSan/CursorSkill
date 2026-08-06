@@ -5,13 +5,15 @@
 ```text
 你 → 主控会话（cursor-admin）
         → 加载 profiles/<Project> + projects/<Project>/PROJECT.md
-        → Task 主程 → projects/<Project>/records/lead-eng/ARCH-D?.md
-        → Task 执行 → records/exec/EXEC-D?.md（代码改 GAME_ROOT）
-        → Task 审核 → records/review/REVIEW-D?.md（含越界）
-        → PASS → PM 自我审核 → records/pm/PM-D?.md
-        → PM 裁决「开下一项」→ 主控派下一刀（不必等老板）
-        → 仅「升级老板」时停
+        → Task 主程 → ARCH-D?.md
+        → Task 执行 → EXEC-D?.md（代码改 GAME_ROOT）
+        → Task 审核 → REVIEW-D?.md
+        → PASS → 主程「主任务完成通知」→ 主控
+        → 主控派 gitea-repo → 项目仓 commit/push + records/gitea/
+        → PM 自我审核 → PM-D?.md
+        → PM「开下一项」→ 下一刀；「结束本批」→ 批末制度迭代
+        → 若本批改了组织规则 → 主控派 gitea-repo → CursorAiOrg commit/push
 ```
 
-规则见 `ORG_ROOT/rules/`（含 `04_pm_self_audit.md`）。模板见 `ORG_ROOT/templates/`。  
-SCL：`projects/SCL/` · GAME_ROOT 见该目录 `PROJECT.md`。
+规则：`rules/04_pm_self_audit.md` · `rules/06_gitea_repo_admin.md`。  
+SCL：`projects/SCL/PROJECT.md`（含 GAME_ROOT 与项目 remote）。

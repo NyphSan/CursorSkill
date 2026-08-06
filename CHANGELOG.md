@@ -1,5 +1,13 @@
 # CursorTeam CHANGELOG
 
+## 1.1.0 — 2026-08-06
+
+- 新增岗位 **Gitea 员工**（`gitea-repo`），归属主控；规则 `rules/06_gitea_repo_admin.md`
+- 组织远程：`http://192.168.3.23:3000/nyph/CursorAiOrg.git`
+- 主程主任务完成后通知主控 → 安排项目仓提交；组织规则更新 → 提交组织仓
+- 提交规范：Conventional Commits（`templates/GIT_COMMIT.md`）
+- 参考：https://docs.gitea.com/
+
 ## 1.0.1 — 2026-08-06
 
 - 明确主控「完善制度」职责与自我迭代触发（`rules/05_main_iterates_org.md`）

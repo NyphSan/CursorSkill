@@ -4,11 +4,12 @@
 
 | 岗位 | 权限 | 入口 skill |
 |------|------|------------|
-| 主控 | 流程最高权；迭代本组织目录 | `cursor-admin` |
-| 主程 | 框架/定界最高权 | `lead-eng` |
+| 主控 | 流程最高权；迭代本组织目录；**管辖 Gitea 仓库管理员** | `cursor-admin` |
+| 主程 | 框架/定界最高权；主任务完成后 **通知主控** 以便提交 | `lead-eng` |
 | 执行 | 功能实现（子代理） | profile 花名册 |
 | 审核 | DoD + 越界检查 | `task-review` |
 | PM | 登记 + **自我审核闸门**（开下一项/结束/升级老板） | `project-pm` |
+| **Gitea 员工** | 仓库提交/推送（项目仓 + 组织仓）；**归属主控** | `gitea-repo` |
 
 ## 双最高裁决
 
@@ -20,4 +21,8 @@
 
 ## 记录
 
-一律写入 `E:\dev\CursorTeam\runs\<Project>\`。
+项目岗位记录：`E:\dev\CursorTeam\projects\<Project>\records\`  
+Gitea 提交记录：`records/gitea/` 或 `docs/gitea/`  
+
+仓库规则见 `rules/06_gitea_repo_admin.md`。  
+组织远程：`http://192.168.3.23:3000/nyph/CursorAiOrg.git`
