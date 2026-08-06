@@ -1,8 +1,9 @@
-﻿# LAST_REPORT — 2026-08-06 12:00Z
+﻿# LAST_REPORT — 2026-08-06 13:00Z
 
 - 分支：CursorSkillSearch
-- 基线：Memories 11:00Z（286 清单 / PR#31）
-- 入库：288×SKILL.md（+2）
-- 建议引入增量：fagemx player-experience / build-playability-review
-- 观望新见：Randroids-Dojo/unreal、NAJEMWEHBE/driving-unreal、mike007jd/game-superpowers；ui-craft 仍有更新
+- 基线：Memories 12:00Z（288 清单 / PR#31）
+- 入库：290×SKILL.md（+2）
+- 建议引入增量：fagemx game-qa / game-ship
+- 观望：ui-craft、alfaris、Yuki001（今日有更新）；Randroids/NAJEM/mike007jd 维持
+- 可忽略：j4flmao/unreal（过浅）
 - DIGEST：./DIGEST.md
