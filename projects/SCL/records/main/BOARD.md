@@ -2,17 +2,15 @@
 
 | 项 | 状态 |
 |----|------|
-| ORG 版本 | **1.0.1**（基线 1.0.0） |
+| ORG 版本 | **1.1.0**（Gitea 员工） |
 | GAME_ROOT | `E:\Project\Game\S_\SCL` |
-| 业务 | R1 高低差 D1/D2 完成 · D3 债记 |
-| 制度 | 主控自我迭代已跑：`docs/retros/20260806-org-v1.0-baseline-r1.md` |
-| 闸门 | PM 自审（`rules/04`） |
-| 下批 | 待老板需求或开 D3 |
+| 业务 | R1 D1/D2 完成 · D3 债 |
+| Gitea | 岗位已建；组织仓 push **待鉴权**；R1 项目仓提交可补派 |
+| 闸门 | PM 自审 |
 
 ## 最近落盘
 
-| 岗 | 最新文件 | 一句话 |
-|----|----------|--------|
-| 主控 | VERSION/CHANGELOG/rules/05 | 制度 1.0 → 1.0.1 |
-| PM | PM-D2 | 结束本批 |
-| 业务 | EXEC/REVIEW D1–D2 | 高低差主链完成 |
+| 岗 | 最新 | 一句话 |
+|----|------|--------|
+| 主控 | rules/06 · VERSION 1.1.0 | Gitea 归属主控 |
+| Gitea | docs/gitea/ORG-COMMIT-… | 本地已提交；Gitea 鉴权失败 |
