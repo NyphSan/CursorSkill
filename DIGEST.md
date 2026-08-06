@@ -1,3 +1,51 @@
+﻿# 技能侦察 DIGEST — 2026-08-06（CursorSkillSearch / 手动）
+
+- 侦察时间：2026-08-06T07:10Z（本地手动，按 SkillSearch 指令）
+- 工作分支：**CursorSkillSearch**（用户指定；自此固定推送该分支）
+- 方向：游戏设计 / UE·虚幻 / 3D / 2D / UI / 研发工作流
+- 增量基线：2026-08-06T06:00Z（`skill-digest-2026-08-06-06`，263 skills）
+- 本仓入库：精选 **266** 个 `SKILL.md`（+3；非整仓镜像）
+- 查询尝试：种子仓 API；关键词 Unreal/UE/game/UI/3D；候选 quodsoler / ui-design-brain / UMG-MCP / kevinpbuckley / ibrews/ue5-mcp
+- 通知：本环境无 Slack 工具；以本分支 push + PR 作为 GitHub 通知通道
+
+## 本轮结论（一屏）
+
+相对 06:00Z：种子仓无方向相关新 skill 目录；`abagames/agentic-gamedev-skills` **仓库不可用（MISS）**；`mouadja02/skills` 仍有推送但偏通用。新增引入 3：`ui-design-brain`、`quodsoler-unreal-engine-skills`（目录路由）、`unreal-motion-graphics-mcp`（UMG 指针）。观望：`kevinpbuckley/unreal-engine-skills`（许可不清）、`ibrews/ue5-mcp`（MCP 手册，先试点 UMG）。
+
+## 建议引入（本轮增量）
+
+| 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
+|---|---|---|---|---|---|
+| ui-design-brain | UI | 60+ 组件最佳实践，SaaS 级 Web UI | https://github.com/carmahhawwari/ui-design-brain | 与 frontend-design 互补；组件规范清晰 | **引入** |
+| quodsoler-unreal-engine-skills | UE·工作流 | 27×UE C++ skill 目录/路由 | https://github.com/quodsoler/unreal-engine-skills | MIT；GAS/网络/动画等可按需抽 | **引入** |
+| unreal-motion-graphics-mcp | UE·UI | UMG 插件+MCP+Skills 指引 | https://github.com/winyunq/UnrealMotionGraphicsMCP | 贴 UE UI；需插件，先试点 | **引入** |
+
+本仓已摘录：
+
+- `skills/ui-design/ui-design-brain/`
+- `skills/unreal/quodsoler-unreal-engine-skills/`
+- `skills/unreal/unreal-motion-graphics-mcp/`
+
+## 观望 / 可忽略
+
+| 名称 | 说明 | 建议 |
+|---|---|---|
+| kevinpbuckley/unreal-engine-skills | UE5.7 知识库，仍无明显 LICENSE | **观望** |
+| ibrews/ue5-mcp | UE5 MCP 手册 | **观望**（先 UMG MCP） |
+| abagames/agentic-gamedev-skills | API MISS，仓可能改名/删除 | **忽略/待复查** |
+| mouadja02/skills / JackyST0 awesome | 无本方向实质新 skill | **忽略** |
+
+## 今天可行动
+
+1. 试装 `ui-design-brain` 到 `~/.cursor/skills/`（做网页/工具 UI 时）
+2. 从 quodsoler 只抽 1–2 个 C++ skill（如 gameplay-framework），勿全装
+3. AirSimUE 若要 UMG：评估 `UnrealMotionGraphicsMCP` 插件风险后再接 MCP
+
+## 上次完整清单（Memories 基线）
+
+见本文件历史段落 + `LAST_REPORT.md`。
+
+---
 # 技能侦察 DIGEST — 2026-08-06（06:00Z）
 
 - 侦察时间：2026-08-06T06:00Z（cron）
@@ -106,3 +154,4 @@
 1. **装**：`skills/unreal/arg-games-unreal-cqtest` + `jetbrains-ue-test-authoring` — 先用 CQTest 模板写一条 Actor 冒烟，再视 Rider MCP 是否开启决定是否用 JetBrains 技能做诊断闭环。
 2. **试**：`mengto-design-game-encounters` + `mengto-tune-enemy-ai` + `mengto-create-game-vfx`，在已有 isometric-arpg 切片上做「一波遭遇 → 可读 telegraph → 奖励」闭环。
 3. **个人化**：把 `heycat-comfyui-lowvram-setup` 的固定 seed/采样器清单收成自己的等距资产生成 checklist，接到已入库 `asset-pipeline-automation`。
+
