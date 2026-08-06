@@ -1,5 +1,10 @@
 # CursorTeam CHANGELOG
 
+## 1.1.1 — 2026-08-06
+
+- `rules/02_subagents.md`：强制「子代理派工」可见块、Task 真派工、agent 链接、默认 background
+- 禁止主会话换帽子假装子代理（除非老板明示主控直干）
+
 ## 1.1.0 — 2026-08-06
 
 - 新增岗位 **Gitea 员工**（`gitea-repo`），归属主控；规则 `rules/06_gitea_repo_admin.md`
