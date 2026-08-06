@@ -4,6 +4,7 @@
 
 - `rules/02_subagents.md`：强制「子代理派工」可见块、Task 真派工、agent 链接、默认 background
 - 禁止主会话换帽子假装子代理（除非老板明示主控直干）
+- **SCL 验证：** F0–F5 框架迁移批全 PASS；retro `docs/retros/20260806-scl-f0-f5-framework-migration.md`
 
 ## 1.1.0 — 2026-08-06
 
