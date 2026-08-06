@@ -1,0 +1,4 @@
+interface:
+  display_name: "UnrealSharp Operations"
+  short_description: "Build UnrealSharp C# safely with hot reload and validation"
+  default_prompt: "Use $unrealsharp-operations to build or debug an UnrealSharp C# project, including automatic compilation, reflected types, assets, networking, UI, and packaging."
