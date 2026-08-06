@@ -1,38 +1,38 @@
-# 技能侦察 DIGEST — 2026-08-06（00:00Z）
+# 技能侦察 DIGEST — 2026-08-06（01:00Z）
 
-- 侦察时间：2026-08-06T00:00Z（cron）
+- 侦察时间：2026-08-06T01:00Z（cron）
 - 方向：游戏设计 / UE·虚幻 / 3D / 2D / UI / 研发工作流
-- 增量基线：2026-08-05T23:00Z（同日上一轮，PR#22）
-- 本仓入库：精选 **212** 个 `SKILL.md`（较上轮 +8；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
-- 关联 PR 分支：`skill-digest-2026-08-06-00`
+- 增量基线：2026-08-06T00:00Z（同日上一轮，PR#23）
+- 本仓入库：精选 **220** 个 `SKILL.md`（较上轮 +8；非整仓镜像），结构 `skills/<方向>/<skill-name>/`
+- 关联 PR 分支：`skill-digest-2026-08-06-01`
 
 ## 本轮结论（一屏）
 
-距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪仓：lisxa5747 **23:15Z** 仅 README SEO 改写（维持观望/降级）；ConnorGriffin 无新 push（上次 22:54Z orchestrate）；Yuki001/kevin/sipher 许可未变；osseous 主仓实为 [osseous/skills](https://github.com/osseous/skills)（MIT，AngelScript/读日志，已有摘录）。本轮按「下次优先」引入 donchitos：**balance-check / team-ui / playtest-report / ux-design**；以及 omer：**player-onboarding / vehicle-design / mobile-game-dev / llm-npc-dialogue**。Flue、ui-craft、driving-unreal、august-batista unreal-assets 继续观望。今日新建噪声多为营销/TDD/Telegram/Slideshow/投注等，方向无关只记数。
+距上轮约 1 小时。种子仓仍无方向相关新 skill。跟踪仓：lisxa5747 **00:06Z** 再改 README（无 LICENSE，维持降级）；Yuki001 50★ 仍无 LICENSE；ConnorGriffin / Flue / kevin / sipher 无实质变化。本轮按「下次优先」升级引入 donchitos：**ux-review / team-combat / vertical-slice / prototype**；omer：**game-monetization / gamification-loops / easter-egg-design / unreal-llm-integration**。新噪声仓：`Oliyflemishspeaking560/threejs-game-skills`（今日 push，0★，疑似 majid 镜像）、`opengameapp/OpenGame-skills`（MIT-0，生态绑定）、`0xheycat/isometric-game-skills`（MIT 6★，下次可摘）记入观望。GitHub code search 本轮 429；repos + skills.sh + 树/blob API 已覆盖。
 
 ## 建议引入（本轮增量）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| donchitos-balance-check | 游戏设计·工作流 | 扫描数值/战斗/经济/进度数据找异常与退化策略 | https://github.com/donchitos/claude-code-game-studios | 23630★ MIT；与已有 evaluating-gameplay-balance / progression 成门禁 | **引入** |
-| donchitos-team-ui | UI·工作流 | 编排 UX→视觉→实现→评审的 UI 团队流水线 | 同上 | 游戏 UI 工程化缺口；接 omer-game-ui-design | **引入** |
-| donchitos-playtest-report | 游戏设计·工作流 | 试玩报告模板 / 原始笔记结构化 | 同上 | 闭环验证必备；与 balance-check 成对 | **引入** |
-| donchitos-ux-design | UI·游戏设计 | 分节撰写屏幕/HUD/交互模式 UX 规格 | 同上 | team-ui 前置；补齐 UX 规格作者 | **引入** |
-| omer-player-onboarding | 游戏设计 | FTUE/教程与留存导向的新手引导 | https://github.com/omer-metin/skills-for-antigravity | 123★ Apache-2.0；补齐 onboarding 缺口 | **引入** |
-| omer-vehicle-design | 3D·2D | 载具/机甲/飞船造型与硬表面形式语言 | 同上 | 与 creature/weapon 成套概念美术 | **引入** |
-| omer-mobile-game-dev | 游戏设计 | 手游触控/散热/功耗与商店上架约束 | 同上 | 移动端此前偏薄；可对接 UE 手游 | **引入** |
-| omer-llm-npc-dialogue | 游戏设计·AI | LLM NPC 对话、人格记忆与破戏防护 | 同上 | 与已收 game-ai / narrative 互补 | **引入** |
+| donchitos-ux-review | UI·工作流 | UX 规格门禁：完整性/无障碍/GDD 对齐 → APPROVED 等裁决 | https://github.com/donchitos/claude-code-game-studios | 23631★ MIT；接上轮 ux-design / team-ui | **引入** |
+| donchitos-team-combat | 游戏设计·工作流 | 战斗功能端到端团队编排（设计→实现→QA） | 同上 | 与已有 combat-design / balance-check 成流水线 | **引入** |
+| donchitos-vertical-slice | 工作流 | 预制作垂直切片，PROCEED/PIVOT/KILL 门禁 | 同上 | 量产前关键验证；工业标准 3–5 分钟切片 | **引入** |
+| donchitos-prototype | 工作流 | 概念原型（HTML/Engine/Paper）快速验趣味 | 同上 | 与 vertical-slice 成对：先概念后生产切片 | **引入** |
+| omer-game-monetization | 游戏设计 | F2P/IAP/通行证与伦理变现策略 | https://github.com/omer-metin/skills-for-antigravity | 123★ Apache-2.0；补齐商业化缺口 | **引入** |
+| omer-gamification-loops | 游戏设计 | 积分/徽章/连胜等参与循环与伦理边界 | 同上 | 接 progression / onboarding | **引入** |
+| omer-easter-egg-design | 游戏设计 | 隐藏彩蛋、发现机制与分享触发 | 同上 | 轻量「惊喜」层，易改成项目个人 skill | **引入** |
+| omer-unreal-llm-integration | UE·AI | UE 内 LLM NPC：异步、蓝图友好、勿堵 GameThread | 同上 | 接上轮 llm-npc-dialogue 的引擎落地 | **引入** |
 
 本仓已摘录：
 
-- `skills/workflow/donchitos-balance-check/`
-- `skills/ui-design/donchitos-team-ui/`
-- `skills/workflow/donchitos-playtest-report/`
-- `skills/ui-design/donchitos-ux-design/`
-- `skills/game-design/omer-player-onboarding/`（+ references）
-- `skills/3d/omer-vehicle-design/`（+ references）
-- `skills/game-design/omer-mobile-game-dev/`（+ references）
-- `skills/game-design/omer-llm-npc-dialogue/`（+ references）
+- `skills/ui-design/donchitos-ux-review/`
+- `skills/workflow/donchitos-team-combat/`
+- `skills/workflow/donchitos-vertical-slice/`
+- `skills/workflow/donchitos-prototype/`
+- `skills/game-design/omer-game-monetization/`（+ references）
+- `skills/game-design/omer-gamification-loops/`（+ references）
+- `skills/game-design/omer-easter-egg-design/`（+ references）
+- `skills/unreal/omer-unreal-llm-integration/`（+ references）
 
 ### 跟踪仓变化（非实质 / 不升级建议）
 
@@ -40,43 +40,44 @@
 |---|---|---|---|
 | mouadja02/skills | 仍为 18:06Z idea-refine；无新 commit | https://github.com/mouadja02/skills | **忽略**（通用 coding） |
 | JackyST0/awesome-agent-skills | 仍仅 08-03 star chore | https://github.com/JackyST0/awesome-agent-skills | 无游戏/UE 专区新增 |
-| ConnorGriffin/skills | 无新于 22:54Z；license NOASSERTION | https://github.com/ConnorGriffin/skills | ui-craft 维持观望（偏 Web UI） |
-| lisxa5747 AngelScript | **23:15Z** README SEO 改写；仍 NOASSERTION | https://github.com/lisxa5747/unreal-angelscript-skills | **观望/降级**（优先 osseous） |
-| snipereagle1/eve-skills | 仍为 20:03Z ESI/SDE | https://github.com/snipereagle1/eve-skills | EVE 专用 → 观望/低优 |
-| Yuki001/game-dev-skills | 仍无 LICENSE；49★ | https://github.com/Yuki001/game-dev-skills | 维持观望 |
-| kevinpbuckley/unreal-engine-skills | 08-04 UE 5.8；仍无 SPDX | https://github.com/kevinpbuckley/unreal-engine-skills | 维持观望 |
-| sipherxyz/universal-ue-skills | 07-31；1★ 无 LICENSE | https://github.com/sipherxyz/universal-ue-skills | 观望 |
-| sfkislev/flue | 无新 push | https://github.com/sfkislev/flue | 观望（需本机 Flue） |
-| osseous/skills | 纠正：主仓为 osseous/skills（非 unreal-engine-skills） | https://github.com/osseous/skills | 已有摘录；低活跃 |
+| ConnorGriffin/skills | 无新于 22:54Z；license NOASSERTION | https://github.com/ConnorGriffin/skills | ui-craft 维持观望 |
+| lisxa5747 AngelScript | **00:06Z** 再 Update README；仍 NOASSERTION | https://github.com/lisxa5747/unreal-angelscript-skills | **观望/降级**（优先 osseous） |
+| Yuki001/game-dev-skills | 50★（+1）；仍无 LICENSE | https://github.com/Yuki001/game-dev-skills | 维持观望 |
+| kevin / sipher / Flue / eve | 无实质变化 | 各原仓 | 维持观望 |
+| Oliyflemishspeaking560/threejs-game-skills | **今日 00:08Z** push；0★ MIT；结构似 majid 镜像 | https://github.com/Oliyflemishspeaking560/threejs-game-skills | 观望/低优（已有 majid 摘录） |
+| opengameapp/OpenGame-skills | 08-04；MIT-0；浏览器原型+市场发布 | https://github.com/opengameapp/OpenGame-skills | 观望（生态绑定） |
+| 0xheycat/isometric-game-skills | MIT 6★；等距美术/渲染技能包 | https://github.com/0xheycat/isometric-game-skills | 观望（下次可摘 art-direction） |
 
 ### 累计建议引入（仍有效）
 
-1–78. 维持至上轮（含 omer creature/procgen/weapon/net/progression、donchitos asset-spec/design-review、blender-unreal-export）  
-79. **+ 本轮** donchitos：balance-check / team-ui / playtest-report / ux-design  
-80. **+ 本轮** omer：player-onboarding / vehicle-design / mobile-game-dev / llm-npc-dialogue
+1–80. 维持至上轮（含 donchitos balance/team-ui/playtest/ux-design、omer onboarding/vehicle/mobile/npc）  
+81. **+ 本轮** donchitos：ux-review / team-combat / vertical-slice / prototype  
+82. **+ 本轮** omer：game-monetization / gamification-loops / easter-egg-design / unreal-llm-integration
 
 ## 观望（本轮新增 / 调整）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| ConnorGriffin ui-craft | UI·工作流 | 视觉 lock→build→critique→audit | https://github.com/ConnorGriffin/skills | 偏 Web/产品 UI；可改造成游戏 UI 个人 skill | 观望 |
+| ConnorGriffin ui-craft | UI·工作流 | 视觉 lock→build→critique→audit | https://github.com/ConnorGriffin/skills | 偏 Web/产品 UI；可改造成游戏 UI | 观望 |
 | sfkislev/flue blender | 3D·工作流 | 无 MCP 的 shell→bpy 桌面桥 | https://github.com/sfkislev/flue | 65★ MIT；含本机路径 | 观望 |
-| Yuki001/game-dev-skills | 游戏设计·3D·工作流 | architect / toon shader / 资产生成 | https://github.com/Yuki001/game-dev-skills | 49★；**无 LICENSE** | 观望 |
+| Yuki001/game-dev-skills | 游戏设计·3D·工作流 | architect / toon shader / 资产生成 | https://github.com/Yuki001/game-dev-skills | 50★；**无 LICENSE** | 观望 |
 | kevin / sipher / lisxa5747 / eve | 各向 | 维持上轮理由 | 各原仓 | 许可或成熟度未变 | 观望 |
-| omer-game-monetization / gamification-loops / easter-egg-design | 游戏设计 | 变现/循环/彩蛋 | https://github.com/omer-metin/skills-for-antigravity | 本轮优先 onboarding/手游/NPC；下次可摘 | 观望 |
-| donchitos ux-review / team-combat / vertical-slice | 工作流 | UX 门禁与品类流水线 | https://github.com/donchitos/claude-code-game-studios | 本轮已收 ux-design/team-ui；下次可续 | 观望 |
+| donchitos team-level / team-narrative / gate-check | 工作流 | 关卡/叙事团队与阶段门禁 | https://github.com/donchitos/claude-code-game-studios | 本轮已收 combat/slice/prototype；下次可续 | 观望 |
+| omer-worldbuilding / tabletop-rpg / prompt-to-game | 游戏设计 | 世界观 / TRPG / vibe 原型 | https://github.com/omer-metin/skills-for-antigravity | 本轮优先 monetization/UE-LLM；下次可摘 | 观望 |
 | NAJEMWEHBE driving-unreal | UE·工作流 | 经 unreal-ai-connection MCP 驱编 | https://github.com/NAJEMWEHBE/unreal-ai-connection | MIT 9★；强依赖其 MCP | 观望 |
 | august-batista unreal-assets | UE | 安全读写 .uasset/.umap | https://github.com/august-batista/claude-unreal-bridge-editor | MIT 0★；强依赖桥 | 观望 |
-| w-zhian/game-design-skills | 游戏设计 | 策划向自演化包 | https://github.com/w-zhian/game-design-skills | 0★ 无 LICENSE；重叠 | 观望/低优 |
-| avemeva/design-boilerplate | UI | Next.js 设计工程样板+28 craft skills | https://github.com/avemeva/design-boilerplate | 今日新建 0★ 无 LICENSE；偏 Web | 观望/低优 |
+| 0xheycat/isometric-game-skills | 2D·3D | 等距美术方向与 Canvas/Godot 管线 | https://github.com/0xheycat/isometric-game-skills | MIT 6★；下次可摘 `isometric-art-direction` | 观望 |
+| opengameapp/OpenGame-skills | 游戏设计·工作流 | 浏览器原型 + Skill/MCP 发布 | https://github.com/opengameapp/OpenGame-skills | MIT-0 0★；偏 OpenGame 生态 | 观望 |
+| w-zhian / avemeva | 游戏/UI | 维持上轮 | 各原仓 | 0★ 无 LICENSE | 观望/低优 |
 
 ## 可忽略
 
 - 种子仓：JackyST0 无实质新条目；mouadja02 idea-refine（方向无关，记数）
 - ConnorGriffin 通用 orchestrate/say-less 增量（非游戏向）
-- 今日新建噪声（方向无关，约 20+）：`vaishnvaik6/brand-website-copy-skill`、`brookejlacey/boring-tools`、`ChloeVPin/tdd-agent-skill`、`penkayone/media-hold-telegram-leads-skill`、`Orange-County-AI/slideshow`、`jvorndran/cfb-betting-skills`、`theocarranza/agent-plugin-template`、`0xwilliamortiz/claude-red` 等
+- 今日新建噪声（方向无关，约 15+）：`snailer-team/JeffDean-Mind`、`pubudu538/agent-skills`（Synapse→Go）、`Kazppe/agent-skills`（日文通用工程）、`PeaceFamily000/Robocon`、各类 `skills-github-pages` / `skills-introduction-to-github` 练习仓等
+- `Oliyflemishspeaking560/threejs-game-skills`：0★ 疑似镜像，已有 majid 摘录
 - eve-skills：EVE Online API
-- path:.agents/skills / path:.cursor/skills 本轮 code search 无新增游戏/UE 命中
+- GitHub code search 本轮 HTTP 429（约需等 12 分钟）；以 repos + skills.sh + 跟踪仓 trees 为准
 
 ## 种子仓状态
 
@@ -85,29 +86,29 @@
 | https://github.com/JackyST0/awesome-agent-skills | 613 | 最近实质提交仍为 07-27；08-03 star chore |
 | https://github.com/mouadja02/skills | 9 | 仍为 **08-05 18:06Z** idea-refine portable（无关）；此后无新 commit |
 
-## 本仓入库变化（+8 → 212）
+## 本仓入库变化（+8 → 220）
 
-- 新增 `skills/workflow/donchitos-balance-check/`
-- 新增 `skills/ui-design/donchitos-team-ui/`
-- 新增 `skills/workflow/donchitos-playtest-report/`
-- 新增 `skills/ui-design/donchitos-ux-design/`
-- 新增 `skills/game-design/omer-player-onboarding/`
-- 新增 `skills/3d/omer-vehicle-design/`
-- 新增 `skills/game-design/omer-mobile-game-dev/`
-- 新增 `skills/game-design/omer-llm-npc-dialogue/`
-- 各含 `SOURCE.md`；承接上轮 204 条精选内容
+- 新增 `skills/ui-design/donchitos-ux-review/`
+- 新增 `skills/workflow/donchitos-team-combat/`
+- 新增 `skills/workflow/donchitos-vertical-slice/`
+- 新增 `skills/workflow/donchitos-prototype/`
+- 新增 `skills/game-design/omer-game-monetization/`
+- 新增 `skills/game-design/omer-gamification-loops/`
+- 新增 `skills/game-design/omer-easter-egg-design/`
+- 新增 `skills/unreal/omer-unreal-llm-integration/`
+- 各含 `SOURCE.md`；omer 四项含 `references/`；承接上轮 212 条精选内容
 
 ## 今天可行动
 
-1. **UI 流水线**：先跑 `donchitos-ux-design` 写一屏/HUD 规格，再用 `donchitos-team-ui` 走实现门禁；对照已有 `omer-game-ui-design` / `ue5-ui-umg-slate`。  
-2. **验证闭环**：改数值后用 `donchitos-balance-check`，试玩笔记丢进 `donchitos-playtest-report`；适合改成你项目的 data 路径个人 skill。  
-3. **FTUE + LLM NPC**：装 `omer-player-onboarding` 设计 30 秒钩子，再用 `omer-llm-npc-dialogue` 约束破戏；载具概念叠 `omer-vehicle-design`。
+1. **UI 门禁闭环**：用已有 `donchitos-ux-design` 写一屏/HUD 规格 → 立刻跑 `donchitos-ux-review` 拿裁决，再进 `donchitos-team-ui`。  
+2. **原型→切片**：新点子先 `donchitos-prototype`（概念）→ 定稿后再 `donchitos-vertical-slice`；战斗功能可叠 `donchitos-team-combat`。  
+3. **变现 + UE LLM**：装 `omer-game-monetization` 审一版 IAP/通行证伦理边界；有 NPC 对话需求时叠 `omer-llm-npc-dialogue` + `omer-unreal-llm-integration`（勿堵 GameThread）。
 
 ## 已尝试查询
 
 1. 种子仓 commits / repo meta（JackyST0、mouadja02）
-2. 跟踪仓 pushed_at / trees / license（omer、donchitos、ConnorGriffin、eve、kevin、sipher、Yuki001、Flue、arjun988、maystudios、MengTo、lisxa5747、NAJEMWEHBE、august-batista、osseous/skills、teixasalone、w-zhian 等）
-3. repos search：skill/skills created≥08-04/05；unreal/gamedev/game design skills；agent skills
-4. code search：Unreal filename:SKILL.md；game design filename:SKILL.md；path:.agents/skills；path:.cursor/skills
-5. skills.sh/api/search：unreal、balance check、playtest、team ui、player onboarding、vehicle design、mobile game、umg、level design、art bible、blender
+2. 跟踪仓 pushed_at / trees / license（omer、donchitos、ConnorGriffin、eve、kevin、sipher、Yuki001、Flue、lisxa5747、NAJEMWEHBE、august-batista、osseous/skills、w-zhian、avemeva、maystudios 等）
+3. repos search：`game skills` / `unreal skills` / `cursor skills`；`skills created:2026-08-05` / `2026-08-06`
+4. code search：Unreal / game design / path:.agents/skills / path:.cursor/skills → **HTTP 429**（本轮未恢复）
+5. skills.sh/api/search：unreal、game design、umg、blender、level design、monetization、gamification、easter egg、ux review、vertical slice、team combat、rider
 6. 候选 blob SKILL.md 质量核 + 入库 + push + open_git_pr + Slack
