@@ -1,0 +1,14 @@
+---
+description: 主控每轮监督 token/上下文，并按任务难易为子代理选模
+alwaysApply: true
+---
+
+# Token 与选模（主控）
+
+接需求或派 Task 前：
+
+1. 评估上下文压力（低/中/高），高则减载、外派、建议续温。
+2. 判定任务档：轻→`composer-2.5-fast`；中→`inherit`；探索快推理→`cursor-grok-4.5-high-fast`。
+3. 派工块写「资源与选模」三行；禁止名单外 model。
+
+权威细则：`E:/dev/CursorTeam/rules/07_token_and_model.md`

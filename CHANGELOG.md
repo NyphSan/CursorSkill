@@ -1,5 +1,10 @@
 # CursorTeam CHANGELOG
 
+## 1.1.3 — 2026-08-06
+
+- 新增 `rules/07_token_and_model.md`：每轮 Token/上下文压力自检；按轻/中/重选 Task `model`
+- `rules/02_subagents.md`：派工块强制「资源与选模」；硬名单 `composer-2.5-fast` / `inherit` / `cursor-grok-4.5-high-fast`
+
 ## 1.1.2 — 2026-08-06
 
 - 组织仓远程改云端：`https://git.bddream.site/nyph/CursorAiOrg`（替代局域网 `192.168.3.23:3000`）
