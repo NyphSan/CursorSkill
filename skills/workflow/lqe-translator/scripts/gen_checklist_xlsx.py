@@ -1,0 +1,248 @@
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
+import os
+
+OUT = os.path.join(os.path.dirname(__file__), "..", "docs", "质量检查项清单.xlsx")
+
+TITLE_F = Font(bold=True, size=14, color="1F4E79")
+SEC_F = Font(bold=True, size=12, color="1F4E79")
+H_F = Font(bold=True, size=10, color="FFFFFF")
+H_FILL = PatternFill("solid", fgColor="4472C4")
+NEW_FILL = PatternFill("solid", fgColor="FFF2CC")
+WRAP = Alignment(wrap_text=True, vertical="top")
+thin = Side(style="thin", color="B0B0B0")
+BORDER = Border(left=thin, right=thin, top=thin, bottom=thin)
+
+wb = Workbook()
+
+def put_table(ws, start_row, headers, rows, widths=None, highlight_rows=None):
+    for j, h in enumerate(headers, 1):
+        c = ws.cell(row=start_row, column=j, value=h)
+        c.font, c.fill, c.alignment, c.border = H_F, H_FILL, WRAP, BORDER
+    for i, row in enumerate(rows, 1):
+        for j, v in enumerate(row, 1):
+            c = ws.cell(row=start_row + i, column=j, value=v)
+            c.alignment, c.border = WRAP, BORDER
+            if highlight_rows and i in highlight_rows:
+                c.fill = NEW_FILL
+    if widths:
+        for j, w in enumerate(widths, 1):
+            ws.column_dimensions[chr(64 + j)].width = w
+    return start_row + len(rows) + 1
+
+# ---------- Sheet 1 ----------
+ws = wb.active
+ws.title = "概览与计分规则"
+ws["A1"] = "质量检查项清单（含评估关注点）"
+ws["A1"].font = TITLE_F
+meta = [
+    "更新日期：2026-06-11",
+    "参考文件（共三份）：",
+    "〔Skill〕评估体系 SKILL.md：本清单撰写时确定性检查 13 项（2026-06-12 已扩至 23 项）、错误子类 17 项、权重与强制严重度、评分公式、归类规则",
+    "〔LQE报告〕《【AI】【英】0512【globaltrunk】【0511新增】_LQE Report.xlsx》：客户对 AI 译文（中→英）的人工质量评估报告，含 Error Severity、Error Definition（错误定义表）、LQA Scorecard（评分卡及 135 条错误明细）三个工作表",
+    "〔LQA模板〕《LQA template to evaluate current cooperating translators.xlsx》：客户用于评估合作译员的 LQA 模板",
+    "标注约定：〔Skill〕＝沿用现行体系；〔LQE报告〕〔LQA模板〕＝本次依据该文件新增；“第 N 段”指 LQE 报告错误明细中的 Segment 编号，便于核对原文；凡属归纳推断处均注明“归纳”，不作为客户明文规则",
+    "报告基础数据：总词数 5,314；总分 82.78，低于阈值 98，判定 FAIL；计分错误 101 条（Minor 25、Major 35、Critical 41），另有重复标记错误 34 条（不计罚分）",
+    "输出约定：报告统一使用“原译、建议译文、处理方式”；处理方式仅由 errors[].needs_confirmation、errors[].protected 与 corrected 推导。建议译文工作簿只将非空 corrected 写回原目标列，不新增状态列或工作表；终端仅汇总“建议修改、需要人工确认、保持原译、已保护”四类数量",
+    "源文档：docs/质量检查项清单.md（内容更新以该文件为准，本表由 scripts/gen_checklist_xlsx.py 重新导出）",
+]
+r = 3
+for m in meta:
+    ws.cell(row=r, column=1, value=m).alignment = WRAP
+    r += 1
+
+r += 1
+ws.cell(row=r, column=1, value="错误分布（来源：LQE 报告评分卡）").font = SEC_F
+r += 1
+r = put_table(ws, r, ["类别", "Minor", "Major", "Critical", "重复标记", "加权罚分", "占比"], [
+    ["Mistranslation", 2, 22, 41, 13, 783, "85.6%"],
+    ["Terminology", 0, 12, 0, 8, 90, "9.8%"],
+    ["Company style", 12, 1, 0, 0, 25.5, "2.8%"],
+    ["Unidiomatic", 6, 0, 0, 11, 9, "1.0%"],
+    ["Inconsistency", 5, 0, 0, 2, 7.5, "0.8%"],
+    ["其余 12 类", 0, 0, 0, 0, 0, "0"],
+    ["合计", 25, 35, 41, 34, 915, "100%"],
+])
+notes = [
+    "41 条 Critical 的内容构成（本清单依据错误明细整理）：成对祝词短句 26 条（第 47–75 段；修订译文呈两两押韵对应，如 Door/Floor、Grows/Flows）；同流程对话选项 3 条（第 42–46 段）；玩法规则说明 7 条（第 256–265 段）；活动名称及签到界面文本 5 条",
+    "主要结论 1：加权罚分的 85.6% 来自 Mistranslation，集中于成对短句的逐句直译与规则说明文本的语义错误",
+    "主要结论 2：Markup、Length、Punctuation、Spelling、Omission、Addition、Untranslated 等可由确定性检查覆盖的类别，本报告中均为零错误，现行 pre-check 机制有效",
+    "主要结论 3：待评估文件《玩法数据表_题目表_皇宫以外内容.xlsx》与本次 Critical 集中的题目类文本属同类内容，预计存在同类风险（归纳推断）",
+]
+for n in notes:
+    ws.cell(row=r, column=1, value=n).alignment = WRAP
+    r += 1
+
+r += 1
+ws.cell(row=r, column=1, value="应用状态与主要差异（摘要）").font = SEC_F
+r += 1
+ws.cell(row=r, column=1, value="应用状态：全部确定性检查 N1–N9 及 PM 反馈 #3/#7/#10 已实施（2026-06-12）；N4 重复计分已入 lqe_calc；成组送评与清单引用已接入 SKILL.md。0512 确认规则（评估前必读文件）持续生效").alignment = WRAP
+r += 1
+r = put_table(ws, r, ["方面", "现行体系", "本清单方案", "依据"], [
+    ["重复错误计分", "每次出现均全额计分；报告输出虽含 repeated 列但数值恒为 0，无识别逻辑", "仅首次计分，重复予以记录不计罚分", "LQE 报告评分卡复核（34 条重复错误未计入罚分）。现行算法在重复较多的文件上得分将低于客户口径"],
+    ["成组文本", "逐段独立评估", "对联、题目类文本按组评估", "本次 41 条 Critical 中 26 条源于成对短句被逐句独立直译"],
+    ["AI 评估视角", "仅依据错误分类定义", "注入人工评审实判模式（拼音残留、规则文本从严、平行句式统一、不得自创术语等）", "“AI评估项17子类”工作表各子类评估关注点"],
+    ["误报防控", "无明文规则", "三点法则与 Word Choice 判定边界", "LQA 模板原文"],
+    ["确定性检查", "撰写时 13 项，现 23 项", "N1–N4 及 PM 反馈新增项均已实施（2026-06-12）", "“确定性检查项”工作表"],
+    ["通过阈值", "单一阈值 98", "按交付阶段分级：TEP/MTPE 98，润色/二审 99", "LQE 报告错误定义表"],
+])
+ws.cell(row=r, column=1, value="总体评价：现行体系在格式类确定性检查上覆盖充分（本次报告该类错误为零）；客户罚分的 85.6% 集中于语义与成组结构层面，本清单的调整方向即为将评估重心移向该层面").alignment = WRAP
+r += 2
+
+ws.cell(row=r, column=1, value="通用评估原则（评估每条错误前先行核对）").font = SEC_F
+r += 1
+r = put_table(ws, r, ["原则", "内容", "来源"], [
+    ["三点法则", "译文同时满足准确（核心含义保留）、合规（符合风格指南、项目指令与术语表）、合乎语法三项，即视为正确；偏好性改写不计为错误，至多记 Neutral 建议", "LQA模板原文（新增）"],
+    ["单一归属与从重判定", "每条错误只归入一个类别，取最具体的一类；严重度在 Minor 与 Major 之间无法确定时，判 Major", "Skill 沿用"],
+    ["Word Choice 判定边界", "用词导致含义错误的，归 Mistranslation；含义正确但存在更优用词的，归 Unidiomatic（Minor）或记 Neutral。前半句为 LQA 模板原文；归入 Unidiomatic/Neutral 系本清单适配（现行体系无 Word Choice 类别）", "LQA模板＋本清单适配"],
+    ["严重度三级判定基准", "Minor＝可察觉但不致误导；Major＝很可能误导玩家或损害可信度；Critical＝可能引起投诉、法律风险、功能破坏或出现在高可见位置。系对三处定义的综合转述，非逐字引用", "Skill＋LQE报告定义表＋LQA模板综合"],
+])
+
+r += 1
+ws.cell(row=r, column=1, value="计分与流程规则").font = SEC_F
+r += 1
+r = put_table(ws, r, ["规则", "内容", "来源", "核验依据"], [
+    ["重复错误", "重复错误予以记录（Repeated=YES）但不计罚分，仅首次计分", "LQE报告（新增）", "评分卡复核：罚分 610 恰等于非重复错误之和（25×1＋35×5＋41×10），34 条重复错误未计入"],
+    ["阈值分级", "TEP、MTPE 阈值 98；润色、二审阈值 99", "LQE报告（新增）", "错误定义表原文（0.98／0.99）；现行 profile.threshold 参数已支持配置"],
+    ["严重度分值", "Neutral 0／Minor 1／Major 5／Critical 10", "Skill 沿用", "与 LQE 报告 Error Severity 工作表一致"],
+    ["评分公式", "得分＝1－加权罚分合计÷词数", "Skill 沿用", "错误定义表原文 Score = 1 - Penalty total/Wordcount；按报告数据复核（1－915÷5314＝82.78）一致"],
+    ["成组文本评估", "对联、题目、谜题类文本按组评估：上下联对仗与押韵、题目与答案的对应关系须保持；逐句独立直译将破坏成组结构", "本清单依据 LQE 报告归纳（新增）", "26 条成对短句 Critical 的修订稿呈两两押韵模式；报告未附判定理由，成因系归纳推断"],
+    ["文本类型与判级倾向", "规则说明类错译普遍判 Critical；界面短句问题多归 Unidiomatic 或 Company style；诗句宣传语按风格改写要求评估", "本清单依据 LQE 报告判级分布归纳（新增）", "规则说明类错译 7 条均为 Critical；界面短句 12 条均为 Unidiomatic Minor"],
+    ["报告格式解析", "修订列可为 #N/A（审校未提供修订稿）；重复列取值 YES/NO", "LQE报告（新增）", "第 259 段修订列为 #N/A"],
+])
+
+r += 1
+ws.cell(row=r, column=1, value="后续实施事项").font = SEC_F
+r += 1
+r = put_table(ws, r, ["编号", "事项", "涉及文件", "状态"], [
+    [1, "重复错误计分规则（N4）", "scripts/lqe_calc.py", "已完成（2026-06-12）"],
+    [2, "拼音残留检查（N1）、同源异译检查（N2，含 ≥20 字分档）", "scripts/lqe_checks.py", "已完成（2026-06-12）"],
+    [3, "罗马数字检查（N3）", "projects/wwm/zh-en/checks.json", "已完成（2026-06-12）"],
+    [4, "0512 报告术语与风格确认规则归档", "projects/wwm/zh-en/confirmed_rules.md", "已完成（2026-06-11）"],
+    [5, "评估流程引用本清单", "SKILL.md", "已完成（2026-06-12）"],
+    [6, "题目类文本按组送评（read --group-col + SKILL.md 合并评估指引）", "scripts/lqe_io.py、SKILL.md", "已完成（2026-06-12）"],
+    [7, "PM 反馈新增检查 N5–N9 及 #3/#7/#10（详见《PM反馈检查项修改报告》）", "scripts/lqe_io.py、SKILL.md、target_languages/", "已完成（2026-06-12，PM 批准）"],
+    [8, "异源同译长度分档（≥20 字才报，项目负责人已确认）", "随事项 2 的 N2 实施", "已完成（2026-06-12）"],
+])
+for col, w in zip("ABCDEFG", [26, 64, 40, 42, 14, 12, 10]):
+    ws.column_dimensions[col].width = w
+
+# ---------- Sheet 2 ----------
+ws2 = wb.create_sheet("确定性检查项")
+rows2 = [
+    ["1", "untranslated_cjk", "译文残留中文", "Untranslated", "Major", "Skill 沿用", "项目指令允许保留的内容除外", "内置"],
+    ["2", "empty_target", "译文为空", "Untranslated", "Major", "Skill 沿用", "与词数统计方式联动（source-chars 模式下仍计分）", "内置"],
+    ["3", "em_dash", "破折号“—”", "Punctuation", "Minor", "Skill 沿用", "可按项目配置关闭", "内置"],
+    ["4", "color_tags", "颜色标签 #G/#C/#Y…#E 配对", "Markup", "Major", "Skill 沿用", "相对位置须一致，不限于数量", "内置"],
+    ["5", "variables", "占位符 {}/%s 缺失或多余", "Markup", "Major", "Skill 沿用", "LQE 报告中“{}天后领取{}”译文缺失一个占位符，被评为 Mistranslation Critical（第 107 段）〔LQE报告〕", "内置"],
+    ["6", "pos_placeholder", "%s/%d 顺序错位", "Markup", "Major", "Skill 沿用", "命名式或带索引的占位符允许重排", "内置"],
+    ["7", "newline_count", "换行符 \\n 数量不一致", "Markup", "Major", "Skill 沿用", "", "内置"],
+    ["8", "numbers_consistency", "数值缺失或改动", "Mistranslation", "Major", "Skill 沿用", "仅当源文含阿拉伯数字时触发；中文数字不误报；上下文确认后可移除误报", "内置"],
+    ["9", "length", "超出长度限制", "Length", "Major", "Skill 沿用", "优先使用 max-length 列；无该列时按 1.5 倍源文长度回退（仅非中日韩源文）", "内置"],
+    ["10", "locale_numbers", "千位分隔符缺失", "Locale convention", "Minor", "Skill 沿用", "", "内置"],
+    ["11", "whitespace", "首尾空格、连续空格", "Punctuation", "Minor", "Skill 沿用", "", "内置"],
+    ["12", "fullwidth_punct", "英文译文中的全角标点", "Punctuation", "Minor", "Skill 沿用", "", "内置"],
+    ["13", "terminology", "术语表命中但译文未采用", "Terminology", "Major", "Skill 沿用", "按术语状态区分：Approved 直接判错；New/WorkingTB 结合语境判断；通用词汇命中不等于错误", "内置"],
+    ["N1", "pinyin_residue", "拼音残留", "Mistranslation", "Critical", "新增·LQE报告", "已实施（2026-06-12，确定性层抓强特征：大写头+≥2音节+zh/x/q 或撇号分隔；TB 词形豁免；弱信号由 AI 评估关注点覆盖）。报告实例：“画卯”译为 Mark Mao（第 105 段）、“平安”译为 Ping'an（第 54 段），均评为 Critical。属半确定性检查：正则初筛后须人工或 AI 复核", "scripts/lqe_checks.py（已实施 2026-06-12）"],
+    ["N2", "intra_consistency", "同文件内同源异译", "Inconsistency", "Minor", "新增·LQE报告", "同一文件内相同源文对应不同译文；以及相同译文对应不同源文。系报告 Inconsistency 类错误（第 82–94 段）中可程序化检出的子集。已实施（2026-06-12）：双向检出，异源同译仅当涉及源文全部 ≥20 字（项目负责人已确认）；组内首段为基准不报", "scripts/lqe_checks.py（已实施 2026-06-12）"],
+    ["N3", "roman_numeral", "序号用罗马数字字符", "Company style", "Minor", "新增·LQE报告", "序号、卷号应使用 Unicode 罗马数字（Ⅰ Ⅱ Ⅲ），不使用 ASCII 字母拼写。报告实例：“其一”修订为“Ⅰ”（第 194 段）、“卷二”修订为“Volume Ⅱ”（第 268 段）", "projects/wwm/zh-en/checks.json（已实施 2026-06-12）"],
+    ["N5", "terminal_punct", "句尾终止标点不对齐", "Punctuation", "Minor", "PM反馈#1", "源以终止标点结尾而译文句尾无（.!?…），或源无句尾标点而译文添加句号；句中标点数量交 AI 评估；无句号体系语言（th）由语言属性自动关闭", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["N6", "cn_numbers", "中文数字+量词漏译", "Mistranslation", "Major", "PM反馈#2", "仅「中文数字+量词」强模式触发（含「一」）；译侧接受阿拉伯数字、英文数词、泰文数字与泰语数词", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["N7", "word_repeat", "单词连续重复", "Grammar", "Minor", "PM反馈#6", "the the 类；白名单豁免合法重复；非空格分词语言由语言属性自动关闭", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["N8", "intra_word_case", "词内大小写混乱", "Spelling", "Minor", "PM反馈#8", "AppLe 类词内转折；豁免术语表词形/Mc/iPhone 型/PvP 型/标签变量；非拉丁语言自动关闭", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["N9", "paired_punct", "半角成对标点不完整", "Punctuation", "Minor", "PM反馈#9", "()、[]、直双引号奇偶；源侧平衡而译侧不平衡才报；撇号豁免；全角/弯引号由现行全角标点检查拦截", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["—", "tag_count", "通用标签数量对账", "Markup", "Major", "PM反馈#3", "补充比对 <…>、[…] 模式的源译数量；项目专属格式用 checks.json custom type=count_match 配置", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["—", "term_case", "术语全大写缩写大小写", "Company style", "Major", "PM反馈#7", "项目负责人确认仅检查 HP/ATK 类全大写缩写，并按严重问题处理；非拉丁语言自动关闭", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["—", "ellipsis_mix", "省略号样式混用", "Inconsistency", "Minor", "PM反馈#10", "项目负责人确认一个项目只用一种省略号；文件内 … 与 ... 并存时报告少数样式所在段", "scripts/lqe_io.py（已实施 2026-06-12）"],
+    ["N4", "repeat_dedup", "重复错误计分规则", "（计分规则）", "—", "新增·LQE报告", "重复出现的同一错误仅首次计罚分，其余标记 Repeated 不计分。依据：报告 34 条重复标记错误经评分卡复核均未计入罚分。重复判定条件（相同源文、相同译文、相同错误）系依据报告数据归纳，报告未明文定义", "scripts/lqe_calc.py（已实施 2026-06-12，--no-repeat-dedup 可关）"],
+]
+put_table(ws2, 1, ["序号", "键/编号", "检查内容", "类别", "严重度", "来源", "评估关注点", "实施位置"], rows2,
+          widths=[6, 20, 24, 16, 10, 16, 72, 22], highlight_rows=[14, 15, 16, 17])
+ws2.freeze_panes = "A2"
+
+# ---------- Sheet 3 ----------
+ws3 = wb.create_sheet("AI评估项17子类")
+ws3["A1"] = "子类体系、权重、强制 Major、严重度分值（0/1/5/10）全部沿用〔Skill〕，并经与 LQE 报告错误定义表逐项核对一致；“严重度分级”列统一取自 LQE 报告错误定义表；关注点逐条以〔〕标注来源，“第 N 段”为报告错误明细 Segment 编号"
+ws3["A1"].font = Font(bold=True, size=10, color="1F4E79")
+
+def fp(*items):
+    return "• " + "\n• ".join(items)
+
+rows3 = [
+    ["Accuracy", "Mistranslation 错译", 1.5, "—", "Minor 2、Major 22（另重复 8）、Critical 41（另重复 5）；最大罚分来源",
+     fp("专有名词与普通词语的双向误判：拼音残留（“画卯”应译 Roll Call，误译 Mark Mao，第 105 段；“平安”应译 Peace，误译 Ping'an，第 54 段）；普通词语误作专名（“年年”误译为人名 Niannian，第 61 段；“岁月长安”误关联城市名 Chang'an，第 55 段；“紫色团花”应译 purple flower，误译 Epic Flower，第 293 段）〔LQE报告〕",
+        "玩法规则文本逐条核对：数值与上限（“铜筹折算上限 2000”，第 258 段）、阶段流程、机制用语（“多轮循环”修订为 Round-robin，第 258 段）、奖励归属与返还条件；报告中规则说明类错译 7 条全部评为 Critical〔LQE报告〕",
+        "操作指引的动作语义：技能效果的对象与方式（“复原巨石使其停止”，第 302 段；“招式”应译 any attack，误译 a Move，第 290 段）〔LQE报告〕",
+        "价格类限定语不可缺失：“折扣价格 2 音玉”译文缺失“折扣”含义，评为 Major（第 14 段）；错误定义表 Critical 示例：源文“有机会获得[68金币]”译为 contains [68 Gold]〔LQE报告〕",
+        "评为 Critical 的常见情形（依据报告判级归纳）：误导玩家决策的规则文本、题目与答案对应关系被破坏、占位符语义错位、涉及付费或收益的内容〔LQE报告归纳〕"),
+     "Minor＝误读但贴近源文｜Major＝译错（示例：关卡→Close Card）｜Critical＝日期、规则、内容错误以致引起投诉或法律风险"],
+    ["Accuracy", "Omission 漏译", 1.5, "—", "0",
+     fp("限定词逐一核对：任意、1 次、仅、同时、最高、每。相关案例：“任意试剑”译为 a Sword Trial，修订为 any Sword Trial（第 83 段，该条报告归入 Inconsistency Minor）〔LQE报告〕",
+        "影响进度或资格的关键信息（如充值条件）缺失即 Critical〔LQE报告〕"),
+     "Minor＝缺失衔接词｜Major＝缺失改变语义的成分（“范围内的敌人”译为 all enemies）｜Critical＝缺失影响进度或资格的关键信息"],
+    ["Accuracy", "Addition 多译", 1.5, "—", "0",
+     fp("区分贴近源文的过度翻译与偏离源文的添加〔LQE报告〕", "不得引入源文不存在的玩法元素（单体伤害译为 all enemies）〔LQE报告〕"),
+     "Minor＝过度翻译但仍贴近源文｜Major＝偏离源文｜Critical＝引入不存在的玩法元素或引起投诉、破坏沉浸"],
+    ["Accuracy", "Untranslated 未翻译", 1.5, "强制 Major", "0（确定性检查已可检出）",
+     fp("拼音转写不视为已翻译：报告将此类情形判入 Mistranslation Critical（见 N1）〔LQE报告〕"),
+     "一律 Major"],
+    ["Terminology", "Terminology 术语", 1.5, "强制 Major", "Major 12（另重复 8）；第二大罚分来源",
+     fp("活动、玩法、界面入口名称逐字核对官方术语库及已上线译名：“皇宫寻宝”应译 Imperial Palace Treasure Hunt，自创译名评为 Major（第 2 段）；“御前练兵”应译 Imperial Drill（第 76 段）〔LQE报告〕",
+        "成对称号按对应体系翻译：“新锐/新兵”＝Recruit，“老将/老兵”＝Veteran；误译 New Edge、Old General（第 366、367 段）〔LQE报告〕",
+        "人物名称查角色档案：“青”＝Halcyon，不作拼音 Qing（第 194–201 段）〔LQE报告〕",
+        "同一事物跨段落统一译名：“手札”统一为 Journal（第 198 段）〔LQE报告〕",
+        "不得将通用名词自创为专有名词：“异色灵蝶”应译 strangely colored butterflies，误译 Spectral Butterfly（第 292 段）〔LQE报告〕",
+        "系列名称格式：“赋神·乘桴归梦”＝Fu Shen - Rippling Dream，系列前缀保留（第 13 段）；间隔号“·”转写为“ - ”〔LQE报告＋Skill〕",
+        "本报告确认的强制译名清单见 projects/wwm/zh-en/confirmed_rules.md《0512 确认规则》〔LQE报告〕；通用词汇命中术语表时结合语境判断〔Skill 沿用〕"),
+     "一律 Major"],
+    ["Fluency", "Inconsistency 不一致", 1.5, "—", "Minor 5（另重复 2）",
+     fp("平行句式统一句型：任务、成就列表采用同一模板（Complete any X once with a Veteran/Recruit，第 82–94 段；原译文 Team up with… and complete… 与之混用被判错）〔LQE报告〕",
+        "任务名称引用格式统一（Lost Chapter quest: X，第 89 段）〔LQE报告〕",
+        "涉及术语表词条的不一致归 Terminology，其余归本类〔Skill 沿用〕"),
+     "Minor＝拼写、大小写、语气不统一（approx. 与 approximately 混用）｜Major＝术语混用以致误解（hero、protagonist、main character 混用）"],
+    ["Fluency", "Grammar 语法", 1.5, "—", "0",
+     fp("主谓一致、时态、冠词（错误定义表示例）〔LQE报告〕", "占位符后接可数名词使用复数兼容写法（修订稿示例：{} in {} day(s)，第 107 段）〔LQE报告〕"),
+     "Minor＝显见疏忽（Me and my friends are…）｜Major＝损害可信度（The lego set are nice）｜Critical＝造成严重后果"],
+    ["Fluency", "Punctuation 标点", 1.0, "—", "0",
+     fp("半角标点、与源文标点对齐（确定性检查已覆盖大部分）〔Skill 沿用〕", "长句缺少逗号影响可读性〔LQA模板〕"),
+     "Minor＝错误但可理解｜Major＝改变句意（Let's eat, Timmy → Let's eat Timmy）｜Critical＝金额标点错误导致事实性错误"],
+    ["Fluency", "Spelling 拼写", 1.0, "—", "0",
+     fp("拼写错误（错误定义表示例：Equipments、Acheive、Entrence）〔LQE报告〕", "易混词（accept/except、then/than、your/you're）＝Major〔LQE报告〕"),
+     "Minor＝一般拼写错误｜Major＝损害可信度的易混词｜Critical＝造成严重后果（示例：pubic library）"],
+    ["Style", "Company style 项目风格", 1.5, "—", "Minor 12、Major 1",
+     fp("句中普通名词小写：Accept a Quest 在句中修订为 accept a quest（第 155 段）；标题式大写仅用于标题位置〔LQE报告；大小写双模式规则为 Skill 沿用〕",
+        "序号、卷号使用 Unicode 罗马数字（见 N3）〔LQE报告〕",
+        "设施与可放置物名称使用方括号：修订稿统一为 [Stove]、[Dining Table] 等格式（第 260 段修订稿）〔LQE报告〕",
+        "诗句、宣传语允许为押韵与节奏改写：第 249 段对仗句修订为 bold/gold 押韵句式；过度直译归入本类〔LQE报告〕",
+        "语域错置（错误定义表 Major 示例：古代背景项目使用现代口语 Sup, Harry?）〔LQE报告〕；风格指南有明文规定的违例归本类，无明文的归 Unidiomatic〔Skill 沿用〕"),
+     "Minor＝未遵循既定标点或大小写规范｜Major＝语域错置（古代背景使用现代口语）"],
+    ["Style", "Unidiomatic 表达不自然", 1.5, "—", "Minor 6（另重复 11）",
+     fp("界面短句的自然化处理：Continue Completing <X> 统一修订为 Continue completing the X quest（去除尖括号、补充通名 quest、改句式大小写；第 17–28 段，同一问题出现 12 次）〔LQE报告〕",
+        "直译腔的典型形式（错误定义表示例：Warm Tips、Successfully Claimed）〔LQE报告〕",
+        "自然度三级标尺：母语者难以理解／直译但可理解／自然流畅，仅前两级计错〔LQA模板，新增〕"),
+     "Minor＝不地道但可理解（Successfully Claimed）｜Major＝不地道且引起困惑（Warm Tips）｜Critical＝冒犯或完全破坏沉浸（You no go. I go for you!）"],
+    ["Locale convention", "Locale convention 区域格式", 1.0, "—", "0",
+     fp("日期写法避免歧义（错误定义表示例：6/5/2023 应拼写月份）〔LQE报告〕", "货币符号与币种一致〔LQE报告〕"),
+     "Minor＝格式少见但可理解｜Major＝影响理解｜Critical＝币种错误（人民币 299 元误写为 $299）导致法律或财务风险"],
+    ["Audience Appropriateness（客户定义表上级类别名为 Verity）", "Culture specific reference 文化特定指涉", 1.5, "—", "0",
+     fp("源语文化元素错置于目标受众（错误定义表示例：520、圣诞节吃苹果）〔LQE报告〕", "冒犯性或涉敏内容＝Critical〔LQE报告〕"),
+     "Minor＝文化指涉略显突兀｜Major＝过于小众以致困惑｜Critical＝冒犯或涉及敏感议题"],
+    ["Audience Appropriateness", "Audience appropriateness 受众适配", 1.5, "—", "0（现行体系独有子类）",
+     fp("语域与世界观语气（如武侠语境使用现代俚语）；翻译准确但不符合目标受众预期〔Skill 沿用〕"),
+     "参照 Company style 与 Unidiomatic 的分级按影响程度判定"],
+    ["Design & Markup", "Markup 标记", 1.5, "强制 Major", "0（确定性检查已覆盖）",
+     fp("颜色标签相对位置、占位符数量与顺序、换行符保留〔Skill 沿用〕"),
+     "一律 Major"],
+    ["Design & Markup", "Length 长度", 1.0, "强制 Major", "0（确定性检查已覆盖）",
+     fp("优先使用 max-length 列；超长存在截断风险〔Skill 沿用〕"),
+     "一律 Major"],
+    ["Other", "Other 其他", 1.0, "—", "0",
+     fp("未尽事项；先经单一归属规则核对后方可归入本类〔Skill 沿用〕"),
+     "—"],
+]
+put_table(ws3, 2, ["上级维度", "子类别", "权重", "强制严重度", "本次计分", "评估关注点（〔〕＝来源；“第 N 段”＝报告 Segment 编号）", "严重度分级（来源：LQE 报告错误定义表）"],
+          rows3, widths=[24, 24, 7, 11, 30, 92, 52])
+ws3.freeze_panes = "A3"
+
+wb.save(OUT)
+print("OK", os.path.abspath(OUT))
