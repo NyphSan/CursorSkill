@@ -1,8 +1,9 @@
-# 流水线看板 · 组织已迁入 CursorTeam
+# 流水线看板
 
 | 项 | 状态 |
 |----|------|
-| ORG_ROOT | `E:\dev\CursorTeam` |
-| 主控 | 在线 · 记录只写入本目录 runs/ |
-| Project | 待接单 |
+| ORG_ROOT / Agent 根 | `E:\dev\CursorTeam`（已切换） |
+| 分支 | `autoAISkill` → 本地 bare origin |
+| Project | 待接单（可 `project=SCL`） |
+| 记录 | `runs/<Project>/` |
 | 闸门 | 空闲 |

@@ -10,7 +10,21 @@ ORG_ROOT = E:\dev\CursorTeam
 | 工作流 | `ORG_ROOT\workflow\` |
 | 档案 | `ORG_ROOT\profiles\` |
 | 模板 | `ORG_ROOT\templates\` |
-| **全部记录** | `ORG_ROOT\runs\<Project>\` |
+| **项目（含记录）** | `ORG_ROOT\projects\<Project>\` |
+| 废弃 | `ORG_ROOT\runs\`（仅兼容指针，新项目勿用） |
 
-禁止把组织记录写回 `~\.cursor\skills\cursor-admin\runs`（已废弃，仅保留入口）。  
-禁止默认把组织记录写入游戏工程仓（除非 profile 明示 PM 写仓库 docs）。
+## 项目包结构
+
+```text
+projects/<Project>/
+  PROJECT.md          ← GAME_ROOT 等
+  records/
+    main/             ← 主控
+    lead-eng/         ← 主程
+    exec/             ← 执行
+    review/           ← 审核
+    pm/               ← PM
+  notes/
+```
+
+SCL 示例：`projects\SCL\PROJECT.md` → GAME_ROOT = `E:\Project\Game\S_\SCL`

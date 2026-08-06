@@ -14,11 +14,15 @@ Cursor 仍通过用户级 skill（`%USERPROFILE%\.cursor\skills\`）发现入口
 |------|------|
 | `rules/` | 组织铁律（主控/主程/定界/子代理） |
 | `workflow/` | 流水线与花名册核 |
-| `profiles/` | 项目档案（SCL、_default…） |
+| `profiles/` | 项目档案索引（SCL、_default…） |
+| `projects/<Project>/` | **项目包**：GAME_ROOT + **各岗位 records/** |
 | `templates/` | 分发/报告/ARCH/看板模板 |
-| `runs/<Project>/` | **所有**执行/审核/PM/ARCH 记录 |
-| `skills/` | 组织相关 skill 正文镜像（便于版本管理） |
+| `skills/` | 组织相关 skill 镜像 |
 | `docs/` | 组织说明、交接 |
+| `runs/` | 已废弃（见各项目 `records/`） |
+
+SCL 快速入口：[projects/SCL/PROJECT.md](projects/SCL/PROJECT.md)  
+游戏工程：`E:\Project\Game\S_\SCL`
 
 ## 主控会话
 
