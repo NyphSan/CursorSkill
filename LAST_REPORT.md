@@ -1,7 +1,8 @@
-﻿# LAST_REPORT — 2026-08-06 08:00Z
+﻿# LAST_REPORT — 2026-08-06 09:00Z
 
 - 分支：CursorSkillSearch
-- 基线：Memories 07:00Z（270 清单 / PR#30）
-- 入库：275×SKILL.md（CSS +9；相对 07:00 +2 新摘录）
-- 建议引入增量：JetBrains×2 + MengTo×5（合并）+ MengTo test-playable/mobile（新）
+- 基线：Memories 08:00Z（275 清单 / PR#31）
+- 入库：279×SKILL.md（+4）
+- 建议引入增量：MengTo monster / hybrid / fog-of-war / changelog
+- 新观望：fagemx/gstack-game、KrickmanC 设计簇
 - DIGEST：./DIGEST.md
