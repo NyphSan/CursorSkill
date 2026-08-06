@@ -1,11 +1,7 @@
-﻿# LAST_REPORT — 增量基线
+﻿# LAST_REPORT — 2026-08-06 08:00Z
 
-- date: 2026-08-06T07:10Z
-- branch: CursorSkillSearch
-- introduced_this_round:
-  - ui-design-brain
-  - quodsoler-unreal-engine-skills
-  - unreal-motion-graphics-mcp
-- known_good_prior: mengto game skills, heycat, arg-games cqtest, jetbrains ue-test, frontend-design, gamedev-game-ui-ux, novel-to-game
-- miss: abagames/agentic-gamedev-skills
-- watch: kevinpbuckley/unreal-engine-skills, ibrews/ue5-mcp
+- 分支：CursorSkillSearch
+- 基线：Memories 07:00Z（270 清单 / PR#30）
+- 入库：275×SKILL.md（CSS +9；相对 07:00 +2 新摘录）
+- 建议引入增量：JetBrains×2 + MengTo×5（合并）+ MengTo test-playable/mobile（新）
+- DIGEST：./DIGEST.md
