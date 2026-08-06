@@ -12,6 +12,18 @@
 | 栈适配器 | `ue-framework` |
 | Gitea 提交记录 | `records/gitea/` |
 
+## 模块分层
+
+```text
+业务 · Source/SCL  →  战斗 · Plugins/SCLTactical  →  核心 · Plugins/SCLCore  →  Engine
+```
+
+- **业务模块 `SCL`：** 模式/关卡编排、3C、Presenter→ViewState→WBP、Adjudication 关口、内容装配。  
+- **战斗插件 `SCLTactical`：** 战旗 L0（单位/回合/移动射击真相）；Demo Content 非生产。  
+- **核心插件 `SCLCore`：** DesignData 叶节点、Framework Types/Guards、日历等可复用底座。  
+
+派工按 profile 花名册区分 **业务岗** vs **核心岗**；定界见 `records/lead-eng/ARCH-F0.md`。
+
 ## 开发工作约定
 
 1. **改游戏代码 / Content：** 路径一律相对 **GAME_ROOT**（上表）。  
