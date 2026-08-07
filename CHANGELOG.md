@@ -1,5 +1,12 @@
 # CursorTeam CHANGELOG
 
+## 1.1.8 — 2026-08-07
+
+- 网络维护定版：`docs/ops/NETWORK_OPS_HANDBOOK.md`（交给 network-ops 常驻）  
+- 参考原文入库：`docs/ops/REF-通用网络环境指令.md`  
+- 日常入口：`scripts/network-ops-maintain.ps1`；强化 `rules/08` + `skills/network-ops`  
+- 目标：持续绿门禁（agentn），保障全部 Task 可跑  
+
 ## 1.1.7 — 2026-08-07
 
 - **工作流三件套落地**：组织仓收口 + 派工纪律固化 + My Machines worker 闭环  

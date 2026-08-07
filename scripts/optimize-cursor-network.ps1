@@ -59,16 +59,18 @@ Write-Host "System proxy -> $want"
 
 # 5) User env proxy for CLI / Node children
 $proxyUrl = "http://127.0.0.1:$HttpPort"
-[Environment]::SetEnvironmentVariable("HTTP_PROXY", $proxyUrl, "User")
-[Environment]::SetEnvironmentVariable("HTTPS_PROXY", $proxyUrl, "User")
-[Environment]::SetEnvironmentVariable("http_proxy", $proxyUrl, "User")
-[Environment]::SetEnvironmentVariable("https_proxy", $proxyUrl, "User")
-[Environment]::SetEnvironmentVariable("NO_PROXY", "localhost,127.0.0.1", "User")
-$env:HTTP_PROXY = $proxyUrl
-$env:HTTPS_PROXY = $proxyUrl
-$env:http_proxy = $proxyUrl
-$env:https_proxy = $proxyUrl
-Write-Host "User env HTTP(S)_PROXY -> $proxyUrl"
+$socksUrl = "socks5://127.0.0.1:$SocksPort"
+$noProxy = "localhost,127.0.0.1,::1,10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,.local"
+foreach ($kv in @(
+  @{N="HTTP_PROXY";V=$proxyUrl}, @{N="HTTPS_PROXY";V=$proxyUrl},
+  @{N="ALL_PROXY";V=$socksUrl}, @{N="NO_PROXY";V=$noProxy},
+  @{N="http_proxy";V=$proxyUrl}, @{N="https_proxy";V=$proxyUrl},
+  @{N="all_proxy";V=$socksUrl}, @{N="no_proxy";V=$noProxy}
+)) {
+  [Environment]::SetEnvironmentVariable($kv.N, $kv.V, "User")
+  Set-Item -Path "Env:$($kv.N)" -Value $kv.V
+}
+Write-Host "User env HTTP(S)_PROXY -> $proxyUrl ; ALL_PROXY -> $socksUrl"
 
 # 6) Cursor settings.json
 if (-not $SkipCursorSettings) {
