@@ -1,9 +1,17 @@
 # CursorTeam CHANGELOG
 
+## 1.1.7 — 2026-08-07
+
+- **工作流三件套落地**：组织仓收口 + 派工纪律固化 + My Machines worker 闭环  
+- `rules/02`：门禁表（绿 / 软绿 BossConfirmGpt / 黄红禁派）与 `rules/08` 对齐  
+- `rules/00`：OS 管理员提权仅主控；脚本 `elevate-cursor-for-main.ps1`  
+- `skills/cursor-admin`：预检→软绿→可见 Task→worker 在线日常纪律  
+- 通用 Agent 网络环境结案：`docs/network/AGENT_NETWORK_CONFIGURATION_COMPLETE.md`
+
 ## 1.1.6 — 2026-08-07
 
 - 网络员工：每次 Task 前强制 `task-env-preflight.ps1`（`rules/08` + `rules/02`）
-- agentn 非绿禁止派后台 Task
+- agentn 非绿禁止派后台 Task（无老板确认时）；`-BossConfirmGpt` 为软绿例外
 
 ## 1.1.5 — 2026-08-07
 

@@ -18,10 +18,15 @@
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File E:\dev\CursorTeam\scripts\task-env-preflight.ps1
+# agentn 红但老板确认 Cursor 内 GPT 可用时：
+powershell -ExecutionPolicy Bypass -File E:\dev\CursorTeam\scripts\task-env-preflight.ps1 -BossConfirmGpt
 ```
 
-- **exit 0**：可派 Task  
-- **exit 4 / 非 0**：禁止派后台 Task（TLS 易 aborted）；写明门禁结果；可主会话本地薄做  
+| 结果 | 主控动作 |
+|------|----------|
+| **绿**（exit 0，agentn OK） | 可派后台 Task |
+| **软绿**（`-BossConfirmGpt` → exit 0） | 可派；派工块必须写「门禁：软绿」；监控 TLS aborted |
+| **黄/红**（exit 4 等，无老板确认） | **禁止**后台 Task；主会话薄做或先 network-ops |
 
 每次拉起 Task **之前**，主控必须在主会话写出：
 

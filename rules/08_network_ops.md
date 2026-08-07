@@ -39,7 +39,7 @@
 - 环境门禁：绿 | 黄（禁 Task）| 红（代理挂） · PREFLIGHT 路径
 ```
 
-主控 **不得**在 agentn 红灯时重派会吞 TLS 的后台 Task。
+主控 **不得**在 agentn 红灯且**无** `-BossConfirmGpt` 时派后台 Task。软绿例外须写进派工块。
 
 ## 触发
 
