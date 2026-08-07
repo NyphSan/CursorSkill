@@ -2,12 +2,10 @@
 
 | 项 | 状态 |
 |----|------|
-| **F0–F5 迁移批** | **已结案** · [BATCH-CLOSE-F0-F5.md](BATCH-CLOSE-F0-F5.md) |
+| 网络 | curl **agentn 仍红**；老板确认 **GPT UI 可用** |
+| 门禁 | 可用 `-BossConfirmGpt` **软绿** 后派 Task |
+| F4c | 待老板确认是否软绿开派 |
 
-## 排队（待老板/主控开批）
-
-| ID | 前置 |
-|----|------|
-| F4c 清单 B / Bootstrap | ARCH-F4c |
-| D3 可达圆 | — |
-| UATBS* 更名 | ARCH |
+```powershell
+powershell -ExecutionPolicy Bypass -File E:\dev\CursorTeam\scripts\task-env-preflight.ps1 -BossConfirmGpt
+```

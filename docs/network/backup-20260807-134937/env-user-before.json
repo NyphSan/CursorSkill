@@ -1,0 +1,18 @@
+﻿{
+    "ALL_PROXY":  {
+                      "User":  null,
+                      "Machine":  null
+                  },
+    "HTTPS_PROXY":  {
+                        "User":  "http://127.0.0.1:10809",
+                        "Machine":  null
+                    },
+    "HTTP_PROXY":  {
+                       "User":  "http://127.0.0.1:10809",
+                       "Machine":  null
+                   },
+    "NO_PROXY":  {
+                     "User":  "localhost,127.0.0.1",
+                     "Machine":  null
+                 }
+}

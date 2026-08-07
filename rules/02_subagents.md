@@ -14,12 +14,22 @@
 
 ## 主控强制可见协议（≥1.1.1）
 
+每次拉起 Task **之前**，必须先过 **环境门禁**（`rules/08_network_ops.md`）：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File E:\dev\CursorTeam\scripts\task-env-preflight.ps1
+```
+
+- **exit 0**：可派 Task  
+- **exit 4 / 非 0**：禁止派后台 Task（TLS 易 aborted）；写明门禁结果；可主会话本地薄做  
+
 每次拉起 Task **之前**，主控必须在主会话写出：
 
 ```text
 ## 子代理派工
-- 岗位：主程 | 执行 | 审核 | Gitea | …
+- 岗位：主程 | 执行 | 审核 | Gitea | 网络 | …
 - 任务：一句话
+- 环境门禁：绿 | 黄 | 红 · PREFLIGHT 路径
 - 可见性：将调用 Task；请在侧栏/Agents 查看运行中的子代理
 ```
 

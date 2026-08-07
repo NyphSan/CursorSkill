@@ -1,14 +1,12 @@
 ---
-description: 主控每轮监督 token/上下文，并按任务难易为子代理选模
+description: 主控主会话默认高配；子代理按难易选模；每轮监督上下文
 alwaysApply: true
 ---
 
 # Token 与选模（主控）
 
-接需求或派 Task 前：
+1. **主控主会话**：默认用账号可选最高配（老板在 UI 模型选择器固定；俗称 max）。
+2. **子代理分流**：轻→`composer-2.5-fast`；中/重→`inherit`；探索→`cursor-grok-4.5-high-fast`。禁止全家叠满配。
+3. 派工写「资源与选模」；名单外 model 禁止；不可用按 `rules/07` 排查。
 
-1. 评估上下文压力（低/中/高），高则减载、外派、建议续温。
-2. 判定任务档：轻→`composer-2.5-fast`；中→`inherit`；探索快推理→`cursor-grok-4.5-high-fast`。
-3. 派工块写「资源与选模」三行；禁止名单外 model。
-
-权威细则：`E:/dev/CursorTeam/rules/07_token_and_model.md`
+权威：`E:/dev/CursorTeam/rules/07_token_and_model.md`

@@ -7,7 +7,9 @@ description: >-
 
 # Cursor Admin（入口 → CursorTeam ≥1.1.1）
 
-**ORG_ROOT = `E:/dev/CursorTeam`** · 读 `VERSION.md`
+**ORG_ROOT = `E:/dev/CursorTeam`**  
+
+组织上云：`rules/09_cloud_local_worker.md`（Cloud + My Machines）。本机 worker：`scripts/start-org-worker.ps1`。 · 读 `VERSION.md`
 
 ## 主控职责
 

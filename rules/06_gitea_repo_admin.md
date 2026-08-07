@@ -1,7 +1,9 @@
 # Gitea 仓库管理员（归属主控）
 
 参考：[Gitea Documentation](https://docs.gitea.com/)  
-组织仓库：`https://git.bddream.site/nyph/CursorAiOrg`
+组织仓库：`https://git.bddream.site/nyph/CursorAiOrg`  
+
+与运行时：Cloud 编排 + 本机 My Machines 落盘见 `rules/09_cloud_local_worker.md`（Gitea push 用本机凭据）。
 
 ## 岗位
 

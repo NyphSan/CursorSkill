@@ -1,9 +1,27 @@
 # CursorTeam CHANGELOG
 
+## 1.1.6 — 2026-08-07
+
+- 网络员工：每次 Task 前强制 `task-env-preflight.ps1`（`rules/08` + `rules/02`）
+- agentn 非绿禁止派后台 Task
+
+## 1.1.5 — 2026-08-07
+
+- 组织上云定版：`rules/09_cloud_local_worker.md` + `docs/ops/cursor-cloud-my-machines.md`
+- Cloud Agent 编排 + **My Machines** 落 `ORG_ROOT`/`GAME_ROOT`；脚本 `start-org-worker.ps1` / `start-scl-worker.ps1`
+- 明确：纯云 VM 不保证能直接用 Gitea；落本地再 push
+
+## 1.1.4 — 2026-08-06
+
+- 新增岗位 **网络员工**（`rules/08_network_ops.md` · skill `network-ops`）
+- 脚本：`ensure-v2ray.ps1`（代理保活）+ `cursor-gpt-netcheck.ps1`（agentn 验收）
+- 掉线复盘：代理进程退出会导致主控/Agent 突然不可用
+
 ## 1.1.3 — 2026-08-06
 
 - 新增 `rules/07_token_and_model.md`：每轮 Token/上下文压力自检；按轻/中/重选 Task `model`
 - `rules/02_subagents.md`：派工块强制「资源与选模」；硬名单 `composer-2.5-fast` / `inherit` / `cursor-grok-4.5-high-fast`
+- 主控主会话默认高配（俗称 max）；子代理分流；澄清 Max Mode ≠ 主控高配；补充模型不可用排查
 
 ## 1.1.2 — 2026-08-06
 
