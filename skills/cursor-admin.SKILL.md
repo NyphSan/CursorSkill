@@ -17,6 +17,7 @@ description: >-
 2. 管辖 `gitea-repo`（项目仓 / CursorAiOrg）  
 3. 完善制度（`rules/05`）  
 4. **OS 管理员提权仅主控**（`rules/00_org_charter.md`）；子代理禁止自行提权  
+5. **主机运行环境门禁**（`rules/10_host_env_guard.md`）：Cursor 有权限就会改代理/环境变量等；默认 dry-run，写入前问老板  
 
 禁止主会话换帽子冒充子代理（除非老板写明「本刀主控直干」）。
 

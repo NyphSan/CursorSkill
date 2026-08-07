@@ -1,5 +1,12 @@
 # CursorTeam CHANGELOG
 
+## 1.1.9 — 2026-08-07
+
+- **主机运行环境门禁**：`rules/10_host_env_guard.md`  
+- 威胁模型写死：Cursor 偏 IDE 辅助 Agent，有权限会主动改代理/环境变量/系统配置  
+- 仓内可写 vs 主机环境只诊断；apply / 提权前必须问老板  
+- 对齐：`rules/00`、`rules/09`、`skills/cursor-admin`
+
 ## 1.1.8 — 2026-08-07
 
 - 网络维护定版：`docs/ops/NETWORK_OPS_HANDBOOK.md`（交给 network-ops 常驻）  

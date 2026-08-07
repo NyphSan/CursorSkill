@@ -29,6 +29,15 @@
 
 原则：组织流程最高权 = 主控；本机 OS 最高权仅在主控会话经老板 UAC 同意后临时持有，用完在结案中注明。
 
+## 主机运行环境（写死 · ≥1.1.9）
+
+Cursor Agent **默认会改主机运行环境**（代理 / 环境变量 / git 与 HTTP 设置等）。  
+组织对策见 `rules/10_host_env_guard.md`：
+
+- 仓内文件按定界可写；**主机环境默认只诊断、不写入**  
+- apply / 提权 / 常驻服务前必须问老板「是否继续」  
+- Cloud + My Machines 的 Shell = 本机权限，禁止偷改
+
 ## 记录
 
 项目岗位记录：`E:\dev\CursorTeam\projects\<Project>\records\`  

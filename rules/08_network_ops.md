@@ -51,4 +51,5 @@
 - 系统代理用 HTTP `10809`，勿把 SOCKS `10808` 写成 `http://`  
 - 「api2 通」≠「可派 Task」；以 **agentn** 为准  
 - OS 管理员提权仅主控（`rules/00`）；网络岗需要 WinHTTP 时升级主控 elevated 会话  
+- 主机运行环境默认只诊断（`rules/10`）；改代理/环境变量前必须问老板  
 - 与 `rules/02_subagents.md` / `07_token_and_model.md` / `09_cloud_local_worker.md` 联动  

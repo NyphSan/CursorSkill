@@ -17,6 +17,7 @@ Cloud Agent（决策）
 1. 派「要改本机文件」的云端任务时，环境须选 **worker**（如 `cursorteam-pc` / `scl-pc`），禁止默认纯云 VM 却要求改 `E:\…`  
 2. 本机 worker 未在线 → 先派网络员工/`ensure-v2ray` + `start-org-worker`，再开云端刀  
 3. 桌面主控会话（Local Agent）可继续日常调度；与 Cloud 并行时以 **records 落盘** 为准防双写  
+4. **主机环境门禁**（`rules/10`）：Cloud worker 的 Shell = 本机权限；代理/环境变量/WinHTTP 等默认只诊断，写入前问老板  
 
 ## Worker 命名（建议）
 
