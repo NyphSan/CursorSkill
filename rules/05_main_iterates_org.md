@@ -11,7 +11,8 @@
 | 流水线 | `workflow/*` |
 | 模板 | `templates/*` |
 | 项目档案结构 | `profiles/*` · `projects/*/PROJECT.md` 约定 |
-| Skill 薄入口对齐 | `%USERPROFILE%\.cursor\skills\{cursor-admin,lead-eng,task-review,project-pm}\` |
+| Skill 薄入口对齐 | `%USERPROFILE%\.cursor\skills\{cursor-admin,lead-eng,task-review,project-pm}\` · 组织镜像 `skills/` |
+| 三仓边界 | `rules/13` · 领域 skill 改 GitHub，组织改 Gitea，项目改 `RULES.md` |
 | 版本与复盘 | `VERSION.md` · `CHANGELOG.md` · `docs/retros/*` |
 
 ## 主控不可以（越权）

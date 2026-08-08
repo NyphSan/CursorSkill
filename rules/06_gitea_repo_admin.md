@@ -17,8 +17,9 @@
 ## 职责
 
 1. **项目仓提交**：某主任务刀（有 GAME_ROOT 改动）在 REVIEW=PASS 后，经主程「主任务完成」通知主控 → 主控派本岗 → 在 **对应项目远程仓库** 写清变更说明并 `commit`（必要时 `push`，需主控/老板已配置凭据）。  
-2. **组织仓提交**：主控与老板更新了 `rules/` / `workflow/` / `templates/` / `VERSION` 等组织内容后 → 主控派本岗 → 提交并推送到 **CursorAiOrg**。  
-3. 不改业务逻辑；不越权改 ARCH；冲突时停工升级主控。
+2. **组织仓提交**：主控与老板更新了 `rules/` / `workflow/` / `templates/` / `VERSION` 等组织内容后 → 主控派本岗 → **push Gitea CursorAiOrg**（不要混 push GitHub）。  
+3. **Skill 仓提交**：领域 skill / SKILL_MAP 变更 → **push GitHub CursorSkill**（不要混组织 commit）。  
+4. 不改业务逻辑；不越权改 ARCH；冲突时停工升级主控。
 
 ## 触发（强制）
 
@@ -52,12 +53,15 @@
 
 模板：`templates/GIT_COMMIT.md`
 
-## 远程对照（SCL 样板）
+## 远程对照
 
-| 仓 | URL | 谁写 |
-|----|-----|------|
-| 组织 CursorAiOrg | `https://git.bddream.site/nyph/CursorAiOrg` | 组织规则/工作流迭代 |
-| 项目 SCL | `http://192.168.3.23:3000/SCLG/SCL.git`（见 PROJECT.md） | D# 功能改动 |
+| 仓 | URL | 权威内容 | 谁 push |
+|----|-----|----------|---------|
+| **组织 CursorAiOrg** | `https://git.bddream.site/nyph/CursorAiOrg` | rules/workflow/templates/组织 skill 薄镜像/records | 主控派 gitea-repo |
+| **Skill Map CursorSkill** | `https://github.com/NyphSan/CursorSkill` | SKILL_MAP + 领域 skill 正文 | skill-evolve / 主控 |
+| **项目 SCL** | `http://192.168.3.23:3000/SCLG/SCL.git` | 代码/Content；可选 `docs/ai/RULES.md` | gitea-repo（PASS 后） |
+
+详 `rules/13_repo_authority_split.md` · 迁移 `docs/ops/REPO_SPLIT_MIGRATION.md`。
 
 ## Gitea 侧注意
 

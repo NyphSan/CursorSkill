@@ -1,17 +1,21 @@
 # ORG_ROOT
 
 ```text
-ORG_ROOT = E:\dev\CursorTeam
+ORG_ROOT = E:\dev\CursorTeam          ← Gitea CursorAiOrg（组织权威）
+SKILL_ROOT = %USERPROFILE%\.cursor\skills\  ← GitHub CursorSkill（领域 skill 运行时）
 ```
 
-| 类型 | 路径 |
-|------|------|
-| 规则 | `ORG_ROOT\rules\` |
-| 工作流 | `ORG_ROOT\workflow\` |
-| 档案 | `ORG_ROOT\profiles\` |
-| 模板 | `ORG_ROOT\templates\` |
-| **项目（含记录）** | `ORG_ROOT\projects\<Project>\` |
-| 废弃 | `ORG_ROOT\runs\`（仅兼容指针，新项目勿用） |
+| 类型 | 路径 | 权威仓 |
+|------|------|--------|
+| 规则 | `ORG_ROOT\rules\` | Gitea |
+| 工作流 | `ORG_ROOT\workflow\` | Gitea |
+| 档案绑定 | `ORG_ROOT\profiles\` | Gitea |
+| 模板 | `ORG_ROOT\templates\` | Gitea |
+| **项目包** | `ORG_ROOT\projects\<Project>\` | 规则在 `RULES.md`；records 在 Gitea |
+| Skill Map | GitHub `SKILL_MAP.md` | GitHub |
+| 废弃 | `ORG_ROOT\runs\` | — |
+
+三仓详表：`rules/13_repo_authority_split.md`
 
 ## 项目包结构
 

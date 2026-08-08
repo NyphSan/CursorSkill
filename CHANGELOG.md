@@ -1,5 +1,27 @@
 # CursorTeam CHANGELOG
 
+## 1.2.0 — 2026-08-08
+
+- **三仓权威拆分**：`rules/13_repo_authority_split.md`  
+- Skill Map → GitHub CursorSkill；组织/工作流 → Gitea CursorAiOrg；项目规则 → `projects/<P>/RULES.md`  
+- SCL 样板：`profiles/SCL.md` 瘦身 + `projects/SCL/RULES.md`  
+- `docs/github/SKILL_MAP.md` 模板 · 迁移计划 `docs/ops/REPO_SPLIT_MIGRATION.md`  
+- 更新 README / ORG / registry / rules/06 / skills/README
+
+## 1.1.11 — 2026-08-07
+
+- **测试岗**：流水线 `ARCH → EXEC → TEST → REVIEW → gitea → PM`  
+- 新 `rules/12_test_runtime.md` · skill `ue-pie-validate` · 模板 `TEST_REPORT.md`  
+- 章程 / WORKFLOW / registry / SCL profile（`records/test/`）  
+- 审核改为采信 TEST；玩法刀强制运行测，工程刀可 ARCH 豁免  
+
+## 1.1.10 — 2026-08-07
+
+- 主控学习 `docs/ops/`：新增 `rules/11_ops_runtime_workflow.md`（运维铁律、agentn HTTP/2、CursorSession、看门狗接口）  
+- `workflow/WORKFLOW.md`：业务刀环 **A** + 运行时环 **B**  
+- 手册修正：agentn 以 h2 探针为准；curl HTTP/0.9 假阴性；`disableHttp2=false`；续温走小工具  
+- 衔接：`rules/03` / `08` / `09` / `10` · `tools/cursor-session`
+
 ## 1.1.9 — 2026-08-07
 
 - **主机运行环境门禁**：`rules/10_host_env_guard.md`  

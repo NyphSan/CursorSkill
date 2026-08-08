@@ -8,6 +8,7 @@
 | **ORG 项目根** | `E:\dev\CursorTeam\projects\SCL` |
 | **记录根** | `E:\dev\CursorTeam\projects\SCL\records\` |
 | Profile | `E:\dev\CursorTeam\profiles\SCL.md` |
+| **项目规则** | `E:\dev\CursorTeam\projects\SCL\RULES.md` |
 | 引擎提示 | UE 5.6.x |
 | 栈适配器 | `ue-framework` |
 | Gitea 提交记录 | `records/gitea/` |
@@ -28,7 +29,7 @@
 
 1. **改游戏代码 / Content：** 路径一律相对 **GAME_ROOT**（上表）。  
 2. **组织与岗位记录：** 只写 **记录根** 下对应岗位子目录，不进游戏仓（PM 额外写 `docs/pm` 除外，见 profile）。  
-3. 主控接单：`project=SCL` → 读本文件 + profile → 派工。  
+3. 主控接单：`project=SCL` → 读本文件 + profile + **RULES.md** → 派工。  
 
 ## 记录目录（按岗位）
 
