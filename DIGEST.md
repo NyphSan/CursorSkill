@@ -1,40 +1,36 @@
-# 技能侦察 DIGEST — 2026-08-11（凌晨手工复跑，相对基线 08-10 01:00Z）
+# 技能侦察 DIGEST — 2026-08-12（每日 cron 01:00+08:00）
 
-- 侦察时间：2026-08-11T00:55+08:00（手工复跑，覆盖 08-10 01:00Z 之后的窗口）
+- 侦察时间：2026-08-12T01:00+08:00（自动化 cron）
 - 目标分支：**CursorSkillSearch**（强制；不使用 skill-digest-*）
 - 方向：游戏设计 / UE·虚幻 / 3D / 2D / UI / 研发工作流
-- 增量基线：远端 `CursorSkillSearch` 2026-08-10 01:00Z 的 DIGEST（296 SKILL，已快进到本地）
-- 本仓入库：精选 **302** 个 `SKILL.md`（相对 296：+6；本轮新增 5 个 SKILL + 1 个跨仓索引）
+- 增量基线：本地 `CursorSkillSearch` 2026-08-11 commit `37b71f5`（302 SKILL；上轮 push 未成功，远端仍停留在 `b5be267`）
+- 本仓入库：精选 **305** 个 `SKILL.md`（相对 302：+3 新增 + 1 实质更新）
 - 结构：`skills/<方向>/<skill-name>/SKILL.md`（精选摘录，非整仓镜像）
 
 ## 一屏结论
 
-种子仓仍无方向相关新增。本轮抓的是 6 条 **08-04 → 08-11 期间出现实质更新 / 验证可定位到 SKILL.md** 的相关条目：
-- `kevinpbuckley/unreal-engine-skills`（**watch list 升级 → 引入**）：61 SKILL、全仓 216 markdown，UE 5.8 重定向已经完成
-- `loomle/loomle`（**新见引入**）：MIT，UE 5.7-5.8，本地优先 + SAL 三调用 MCP，`skills/` 目录 + `agent_skill` 动态加载
-- `db-lyon/ue-mcp`（**本仓补齐**）：随 npm 包分发的 5 个 SKILL.md，本仓此前已收录 workflow / blueprint；本轮补齐 niagara / native-cpp / epic-routing 三条
-- `nextlevelbuilder/ui-ux-pro-max-skill`（**新见引入**）：115k★ MIT，检索驱动，含 Cyberpunk UI / Pixel Art / HUD & Sci-Fi FUI / Vaporwave / Spatial UI / 3D & Hyperrealism 等**游戏相关**风格
+种子仓仍无方向相关新增。本轮抓到 4 条 **08-07 → 08-11 期间新出现或首次定位到 SKILL.md** 的相关条目：
+- `dcc-mcp/dcc-mcp-agent-plugins`（**新见引入**）：MIT-0，统一 DCC 控制层覆盖 Unreal/Blender/Maya/Houdini/3ds Max/Nuke/Photoshop/Godot/Substance/RenderDoc，v0.19.92，安全等级 A，多 agent 兼容（含 WorkBuddy/CodeBuddy）
+- `dcc-mcp/dcc-mcp-blender`（**新见引入**）：MIT，Blender 4.2+ 嵌入式 MCP 服务器，200+ 工具 / 29 类别，CI 测试矩阵覆盖 Win/Linux/macOS
+- `QwenLM/Qwen-MM-Plugins`（**新见引入**）：Apache-2.0，08-10 发布，Blender 22 工具 + FreeCAD 14 工具 + 3D 模型读取 + 视频编辑，~1.6k★
+- `quodsoler/unreal-engine-skills`（**实质更新**）：MIT，27 个 UE5 C++ 技能，源码审计修正 160+ 处不准确，与 kevinpbuckley 互补；已在仓内（commit 9dba7bd），本轮更新 SKILL.md 内容
 
-无方向相关的 `mouadja02/skills` 近日新增（Postgres / HTTP2 / NO_PROXY / SEO 等）依旧记数量、不展开。
+种子仓 mouadja02/skills 08-11 有 commit（docs 目录更新），但方向无关。
 
-## 建议引入（本轮增量 = 6）
+## 建议引入（本轮增量 = 3 新增 + 1 实质更新）
 
 | 名称 | 方向标签 | 一句话用途 | 仓库链接 | 为什么值得关注 | 建议 |
 |---|---|---|---|---|---|
-| kevinpbuckley-unreal-engine-skills | UE | 61 个 UE 5.8 域知识 SKILL，216 markdown 文件，覆盖 C++/Gameplay/BP/动画/关卡/VFX/UMG/工具 | https://github.com/kevinpbuckley/unreal-engine-skills | 2026-08-04 完成全仓审计 + UE 5.8 重定向；**watch list 升级**；同作者另起 VibeUE 是 MCP 层，本仓 `vibeue-blueprints/materials` 已收 | **引入**（已摘录索引 + 用法，URL 链接到原仓） |
-| loomle-ue-sal-mcp | UE | 本地 UE 编辑器 MCP + SAL 三调用（schema/query/patch），支持 BP/Graph/StateTree/Widget/UMG，含 Resident Skill | https://github.com/loomle/loomle | MIT，UE 5.7-5.8，08-11 仍在动；结构保留型编辑（pin 重建鲁棒）+ 强制 dry-run | **引入**（已摘录 SAL 三调用 + 选型对比） |
-| ue-mcp-niagara | UE | ue-mcp 包随附：Niagara emitter/module/renderer 读写，运行时从 BP/C++ 驱动 | https://github.com/db-lyon/ue-mcp | 原仓 08-05 起把 Agent Skills 节扩到 5 条；本仓已收 workflow / blueprint；本轮补齐 niagara | **引入**（已摘录 emit/系统/模块/曲线/DI 范式） |
-| ue-mcp-native-cpp | UE | Bridge C++ 扩展：最小 handler 范式、post-back 契约、仅编辑器目标隔离 | 同上 | MIT；说明如何在 `Source/ue-mcpEditor/` 加新 handler 而不动 npm wrapper | **引入**（已摘录 handler 模板 + 编译边界） |
-| ue-mcp-epic-routing | UE | 决策表：什么操作走 native handler 什么走 Epic Toolset `epic_*` | 同上 | 与 `ue-mcp-blueprint` 的 DSL 节互为镜像；UE 5.8+ 决定性收益在 graph body | **引入**（已摘录决策矩阵 + 回退模式） |
-| nextlevelbuilder-ui-ux-pro-max | UI·3D | 检索驱动设计智能 skill，84 风格/192 调色/74 字体，含 Cyberpunk/Pixel-Art/HUD-FUI/Spatial-UI/3D-Hyperrealism | https://github.com/nextlevelbuilder/ui-ux-pro-max-skill | 115k★ MIT；**游戏相关风格单列明确**；与 `frontend-design` 互补：检索驱动 vs 品味驱动 | **引入**（已摘录 game-relevant 风格覆盖 + 设计系统生成调用） |
+| dcc-mcp | 研发工作流·UE·3D | 统一 DCC 控制层：10+ DCC 应用（Unreal/Blender/Maya/Houdini/3ds Max/Nuke/Photoshop/Godot/Substance/RenderDoc）通过 CLI 或 MCP gateway 操控 | https://github.com/dcc-mcp/dcc-mcp-agent-plugins | MIT-0；v0.19.92（08-07）；安全等级 A；明确支持 WorkBuddy/CodeBuddy 安装；3 个 skill（dcc-mcp/dcc-mcp-creator/dcc-mcp-skills-creator） | **引入**（已摘录路由表 + 五步流程 + 安装命令） |
+| dcc-mcp-blender | 3D | Blender 4.2+ 嵌入式 MCP 服务器，200+ 预构建工具 / 29 类别（建模/材质/灯光/渲染/绑定/动画/物理/几何节点/导出/验证/管线） | https://github.com/dcc-mcp/dcc-mcp-blender | MIT；v0.1.43；Blender Extension 格式；CI 测试 Win/Linux/macOS × Blender 4.3.2/4.4.3；与 dcc-mcp 主 skill 互补 | **引入**（已摘录 29 类工具概要 + 安装方式） |
+| qwen-mm-plugins-blender | 3D·研发工作流 | 阿里 Qwen 多模态插件套件 Blender 能力：22 工具驱动运行中 Blender（建模/材质/灯光/渲染），uvx 按需启动 | https://github.com/QwenLM/Qwen-MM-Plugins | Apache-2.0；08-10 发布；~1.6k★；9 个 agent 平台兼容；uvx 依赖隔离；套件另有 FreeCAD/video-edit/video-memory 能力 | **引入**（已摘录架构 + 工具概要 + 安装方式） |
+| quodsoler-unreal-engine-skills | UE | 27 个 UE5 C++ 技能，源码审计修正 160+ 处不准确（函数签名/不存在方法/已弃用 API），覆盖 Core/Gameplay/Rendering/World/AI/UI/Build | https://github.com/quodsoler/unreal-engine-skills | MIT；ue-project-context 跨引用机制；与 kevinpbuckley（61 SKILL 广覆盖）互补：quodsoler（27 SKILL 深审计）；**本轮实质更新 SKILL.md 内容** | **引入**（已更新摘录 27 技能分类 + 安装方式 + 对比表） |
 
 本仓路径：
-- `skills/unreal/kevinpbuckley-unreal-engine-skills/`（SKILL.md + SOURCE.md）
-- `skills/unreal/loomle-ue-sal-mcp/`
-- `skills/unreal/ue-mcp-niagara/`
-- `skills/unreal/ue-mcp-native-cpp/`
-- `skills/unreal/ue-mcp-epic-routing/`
-- `skills/ui-design/nextlevelbuilder-ui-ux-pro-max/`
+- `skills/workflow/dcc-mcp/`（SKILL.md + SOURCE.md）
+- `skills/3d/dcc-mcp-blender/`（SKILL.md + SOURCE.md）
+- `skills/3d/qwen-mm-plugins-blender/`（SKILL.md + SOURCE.md）
+- `skills/unreal/quodsoler-unreal-engine-skills/`（SKILL.md + SOURCE.md）
 
 ## 观望（本轮维持 / 微调）
 
@@ -46,11 +42,13 @@
 - SummerEngine/summer-engine-agent — 维持
 - Randroids / NAJEM / mike007jd / alfaris / Shellishack — 维持
 - opengameapp/OpenGame-skills — 维持低优
-- kevinpbuckley/VibeUE — 同作者 MCP 层；本仓 `vibeue-blueprints` / `vibeue-materials` 已收，等本轮 `kevinpbuckley-unreal-engine-skills` 跑通后再决定是否补 vibeue-profiling 等剩余约 32 个 SKILL.md
+- kevinpbuckley/VibeUE — 同作者 MCP 层；等 kevinpbuckley-unreal-engine-skills 跑通后再决定是否补剩余约 32 个 SKILL.md
+- affaan-m/everything-claude-code/blender-motion-state-inspection — Blender 角色/绑定/动画检查，范围窄，本轮观望
+- dcc-mcp-skills-creator — DCC-MCP 技能包创建工具，基建向，本轮观望
 
 ## 可忽略
 
-- 种子：JackyST0/awesome-agent-skills 仍仅 star chore；mouadja02/skills 08-07~09 新增 Postgres / HTTP2 / NO_PROXY / SEO 方向无关，计数量、不展开
+- 种子：JackyST0/awesome-agent-skills 仍仅 star chore（08-10）；mouadja02/skills 08-11 docs 更新，方向无关
 - 新建技能仓仍以 GitHub Skills 练习 / 作品集 / 合规 / 招聘 / WhatsApp 噪声为主
 - 作弊 / 外挂 / 电竞陪玩类一律忽略
 
@@ -59,22 +57,35 @@
 | 仓 | stars | 近况 | 备注 |
 |---|---:|---|---|
 | JackyST0/awesome-agent-skills | ~616 | 仍仅 star chore（08-10） | 无 UE / 游戏专区新增 |
-| mouadja02/skills | ~9 | 08-09 合并 SEO / Postgres 等 PR | 本轮有 commit，**方向无关** |
+| mouadja02/skills | ~9 | 08-11 docs 目录更新 | 本轮有 commit，**方向无关** |
 
 ## 今天可行动
 
-1. UE 主链续力：`kevinpbuckley-unreal-engine-skills` 用作 UE 5.8 域知识主入口；用 LOOMLE 在复杂 BP/WP 图编辑时拿到结构保留；用 `ue-mcp-niagara` / `ue-mcp-native-cpp` / `ue-mcp-epic-routing` 覆盖 Bridge 三缺角
-2. 后续若做游戏 HUD（科幻 / 像素 / 赛博朋克风）：跑 `nextlevelbuilder-ui-ux-pro-max --design-system --persist` 用强制的设计系统生成器先出 system 再写屏
-3. 把 `nextlevelbuilder-ui-ux-pro-max` 与现有 `frontend-design` / `ui-design-brain` 并列做 Web UI，避免 UI 风味同质化
+1. **安装 dcc-mcp 主 skill**：`npx --yes skills@1.5.22 add dcc-mcp/dcc-mcp-agent-plugins --skill dcc-mcp` — 一次搞定 Unreal/Blender/Maya/Houdini 等 10+ DCC 应用的统一 AI 控制
+2. **Blender 3D 工作流二选一**：重量级用 `dcc-mcp-blender`（200+ 工具，Blender Extension 原生集成）；轻量级用 `qwen-mm-plugins-blender`（22 工具，uvx 按需启动，套件协同）
+3. **UE5 C++ 双保险**：`kevinpbuckley`（61 SKILL 广覆盖）+ `quodsoler`（27 SKILL 源码审计）组合使用，广度+深度互补
 
 ## 查询记录
 
-1. 种子仓：JackyST0 / mouadja02 commits 仍无方向新增
-2. WebFetch 直接拉候选原仓首页：
-   - github.com/kevinpbuckley/unreal-engine-skills（8 类 61 SKILL / 216 markdown / UE 5.8 重定向）
-   - github.com/loomle/loomle（931 commits / MIT / SAL 三调用）
-   - github.com/db-lyon/ue-mcp（npm 携带 5 SKILL.md：workflow/blueprint 已收，本轮补 niagara/native-cpp/epic-routing）
-   - github.com/nextlevelbuilder/ui-ux-pro-max-skill（115k★ MIT，含 game-relevant 风格子集）
-3. WebSearch：`SKILL.md` + Unreal/UE5/UE4 cursor skill 2026、`nextlevelbuilder` ui-ux-pro-max、`db-lyon` ue-mcp、`kevinpbuckley` unreal-engine-skills、`ibrews` ue5 mcp
-4. 候选去重：对照本仓 `skills/unreal/` 与 `skills/ui-design/`，确认以上 6 个均无重复
-5. 入库：+6 → push `CursorSkillSearch`（待本轮 commit）
+1. 种子仓：JackyST0（08-10 star chore）/ mouadja02（08-11 docs 更新）— 方向无关
+2. WebSearch 查询：
+   - `GitHub SKILL.md "agent skills" Unreal Engine UE5 game design 2026`（d7）
+   - `GitHub ".cursor/skills" OR ".agents/skills" SKILL.md 3D design UI design workflow 2026`（d7）
+   - `GitHub "SKILL.md" game design Unreal blueprint niagara gameplay agent skill`（d7）
+   - `GitHub agent skills "3D" "Blender" OR "Maya" OR "Houdini" SKILL.md 2026`（d7）
+   - `site:github.com SKILL.md unreal engine game dev workflow 2026`
+   - `GitHub "dcc-mcp" OR "dcc mcp" skill Unreal Blender Maya Houdini SKILL.md 2026`（d7）
+3. WebFetch 候选原仓：
+   - github.com/dcc-mcp/dcc-mcp-agent-plugins（MIT-0 / v0.19.92 / 3 skills / 08-07）
+   - github.com/dcc-mcp/dcc-mcp-blender（MIT / v0.1.43 / 200+ tools / 29 categories）
+   - github.com/QwenLM/Qwen-MM-Plugins（Apache-2.0 / 08-10 发布 / ~1.6k★ / 8 capabilities）
+   - github.com/quodsoler/unreal-engine-skills（MIT / 27 skills / 源码审计 160+ 修正）
+4. 候选去重：对照本仓 `skills/unreal/` `skills/3d/` `skills/workflow/`，确认以上 4 个均无重复
+5. 入库：+4 → commit `CursorSkillSearch`（待 push；上轮 08-11 commit `37b71f5` 仍未 push 到远端）
+
+## 遗留问题
+
+- 08-11 commit `37b71f5`（6 条引入）因 git credential helper selector 交互式挂起，**仍未 push 到远端**
+- 本轮 commit 将叠加在 `37b71f5` 之上，push 时一并推送
+- 根因：全局 `credential.helper = helper-selector` + `credential.helperselector.selected = <no helper>` 在非交互 shell 下触发 `git config --system -e` 永久挂起
+- 本轮尝试：用 `git -c credential.helper= -c credential.helper=manager` 覆盖 selector
