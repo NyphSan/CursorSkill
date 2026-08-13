@@ -42,6 +42,12 @@ Cloud / 本仓根可重复命令（只读，不改主机环境）：
 bash cloud-resume.sh OrgOps
 ```
 
+长期环（升格 + 度量 + 报告，会写 records）：
+
+```bash
+bash scripts/orgops-loop.sh
+```
+
 SCL 不在本仓。若用户说 `project=SCL`，应到组织仓 / 游戏仓续温，不要在本仓假装 SCL 看板存在。
 
 ## 记录目录（按岗位）

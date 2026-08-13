@@ -38,3 +38,4 @@ bash cloud-resume.sh OrgOps
 - Skill 入库：`Skill/SkillRules.md`
 - MCP：`MCP/MCPRules.md`
 - 地图：`SKILL_MAP.md`
+- 长期环：`projects/OrgOps/LOOP.md` · `bash scripts/orgops-loop.sh`

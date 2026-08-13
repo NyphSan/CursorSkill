@@ -57,9 +57,15 @@
 ARCH → EXEC → REVIEW → github commit/push → PM
 ```
 
+长期环（常驻，见 `LOOP.md`）：
+
+```text
+DIGEST 引入 → 升格闸门（每周期 ≤3）→ skills/ + SKILL_MAP → CYCLE 报告 + ledger.csv
+```
+
 - 纯文档建仓刀（如 D0）允许主控直干，但必须先有 ARCH 书面批准
 - 精选入库刀：默认目标分支 `CursorSkillSearch`，不碰 `main` 项目包
-- 升 main：单独 ARCH，说明为什么这条 skill 进入权威索引
+- 升 main：单独 ARCH 或长期环自动升格后仍走 PR，说明为什么这条 skill 进入权威索引
 
 ## 栈与远程
 

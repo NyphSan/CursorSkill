@@ -15,19 +15,20 @@ bash cloud-resume.sh OrgOps
 ```
 
 读：`projects/OrgOps/PROJECT.md` → `RULES.md` → `records/main/BOARD.md`。  
-人设：`Command/人设.md`。工作区入口：`AGENTS.md`。
+人设：`Command/人设.md`。工作区入口：`AGENTS.md`。长期环：`projects/OrgOps/LOOP.md`。
 
 ## 结构
 
 ```text
 cloud-resume.sh        # 只读续温：bash cloud-resume.sh OrgOps
+scripts/orgops-loop.sh # 长期环一轮：升格 + 度量 + CYCLE 报告
 AGENTS.md              # 接单 / 写域
 SKILL_MAP.md           # skill 索引（main 权威）
 Command/人设.md
 Skill/SkillRules.md    # 写作与入库
 MCP/MCPRules.md        # MCP 纪律
-projects/OrgOps/       # 本仓运营项目包 + records
-skills/                # 精选库正文 → 见分支 CursorSkillSearch
+projects/OrgOps/       # 本仓运营项目包 + records + LOOP.md
+skills/                # 已升格摘录；全量侦察仍在分支 CursorSkillSearch
 ```
 
 ## 两条线

@@ -87,11 +87,13 @@ arch="$(latest "$PROJ_DIR/records/lead-eng" "ARCH-*.md")"
 exec_r="$(latest "$PROJ_DIR/records/exec" "EXEC-*.md")"
 review="$(latest "$PROJ_DIR/records/review" "REVIEW-*.md")"
 pm="$(latest "$PROJ_DIR/records/pm" "PM-*.md")"
+cycle="$(latest "$PROJ_DIR/records/reports" "CYCLE-*.md")"
 
 echo "- 最新 ARCH：$(one_line "$arch")"
 echo "- 最新 EXEC：$(one_line "$exec_r")"
 echo "- 最新 REVIEW：$(one_line "$review")"
 echo "- 最新 PM：$(one_line "$pm")"
+echo "- 最新 CYCLE：$(one_line "$cycle")"
 
 gate="$(grep -E '^\| 闸门 \|' "$BOARD" | head -n 1 | sed 's/^| 闸门 |//;s/|$//;s/^[[:space:]]*//;s/[[:space:]]*$//' || true)"
 focus="$(grep -E '^\| 焦点 \|' "$BOARD" | head -n 1 | sed 's/^| 焦点 |//;s/|$//;s/^[[:space:]]*//;s/[[:space:]]*$//' || true)"

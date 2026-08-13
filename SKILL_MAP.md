@@ -25,15 +25,20 @@
 
 ## 领域 skill
 
+侦察库方向：`game-design` · `unreal` · `ui-design` · `2d` · `3d` · `workflow`。  
+日更摘要在分支 `CursorSkillSearch` 的 `DIGEST.md`。下面「已入权威」由长期环写入；未列出的仍只在侦察库。
+
+<!-- ORGOPS_SKILL_MAP_BEGIN -->
+
 | name | 路径 | 状态 |
 |------|------|------|
-| （待 D1/D2 升格） | 见分支 `CursorSkillSearch` 的 `skills/<方向>/<name>/` | 侦察库 |
+| `haxqer-godot-skill` | `skills/game-design/haxqer-godot-skill` | 已入权威 |
+| `leonxlnx-taste-skill` | `skills/ui-design/leonxlnx-taste-skill` | 已入权威 |
 
-侦察库方向：`game-design` · `unreal` · `ui-design` · `2d` · `3d` · `workflow`。  
-日更摘要在该分支 `DIGEST.md`。把某一条标进本表「已入权威」须 OrgOps ARCH 批准。
+<!-- ORGOPS_SKILL_MAP_END -->
 
 ## 维护
 
-- 新增领域 skill：先 `CursorSkillSearch` 摘录（SKILL.md + SOURCE.md）→ 再单独刀升格本表
+- 新增领域 skill：先 `CursorSkillSearch` 摘录（SKILL.md + SOURCE.md）→ 长期环升格本表（每周期 ≤3）
 - 改组织流程：改 Gitea，不要写进 skill 正文
 - 改 SCL 花名册：改 SCL `RULES.md`，不在本表展开定界

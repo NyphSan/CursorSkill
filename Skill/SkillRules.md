@@ -9,7 +9,22 @@
 | 运营权威 | `main`（及经审核合入的 PR） | `SKILL_MAP.md`、本文件、`MCP/MCPRules.md`、`projects/OrgOps/` |
 | 精选侦察 | `CursorSkillSearch` | `skills/<方向>/<name>/SKILL.md` + `SOURCE.md`、`DIGEST.md` |
 
-`DIGEST.md` 不是收录批准书。升到 `main` / 写入 SKILL_MAP「已入权威」须单独 OrgOps 刀。
+`DIGEST.md` 不是收录批准书。升到本仓 `skills/` 并写入 SKILL_MAP「已入权威」须过下面 **升格** 闸门（长期环 `LOOP.md` 可自动执行；合入 `main` 仍走 PR）。
+
+## 升格（D1 · 写死）
+
+侦察库 `CursorSkillSearch` → 本仓权威索引，**每周期最多 3 条**。
+
+**自动升格须全中：**
+
+1. 当日（或周期读取的）`DIGEST.md` 建议列为 **引入**（不是观望 / 可忽略 / 不直接入库）
+2. 侦察库能定位 `skills/<方向>/<name>/SKILL.md`
+3. 同目录有 `SOURCE.md`，且写明 **LICENSE**（无许可、仅「观望因无 LICENSE」→ 不升）
+4. 方向属于：`game-design` · `unreal` · `ui-design` · `2d` · `3d` · `workflow`
+5. SKILL_MAP 里还不是「已入权威」
+6. 只拷 `SKILL.md` + `SOURCE.md`（不整仓镜像 references/scripts，除非以后单独 ARCH）
+
+**禁止自动升格：** 作弊/外挂/凭证窃取；无 DIGEST 引入；本周期已满 3 条。溢出写入 CYCLE 报告「未升格队列」。
 
 ## 目录约定
 

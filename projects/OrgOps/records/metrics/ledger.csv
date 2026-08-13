@@ -1,0 +1,3 @@
+kind,id,started_at,ended_at,duration_s,tokens_in,tokens_out,tokens_source,model,skills_promoted,notes
+cycle,CYCLE-2026-08-13,2026-08-13T07:29:00+00:00,2026-08-13T07:29:00+00:00,0,unobserved,unobserved,unobserved,cursor-grok-4.6-high,"leonxlnx-taste-skill,haxqer-godot-skill",promoted=2 queued=0
+session,bc-9d375319-ac76-4ddd-8166-48a3632db793,2026-08-13T06:29:43Z,2026-08-13T07:29:00+00:00,3557,unobserved,unobserved,unobserved,cursor-grok-4.6-high,"leonxlnx-taste-skill,haxqer-godot-skill",same cloud run; token unobserved unless env set
