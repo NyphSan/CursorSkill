@@ -6,7 +6,7 @@
 | 权威仓 | GitHub NyphSan/CursorSkill |
 | BOARD | `projects/OrgOps/records/main/BOARD.md` |
 | 清单 | `projects/OrgOps/records/main/BACKLOG.md` |
-| 焦点 | D0 建仓已落盘，待合入 PR |
+| 焦点 | D0 建仓已落盘 · [PR #32](https://github.com/NyphSan/CursorSkill/pull/32) |
 | 主程 | ARCH-D0 批准开工 |
 | 执行 | EXEC-D0 完成 |
 | 审核 | REVIEW-D0 **PASS**（代审，见报告风险） |
