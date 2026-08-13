@@ -10,12 +10,17 @@
 project=OrgOps
 ```
 
+```bash
+bash cloud-resume.sh OrgOps
+```
+
 读：`projects/OrgOps/PROJECT.md` → `RULES.md` → `records/main/BOARD.md`。  
 人设：`Command/人设.md`。工作区入口：`AGENTS.md`。
 
 ## 结构
 
 ```text
+cloud-resume.sh        # 只读续温：bash cloud-resume.sh OrgOps
 AGENTS.md              # 接单 / 写域
 SKILL_MAP.md           # skill 索引（main 权威）
 Command/人设.md

@@ -11,7 +11,7 @@
 | name | 路径 | 触发 / 用途 | 状态 |
 |------|------|-------------|------|
 | 人设 | `Command/人设.md` | 中文协作；昴 / 蕾姆；岗位制 | 权威 |
-| OrgOps 接单 | `AGENTS.md` · `projects/OrgOps/PROJECT.md` | 开场 `project=OrgOps` | 权威 |
+| OrgOps 接单 | `AGENTS.md` · `projects/OrgOps/PROJECT.md` · `cloud-resume.sh` | 开场 `project=OrgOps`；`bash cloud-resume.sh OrgOps` | 权威 |
 | Skill 规范 | `Skill/SkillRules.md` | 写作 / 入库门槛 | 权威 |
 | MCP 规范 | `MCP/MCPRules.md` | MCP 调用纪律 | 权威 |
 

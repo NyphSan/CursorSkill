@@ -10,6 +10,12 @@
 project=OrgOps
 ```
 
+可重复只读命令（本仓根）：
+
+```bash
+bash cloud-resume.sh OrgOps
+```
+
 然后按顺序读盘，回复顶部给续温块：
 
 1. `projects/OrgOps/PROJECT.md`

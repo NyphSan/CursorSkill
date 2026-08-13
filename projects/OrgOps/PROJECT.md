@@ -36,6 +36,12 @@ project=OrgOps
   → 给出续温块后再派工或直干
 ```
 
+Cloud / 本仓根可重复命令（只读，不改主机环境）：
+
+```bash
+bash cloud-resume.sh OrgOps
+```
+
 SCL 不在本仓。若用户说 `project=SCL`，应到组织仓 / 游戏仓续温，不要在本仓假装 SCL 看板存在。
 
 ## 记录目录（按岗位）
