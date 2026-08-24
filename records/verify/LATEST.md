@@ -84,9 +84,8 @@
 
 ## 目标命中
 
-13 条目录方向与正文关键词对不上（警告，不阻断）：
+11 条目录方向与正文关键词对不上（警告，不阻断）：
 - `skills/2d/omer-art-consistency`
-- `skills/2d/omer-concept-art`
 - `skills/2d/omer-creature-design`
 - `skills/3d/omer-environment-art`
 - `skills/3d/omer-lighting-design`
@@ -94,7 +93,6 @@
 - `skills/3d/omer-vehicle-design`
 - `skills/3d/threejs-game-director`
 - `skills/3d/threejs-lighting`
-- `skills/game-design/omer-ai-world-building`
 - `skills/workflow/dcc-mcp`
 - `skills/workflow/donchitos-balance-check`
 - `skills/workflow/donchitos-launch-checklist`

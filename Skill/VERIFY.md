@@ -36,7 +36,7 @@ fetch origin CursorSkillSearch
 6. 独立 github 来源 HEAD 为 2xx/3xx；DIGEST 建议引入项在 `skills/` 下有同名目录
 7. 方向目录与正文关键词大致对齐（未命中记警告，不单独阻断）
 
-失败 = 报告标「未通过」，不自动删技能、不合 main。
+失败 = 报告标「未通过」，不自动删技能、不合 main。GitHub Action 未通过会标红，但仍上传 `records/verify/` 产物。
 
 ## 本会话怎么挂
 

@@ -30,3 +30,17 @@
 - `skills/unreal/ue-mover-movement-system` — https://github.com/kevinpbuckley/unreal-engine-skills — 原仓无 GitHub 可识别 LICENSE（404）
 - `skills/unreal/ue-project-discovery` — https://github.com/dstn2000/claude-unreal-engine-skill — 原仓无 GitHub 可识别 LICENSE（404）
 - `skills/unreal/unreal-engine-5-3-python-scripting` — https://github.com/fenggezaici/dcc-python-skills — 原仓无 GitHub 可识别 LICENSE（404）
+
+目标命中弱（目录方向和正文关键词对不上，警告不阻断）：
+
+- `skills/2d/omer-art-consistency`
+- `skills/2d/omer-creature-design`
+- `skills/3d/omer-environment-art`
+- `skills/3d/omer-lighting-design`
+- `skills/3d/omer-shader-programming`
+- `skills/3d/omer-vehicle-design`
+- `skills/3d/threejs-game-director`
+- `skills/3d/threejs-lighting`
+- `skills/workflow/dcc-mcp`
+- `skills/workflow/donchitos-balance-check`
+- `skills/workflow/donchitos-launch-checklist`

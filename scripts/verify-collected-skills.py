@@ -175,7 +175,8 @@ def check_one(ref: str, skill_dir: str) -> dict:
 
     blob = f"{fm_desc}\n{skill[:2500]}\n{source[:800]}"
     hint = TARGET_HINTS.get(direction)
-    target_miss = bool(hint and not hint.search(blob))
+    yaml_broken = any("yaml-unquoted-colon" in i for i in issues)
+    target_miss = bool(hint and not yaml_broken and not hint.search(blob))
     if target_miss:
         warns.append("目标命中弱：描述/正文未出现本方向关键词")
 
