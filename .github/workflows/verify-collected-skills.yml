@@ -11,12 +11,24 @@ on:
       - "scripts/verify-collected-skills.py"
       - "Skill/VERIFY.md"
       - ".github/workflows/verify-collected-skills.yml"
+      - "tests/test_verify_collected_skills.py"
 
 jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --user pyyaml
+      - name: Run verifier self-tests
+        run: python3 tests/test_verify_collected_skills.py
+
   verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --user pyyaml
       - name: Fetch scout branch
         run: git fetch origin CursorSkillSearch:CursorSkillSearch
       - name: Run verifier

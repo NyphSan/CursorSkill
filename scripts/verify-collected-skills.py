@@ -55,6 +55,24 @@ LICENSE_RE = re.compile(
 ROOT = Path(__file__).resolve().parents[1]
 
 
+def is_vendor_namespaced(dir_name: str, fm_name: str) -> bool:
+    """True when folder is `{vendor}-{name}` and frontmatter name is `{name}`."""
+    if not dir_name or not fm_name or dir_name == fm_name:
+        return False
+    return dir_name.endswith("-" + fm_name)
+
+
+def parse_skill_yaml(raw: str) -> tuple[dict, str | None]:
+    """Parse YAML frontmatter body. Error is 'yaml-unquoted-colon' on YAMLError."""
+    try:
+        meta = yaml.safe_load(raw) or {}
+    except yaml.YAMLError:
+        return {}, "yaml-unquoted-colon"
+    if not isinstance(meta, dict):
+        return {}, "frontmatter-not-mapping"
+    return meta, None
+
+
 def git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
@@ -121,34 +139,33 @@ def check_one(ref: str, skill_dir: str) -> dict:
     fm = FRONTMATTER.search(skill_text) if skill_text else None
     fm_name = fm_desc = ""
     yaml_ok = False
+    ns_name = False
     if not fm:
         issues.append("SKILL.md 无 YAML frontmatter")
     else:
         raw = fm.group(1)
-        try:
-            meta = yaml.safe_load(raw) or {}
-            yaml_ok = True
-        except yaml.YAMLError:
+        meta, yaml_err = parse_skill_yaml(raw)
+        if yaml_err == "yaml-unquoted-colon":
             issues.append(
                 "yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；"
                 "Cursor 加载该 skill 也可能失败"
             )
-            meta = {}
             nm = NAME_LINE.search(raw)
             ds = DESC_LINE.search(raw)
             if nm:
                 fm_name = nm.group(1).strip()
             if ds:
                 fm_desc = ds.group(1).strip().strip("\"'")
-        if yaml_ok:
-            if not isinstance(meta, dict):
-                issues.append("frontmatter 不是 mapping")
-                meta = {}
+        elif yaml_err == "frontmatter-not-mapping":
+            issues.append("frontmatter 不是 mapping")
+        else:
+            yaml_ok = True
             fm_name = str(meta.get("name") or "").strip()
             fm_desc = str(meta.get("description") or "").strip()
+        ns_name = is_vendor_namespaced(name, fm_name)
         if not fm_name:
             issues.append("frontmatter 缺 name")
-        elif fm_name != name:
+        elif fm_name != name and not ns_name:
             warns.append(f"name={fm_name} 与目录 {name} 不一致")
         if yaml_ok and (not fm_desc or len(fm_desc) < 20):
             issues.append("description 过短或缺失")
@@ -193,6 +210,7 @@ def check_one(ref: str, skill_dir: str) -> dict:
         "target_miss": target_miss,
         "sha": digest,
         "skill_bytes": len(skill),
+        "ns_name": ns_name,
     }
 
 
@@ -353,6 +371,7 @@ def render(report: dict) -> str:
         f"- 抽检时刻: `{report['verified_at']}`",
         f"- 技能数: **{report['count']}**（SKILL/SOURCE 成对）",
         f"- 阻断: **{len(blockers)}**  警告: **{len(warns)}**",
+        f"- 供应商前缀命名: {report.get('ns_name_n', 0)}（name 与目录后缀一致，不计入警告）",
         f"- 方向分布: {', '.join(f'{k}={v}' for k,v in report['dirs'].items())}",
         f"- DIGEST 建议引入: {', '.join(report['introduces']) or '（无表）'}",
         "",
@@ -529,6 +548,7 @@ def main() -> int:
         "delta": delta,
         "license_probes": license_probes,
         "target_misses": [r["dir"] for r in results if r.get("target_miss")],
+        "ns_name_n": sum(1 for r in results if r.get("ns_name")),
         "verdict": verdict,
     }
     md = render(report)

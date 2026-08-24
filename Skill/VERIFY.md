@@ -38,7 +38,7 @@ GitHub Action 合进默认分支后才会每天 04:20 UTC 抽检，且**只上�
 6. 独立 github 来源 HEAD 为 2xx/3xx；DIGEST 建议引入项在 `skills/` 下有同名目录
 7. 方向目录与正文关键词大致对齐（未命中记警告，不单独阻断）
 
-失败 = 报告标「未通过」，不自动删技能、不合 main。GitHub Action 未通过会标红，但仍上传 `records/verify/` 产物。
+失败 = 报告标「未通过」，不自动删技能、不合 main。GitHub Action 未通过会标红，但仍上传 `records/verify/` 产物。验证器自检（`tests/test_verify_collected_skills.py`）不拉侦察分支，应保持绿。
 
 ## 本会话怎么挂
 
