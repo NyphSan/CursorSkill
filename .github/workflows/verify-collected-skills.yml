@@ -25,6 +25,8 @@ jobs:
 
   verify:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
       - name: Install PyYAML
@@ -42,6 +44,19 @@ jobs:
           name: verify-report
           path: records/verify/
           if-no-files-found: error
+      # PR 上只上传产物。合进默认分支后，schedule / 手动触发会把报告写回仓库。
+      - name: Commit reports to default branch
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add records/verify/
+          if git diff --cached --quiet; then
+            echo "reports unchanged"
+            exit 0
+          fi
+          git commit -m "docs: VERIFY $(date -u +%Y-%m-%d) 抽检（Action）"
+          git push
       - name: Fail if verifier failed
         if: steps.verify.outcome == 'failure'
         run: exit 1

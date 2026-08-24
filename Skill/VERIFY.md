@@ -24,7 +24,7 @@ fetch origin CursorSkillSearch
   → 对话里给昴一屏结论
 ```
 
-GitHub Action 合进默认分支后才会每天 04:20 UTC 抽检，且**只上传产物、不回写** `records/verify/`。真正落盘靠本会话 timer（`0 4 * * *`）或 cursor.com Automation。timer 约 7 天过期，临期先退订再按本文件提示词续订。
+GitHub Action 合进默认分支后每天 04:20 UTC 抽检：上传产物，并把 `records/verify/` **写回默认分支**（技能仍只在侦察分支）。本会话 timer（`0 4 * * *`）在合入前负责把报告推到验证分支。timer 约 7 天过期，临期先退订再按本文件提示词续订。会话关掉后若还要对话升级，昴到 https://cursor.com/automations 按下方提示词新建（MCP 不能代建）。
 
 ## 闸门
 
