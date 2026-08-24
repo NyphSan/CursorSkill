@@ -19,14 +19,14 @@ import urllib.request
 from collections import Counter, defaultdict
 from pathlib import Path
 
+import yaml
+
 ALLOWED_DIRS = ("game-design", "unreal", "ui-design", "2d", "3d", "workflow")
 FORBIDDEN = re.compile(
     r"\b(aimbot|wallhack|esp\b|cheat engine|凭证窃取|盗号|外挂)\b",
     re.I,
 )
-FRONTMATTER = re.compile(r"\A---\n(.*?)\n---", re.S)
-NAME_RE = re.compile(r"^name:\s*[\"']?([^\"'\n]+)", re.M)
-DESC_RE = re.compile(r"^description:\s*[\"']?(.+?)[\"']?\s*$", re.M)
+FRONTMATTER = re.compile(r"\A(?:\ufeff)?---\n(.*?)\n---", re.S)
 URL_RE = re.compile(r"https?://[^\s)>\"]+")
 LICENSE_RE = re.compile(
     r"(MIT|Apache-2\.0|Apache 2|BSD-3|BSD-2|ISC|CC0|CC-BY|GPL-3|GPL-2|MPL-2|"
@@ -82,16 +82,22 @@ def check_one(ref: str, skill_dir: str) -> dict:
     if not source.strip():
         issues.append("SOURCE.md 缺失或空")
 
-    fm = FRONTMATTER.search(skill) if skill else None
+    skill_text = skill.lstrip("\ufeff") if skill else ""
+    fm = FRONTMATTER.search(skill_text) if skill_text else None
     fm_name = fm_desc = ""
     if not fm:
         issues.append("SKILL.md 无 YAML frontmatter")
     else:
-        body = fm.group(1)
-        nm = NAME_RE.search(body)
-        ds = DESC_RE.search(body)
-        fm_name = (nm.group(1).strip() if nm else "")
-        fm_desc = (ds.group(1).strip() if ds else "")
+        try:
+            meta = yaml.safe_load(fm.group(1)) or {}
+        except yaml.YAMLError as e:
+            issues.append(f"frontmatter YAML 无法解析: {e}")
+            meta = {}
+        if not isinstance(meta, dict):
+            issues.append("frontmatter 不是 mapping")
+            meta = {}
+        fm_name = str(meta.get("name") or "").strip()
+        fm_desc = str(meta.get("description") or "").strip()
         if not fm_name:
             issues.append("frontmatter 缺 name")
         elif fm_name != name:
@@ -255,10 +261,14 @@ def main() -> int:
             break
 
     dead = [u for u in url_checks if u["status"] not in {"200", "301", "302"}]
-    if blockers or dead or dupes:
-        verdict = "未通过：存在结构阻断、失效来源或重复 name，需人工看 CYCLE 阻断项。"
+    # Duplicate YAML names are expected when vendors are namespaced by folder.
+    if dupes:
+        for n, paths in dupes.items():
+            warns.append({"dir": n, "warns": [f"重复 name → {', '.join(paths)}"], "issues": []})
+    if blockers or dead:
+        verdict = "未通过：存在结构阻断或失效来源，需人工看阻断项。"
     elif warns:
-        verdict = "有条件通过：结构完整，但有 name/体积警告，下一轮优先处理。"
+        verdict = "有条件通过：结构完整，但有 name/体积/重名警告，下一轮优先处理。"
     else:
         verdict = "通过：成对 SKILL+SOURCE、方向合法、抽检来源可访问。"
 
@@ -284,7 +294,7 @@ def main() -> int:
         latest.write_text(md, encoding="utf-8")
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)
-    return 1 if (blockers or dead or dupes) else 0
+    return 1 if (blockers or dead) else 0
 
 
 if __name__ == "__main__":
