@@ -21,7 +21,6 @@ jobs:
         run: git fetch origin CursorSkillSearch:CursorSkillSearch
       - name: Run verifier
         run: python3 scripts/verify-collected-skills.py --ref CursorSkillSearch
-        continue-on-error: true
       - name: Upload report
         uses: actions/upload-artifact@v4
         with:

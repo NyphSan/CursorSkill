@@ -2,7 +2,7 @@
 
 - ref: `origin/CursorSkillSearch` @ `aa2d7074e7ad`
 - 技能数: **322**（SKILL/SOURCE 成对）
-- 阻断: **8**  警告: **179**
+- 阻断: **8**  警告: **182**
 - 方向分布: 2d=28, 3d=30, game-design=119, ui-design=25, unreal=95, workflow=25
 - DIGEST 建议引入: schepetkov-ue-ui, schepetkov-ue-assets, fagemx-game-direction, rundesk-designing-game-levels, rundesk-playtesting-games
 
@@ -45,25 +45,25 @@
 - `skills/2d/heycat-tilemap-data-format`: name=tilemap-data-format 与目录 heycat-tilemap-data-format 不一致
 - `skills/2d/heycat-transparent-cutout-cleanup`: name=transparent-cutout-cleanup 与目录 heycat-transparent-cutout-cleanup 不一致
 - `skills/2d/omer-ai-game-art-generation`: name=ai-game-art-generation 与目录 omer-ai-game-art-generation 不一致
-- `skills/2d/omer-art-consistency`: name=art-consistency 与目录 omer-art-consistency 不一致
+- `skills/2d/omer-art-consistency`: name=art-consistency 与目录 omer-art-consistency 不一致; 目标命中弱：描述/正文未出现本方向关键词
 - `skills/2d/omer-character-design`: name=character-design 与目录 omer-character-design 不一致
-- `skills/2d/omer-creature-design`: name=creature-design 与目录 omer-creature-design 不一致
+- `skills/2d/omer-creature-design`: name=creature-design 与目录 omer-creature-design 不一致; 目标命中弱：描述/正文未出现本方向关键词
 - `skills/2d/omer-pixel-art-sprites`: name=pixel-art-sprites 与目录 omer-pixel-art-sprites 不一致
 - `skills/3d/blender-unreal-export`: name=unreal-export 与目录 blender-unreal-export 不一致
 - `skills/3d/omer-3d-modeling`: name=3d-modeling 与目录 omer-3d-modeling 不一致
-- `skills/3d/omer-environment-art`: name=environment-art 与目录 omer-environment-art 不一致
-- `skills/3d/omer-lighting-design`: name=lighting-design 与目录 omer-lighting-design 不一致
+- `skills/3d/omer-environment-art`: name=environment-art 与目录 omer-environment-art 不一致; 目标命中弱：描述/正文未出现本方向关键词
+- `skills/3d/omer-lighting-design`: name=lighting-design 与目录 omer-lighting-design 不一致; 目标命中弱：描述/正文未出现本方向关键词
 - `skills/3d/omer-rigging-animation`: name=rigging-animation 与目录 omer-rigging-animation 不一致
-- `skills/3d/omer-shader-programming`: name=shader-programming 与目录 omer-shader-programming 不一致
+- `skills/3d/omer-shader-programming`: name=shader-programming 与目录 omer-shader-programming 不一致; 目标命中弱：描述/正文未出现本方向关键词
 - `skills/3d/omer-texture-art`: name=texture-art 与目录 omer-texture-art 不一致
-- `skills/3d/omer-vehicle-design`: name=vehicle-design 与目录 omer-vehicle-design 不一致
+- `skills/3d/omer-vehicle-design`: name=vehicle-design 与目录 omer-vehicle-design 不一致; 目标命中弱：描述/正文未出现本方向关键词
 - `skills/3d/omer-vfx-realtime`: name=vfx-realtime 与目录 omer-vfx-realtime 不一致
 - `skills/3d/omer-voxel-art`: name=voxel-art 与目录 omer-voxel-art 不一致
+- `skills/3d/threejs-game-director`: 目标命中弱：描述/正文未出现本方向关键词
+- `skills/3d/threejs-lighting`: 目标命中弱：描述/正文未出现本方向关键词
 - `skills/game-design/donchitos-art-bible`: name=art-bible 与目录 donchitos-art-bible 不一致
 - `skills/game-design/fagemx-balance-review`: name=balance-review 与目录 fagemx-balance-review 不一致
-- `skills/game-design/fagemx-build-playability-review`: name=build-playability-review 与目录 fagemx-build-playability-review 不一致
-- `skills/game-design/fagemx-feel-pass`: name=feel-pass 与目录 fagemx-feel-pass 不一致
-- …另有 139 条警告未展开
+- …另有 142 条警告未展开
 
 ## 许可分布
 
@@ -81,6 +81,23 @@
 - `makesupply/lodestar-skill`：文件是 MIT，GitHub SPDX=NOASSERTION
 - `kevinpbuckley/unreal-engine-skills`：原仓无 GitHub 可识别 LICENSE（404）
 - `dstn2000/claude-unreal-engine-skill`：原仓无 GitHub 可识别 LICENSE（404）
+
+## 目标命中
+
+13 条目录方向与正文关键词对不上（警告，不阻断）：
+- `skills/2d/omer-art-consistency`
+- `skills/2d/omer-concept-art`
+- `skills/2d/omer-creature-design`
+- `skills/3d/omer-environment-art`
+- `skills/3d/omer-lighting-design`
+- `skills/3d/omer-shader-programming`
+- `skills/3d/omer-vehicle-design`
+- `skills/3d/threejs-game-director`
+- `skills/3d/threejs-lighting`
+- `skills/game-design/omer-ai-world-building`
+- `skills/workflow/dcc-mcp`
+- `skills/workflow/donchitos-balance-check`
+- `skills/workflow/donchitos-launch-checklist`
 
 ## DIGEST 引入是否在库里
 

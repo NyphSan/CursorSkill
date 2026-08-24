@@ -24,6 +24,20 @@ from pathlib import Path
 import yaml
 
 ALLOWED_DIRS = ("game-design", "unreal", "ui-design", "2d", "3d", "workflow")
+TARGET_HINTS = {
+    "game-design": re.compile(
+        r"game|gameplay|gdd|narrative|combat|economy|level.?design|quest|player|mechanics",
+        re.I,
+    ),
+    "unreal": re.compile(
+        r"unreal|ue5|ue4|\bue\b|umg|niagara|replication|blueprint|gas\b|gameplay.?ability",
+        re.I,
+    ),
+    "ui-design": re.compile(r"\bui\b|\bux\b|hud|widget|interface|figma|layout|visual design", re.I),
+    "2d": re.compile(r"\b2d\b|sprite|pixel|isometric|tileset|tilemap|canvas", re.I),
+    "3d": re.compile(r"\b3d\b|blender|maya|houdini|mesh|\blod\b|nanite|skeletal", re.I),
+    "workflow": re.compile(r"pipeline|workflow|review|\bci\b|\bgit\b|process|playtest|\bqa\b", re.I),
+}
 FORBIDDEN = re.compile(
     r"\b(aimbot|wallhack|esp\b|cheat engine|凭证窃取|盗号|外挂)\b",
     re.I,
@@ -159,6 +173,12 @@ def check_one(ref: str, skill_dir: str) -> dict:
     if source and not license_name:
         issues.append("SOURCE.md 未写明 LICENSE/许可")
 
+    blob = f"{fm_desc}\n{skill[:2500]}\n{source[:800]}"
+    hint = TARGET_HINTS.get(direction)
+    target_miss = bool(hint and not hint.search(blob))
+    if target_miss:
+        warns.append("目标命中弱：描述/正文未出现本方向关键词")
+
     digest = hashlib.sha256(skill.encode()).hexdigest()[:12] if skill else ""
     return {
         "dir": skill_dir,
@@ -169,6 +189,7 @@ def check_one(ref: str, skill_dir: str) -> dict:
         "warns": warns,
         "urls": github_urls or urls,
         "license": license_name,
+        "target_miss": target_miss,
         "sha": digest,
         "skill_bytes": len(skill),
     }
@@ -339,6 +360,16 @@ def render(report: dict) -> str:
     else:
         for p in report["license_probes"]:
             lines.append(f"- `{p.get('repo') or p.get('url')}`：{p.get('verdict')}")
+    lines += ["", "## 目标命中", ""]
+    misses = report.get("target_misses") or []
+    if not misses:
+        lines.append("抽检范围内未见方向关键词空缺。")
+    else:
+        lines.append(f"{len(misses)} 条目录方向与正文关键词对不上（警告，不阻断）：")
+        for m in misses[:20]:
+            lines.append(f"- `{m}`")
+        if len(misses) > 20:
+            lines.append(f"- …另有 {len(misses)-20} 条")
     lines += ["", "## DIGEST 引入是否在库里", ""]
     if not report["introduces"]:
         lines.append("DIGEST 无引入表。")
@@ -462,6 +493,7 @@ def main() -> int:
         "missing_introduces": missing_introduces,
         "delta": delta,
         "license_probes": license_probes,
+        "target_misses": [r["dir"] for r in results if r.get("target_miss")],
         "verdict": verdict,
     }
     md = render(report)
@@ -499,7 +531,18 @@ def main() -> int:
                 probe = probe_by_url.get(u) or {}
                 esc_lines.append(f"- `{r['dir']}` — {u} — {probe.get('verdict', '未探测')}")
             esc_lines.append("")
-        if yaml_blockers or pending:
+        misses = [r["dir"] for r in results if r.get("target_miss")]
+        if misses:
+            esc_lines += [
+                "目标命中弱（目录方向和正文关键词对不上，警告不阻断）：",
+                "",
+            ]
+            for d in misses[:20]:
+                esc_lines.append(f"- `{d}`")
+            if len(misses) > 20:
+                esc_lines.append(f"- …另有 {len(misses)-20} 条")
+            esc_lines.append("")
+        if yaml_blockers or pending or misses:
             esc.write_text("\n".join(esc_lines), encoding="utf-8")
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)

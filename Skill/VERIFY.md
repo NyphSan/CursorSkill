@@ -34,6 +34,7 @@ fetch origin CursorSkillSearch
 4. SOURCE 写明 GitHub URL 和 LICENSE
 5. 无外挂/作弊/凭证窃取
 6. 独立 github 来源 HEAD 为 2xx/3xx；DIGEST 建议引入项在 `skills/` 下有同名目录
+7. 方向目录与正文关键词大致对齐（未命中记警告，不单独阻断）
 
 失败 = 报告标「未通过」，不自动删技能、不合 main。
 
