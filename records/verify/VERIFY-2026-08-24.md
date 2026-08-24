@@ -1,6 +1,7 @@
 # VERIFY 2026-08-24
 
 - ref: `origin/CursorSkillSearch` @ `aa2d7074e7ad`
+- 抽检时刻: `2026-08-24T04:30:22Z`
 - 技能数: **322**（SKILL/SOURCE 成对）
 - 阻断: **8**  警告: **182**
 - 方向分布: 2d=28, 3d=30, game-design=119, ui-design=25, unreal=95, workflow=25
