@@ -1,23 +1,8 @@
-﻿# LAST_REPORT — 增量基线
+﻿# LAST_REPORT — 2026-08-24
 
-- date: 2026-08-17T01:04Z
-- branch: CursorSkillSearch
-- introduced_this_round:
-  - schepetkov-ue-lighting     # Schepetkov/claude-skills-game-UE MIT；UE 5.8 Lumen Lite/MegaLights；源码核对 cvar
-  - schepetkov-ue-performance  # 同仓；stat unit → Insights → PSO/hitch 方法论
-  - schepetkov-ue-networking   # 同仓；Iris production + Push Model；纠正 bUseIris 误传
-  - rundesk-designing-games    # rundesk-ai/rundesk-skills-gamedev MIT；体验契约/MDA/嵌套循环
-  - fagemx-game-ideation       # fagemx/gstack-game MIT；Fantasy/Loop/Twist + Iceberg（遗留计划）
-- known_good_prior: nvidia omniverse cad/tuning/viewer + simready-foundation-conform-fet-000-core, thrixel-goal-to-game, leonxlnx-taste-skill, haxqer-godot-skill, kevinpbuckley UE5.8, loomle SAL, db-lyon ue-mcp, nextlevelbuilder ui-ux-pro-max, fagemx stack (12), gamedev-skills UE 主链, mengto, heycat, arg-games cqtest, jetbrains ue-*, quodsoler, dcc-mcp*
-- carry_watch:
-  - Schepetkov ue-ui / ue-assets / ue-mcp / meshy-3d-generation
-  - rundesk 其余 ~16（levels/playtesting/2d-art/cameras/…）
-  - fagemx game-direction（下轮优先）
-  - abagames 08-16 更新 + generating-dot-assets / coverage-audit / dispatching-agent-work
-  - educlopez/ui-craft v1.0.19；MengTo threejs-landscape/weather/towers
-  - Randroids unreal；tzwkb/lqe-translator；simready-foundation 其余；Yuki001 无 LICENSE
-- missed_or_pending:
-  - code search 429；依赖 repos/trees/skills.sh
-  - NVIDIA Jetson video SDK skills（已判定可忽略）
-- push_status: pending → CursorSkillSearch
-- pr_status: PR #31 复用刷新
+- 分支：`CursorSkillSearch`
+- 基线：317 → **322** SKILL（+5）；JetBrains UE code/test 实质同步
+- 引入：schepetkov-ue-ui / schepetkov-ue-assets / fagemx-game-direction / rundesk-designing-game-levels / rundesk-playtesting-games
+- PR：https://github.com/NyphSan/CursorSkill/pull/31
+- DIGEST：https://github.com/NyphSan/CursorSkill/blob/CursorSkillSearch/DIGEST.md
+- 下轮：Schepetkov ue-mcp；teixasalone 对比；rundesk 2d/cameras；Yuki/Murdle LICENSE
