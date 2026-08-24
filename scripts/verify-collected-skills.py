@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import datetime as dt
 import hashlib
+import json
 import os
 import re
 import subprocess
@@ -192,6 +193,44 @@ def head_url(url: str, timeout: float = 8.0) -> str:
         return f"err:{e.__class__.__name__}"
 
 
+REPO_RE = re.compile(r"https://github.com/([\w.-]+)/([\w.-]+)")
+
+
+def probe_github_license(url: str) -> dict:
+    m = REPO_RE.search(url or "")
+    if not m:
+        return {"url": url, "repo": "", "verdict": "无法解析仓库"}
+    repo = f"{m.group(1)}/{m.group(2)}"
+    api = f"https://api.github.com/repos/{repo}/license"
+    req = urllib.request.Request(api, headers={"User-Agent": "CursorSkill-verify", "Accept": "application/vnd.github+json"})
+    try:
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            data = json.loads(resp.read().decode())
+        spdx = (data.get("license") or {}).get("spdx_id") or ""
+        html = data.get("html_url") or ""
+        if spdx and spdx not in {"NOASSERTION", "NONE"}:
+            return {"url": url, "repo": repo, "verdict": f"GitHub SPDX={spdx}", "html": html}
+        raw = data.get("download_url") or ""
+        text = ""
+        if raw:
+            try:
+                with urllib.request.urlopen(raw, timeout=10) as resp:
+                    text = resp.read(800).decode("utf-8", "replace")
+            except Exception:
+                text = ""
+        if re.search(r"MIT License", text, re.I):
+            return {"url": url, "repo": repo, "verdict": "文件是 MIT，GitHub SPDX=NOASSERTION", "html": html}
+        if re.search(r"Apache License", text, re.I):
+            return {"url": url, "repo": repo, "verdict": "文件是 Apache-2.0，GitHub SPDX=NOASSERTION", "html": html}
+        return {"url": url, "repo": repo, "verdict": f"有 LICENSE 文件但 SPDX={spdx or '未知'}", "html": html}
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return {"url": url, "repo": repo, "verdict": "原仓无 GitHub 可识别 LICENSE（404）", "html": f"https://github.com/{repo}"}
+        return {"url": url, "repo": repo, "verdict": f"api err {e.code}", "html": f"https://github.com/{repo}"}
+    except Exception as e:
+        return {"url": url, "repo": repo, "verdict": f"err:{e.__class__.__name__}", "html": f"https://github.com/{repo}"}
+
+
 def unique_github_urls(results: list[dict]) -> list[tuple[str, str]]:
     seen: dict[str, str] = {}
     for r in results:
@@ -294,6 +333,12 @@ def render(report: dict) -> str:
     pending_n = report["licenses"].get("未声明/待核", 0)
     if pending_n:
         lines.append(f"未声明/待核 {pending_n} 条已写入 `records/verify/ESCALATION.md`，升格前先核原仓 LICENSE。")
+    lines += ["", "## 许可原仓探测", ""]
+    if not report.get("license_probes"):
+        lines.append("本轮无待核许可可探测。")
+    else:
+        for p in report["license_probes"]:
+            lines.append(f"- `{p.get('repo') or p.get('url')}`：{p.get('verdict')}")
     lines += ["", "## DIGEST 引入是否在库里", ""]
     if not report["introduces"]:
         lines.append("DIGEST 无引入表。")
@@ -377,6 +422,13 @@ def main() -> int:
 
     url_checks = head_unique_urls(unique_github_urls(results), args.spot_check)
     dead = [u for u in url_checks if u["status"] not in {"200", "301", "302"}]
+    pending = [r for r in results if r.get("license") == "未声明/待核"]
+    pending_repos: dict[str, dict] = {}
+    for r in pending:
+        u = (r["urls"] or [""])[0]
+        if u not in pending_repos:
+            pending_repos[u] = probe_github_license(u)
+    license_probes = list(pending_repos.values())
     # Duplicate YAML names are expected when vendors are namespaced by folder.
     if dupes:
         for n, paths in dupes.items():
@@ -409,6 +461,7 @@ def main() -> int:
         "licenses": dict(licenses.most_common()),
         "missing_introduces": missing_introduces,
         "delta": delta,
+        "license_probes": license_probes,
         "verdict": verdict,
     }
     md = render(report)
@@ -435,14 +488,16 @@ def main() -> int:
                 esc_lines.append(f"- `{b['dir']}`")
             esc_lines.append("")
         if pending:
+            probe_by_url = {p.get("url"): p for p in license_probes}
             esc_lines += [
-                "许可待核（SOURCE 写了未声明 SPDX / NOASSERTION / 无 LICENSE）。",
-                "升格进权威库前先核对原仓 LICENSE；验证环不改侦察分支。",
+                "许可待核。下面是本轮对原仓 GitHub license API 的探测结果。",
+                "无 LICENSE 的仓，升格进权威库应拦下；有文件但 SPDX=NOASSERTION 的，SOURCE 可改记实际许可证。",
                 "",
             ]
             for r in pending:
-                url = (r["urls"] or ["（无 URL）"])[0]
-                esc_lines.append(f"- `{r['dir']}` — {url}")
+                u = (r["urls"] or [""])[0]
+                probe = probe_by_url.get(u) or {}
+                esc_lines.append(f"- `{r['dir']}` — {u} — {probe.get('verdict', '未探测')}")
             esc_lines.append("")
         if yaml_blockers or pending:
             esc.write_text("\n".join(esc_lines), encoding="utf-8")

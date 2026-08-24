@@ -73,6 +73,15 @@
 - 未声明/待核: 14
 未声明/待核 14 条已写入 `records/verify/ESCALATION.md`，升格前先核原仓 LICENSE。
 
+## 许可原仓探测
+
+- `fenggezaici/dcc-python-skills`：原仓无 GitHub 可识别 LICENSE（404）
+- `w-zhian/game-design-skills`：原仓无 GitHub 可识别 LICENSE（404）
+- `ityes22/game-design-document`：文件是 Apache-2.0，GitHub SPDX=NOASSERTION
+- `makesupply/lodestar-skill`：文件是 MIT，GitHub SPDX=NOASSERTION
+- `kevinpbuckley/unreal-engine-skills`：原仓无 GitHub 可识别 LICENSE（404）
+- `dstn2000/claude-unreal-engine-skill`：原仓无 GitHub 可识别 LICENSE（404）
+
 ## DIGEST 引入是否在库里
 
 建议引入项都能在 `skills/` 下找到同名目录。
