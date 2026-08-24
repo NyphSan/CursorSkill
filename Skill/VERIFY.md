@@ -9,7 +9,7 @@
 - 非目标：不去 GitHub 再搜新技能（那是 Automation `SkillSearch`）；不把侦察库合进 main；不发邮件
 - 决策权：阻断项升级给昴；警告可自行记入报告
 - 写域：`records/verify/` · 本文件 · `scripts/verify-collected-skills.py`
-- 交付物：`records/verify/VERIFY-YYYY-MM-DD.md`、`ESCALATION.md`（有阻断时）+ 对话一屏结论
+- 交付物：`records/verify/VERIFY-YYYY-MM-DD.md`、`RUNLOG.md`、`ESCALATION.md`（有阻断时）+ 对话一屏结论
 - 退出：昴说停，或关掉本会话 timer / Automation
 
 ## 节奏
@@ -20,9 +20,11 @@ SkillSearch 每天 **01:00 UTC** 写 `DIGEST.md`。本环默认 **04:00 UTC** �
 fetch origin CursorSkillSearch
   → python3 scripts/verify-collected-skills.py
   → 独立 github 仓 HEAD、许可归一、DIGEST 目录对账、相对上次差量
-  → 写 VERIFY 报告并推本验证分支
+  → 写 VERIFY 报告 + RUNLOG 一行，并推本验证分支
   → 对话里给昴一屏结论
 ```
+
+GitHub Action 合进默认分支后才会每天 04:20 UTC 抽检，且**只上传产物、不回写** `records/verify/`。真正落盘靠本会话 timer（`0 4 * * *`）或 cursor.com Automation。timer 约 7 天过期，临期先退订再按本文件提示词续订。
 
 ## 闸门
 

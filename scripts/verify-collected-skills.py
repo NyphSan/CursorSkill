@@ -277,6 +277,35 @@ def head_unique_urls(pairs: list[tuple[str, str]], limit: int) -> list[dict]:
     return out
 
 
+def append_runlog(
+    report: dict,
+    commit: str,
+    blockers: list[dict],
+    warns: list[dict],
+    verdict: str,
+) -> None:
+    runlog = ROOT / "records" / "verify" / "RUNLOG.md"
+    header = (
+        "# 验证环 RUNLOG\n\n"
+        "每次抽检追加一行。侦察分支没变时也能看出日跑有没有执行。\n\n"
+        "| 时刻 (UTC) | ref | 技能 | 阻断 | 警告 | 结论 |\n"
+        "|---|---|---:|---:|---:|---|\n"
+    )
+    short = verdict.replace("|", "/").split("。")[0]
+    row = (
+        f"| {report['verified_at']} | `{commit[:12]}` | {report['count']} | "
+        f"{len(blockers)} | {len(warns)} | {short} |\n"
+    )
+    if not runlog.exists():
+        runlog.write_text(header + row, encoding="utf-8")
+        return
+    text = runlog.read_text(encoding="utf-8")
+    if "| 时刻 (UTC) |" not in text:
+        runlog.write_text(header + row, encoding="utf-8")
+        return
+    runlog.write_text(text.rstrip() + "\n" + row, encoding="utf-8")
+
+
 def previous_blockers() -> set[str]:
     latest = ROOT / "records" / "verify" / "LATEST.md"
     if not latest.exists():
@@ -321,6 +350,7 @@ def render(report: dict) -> str:
         f"# VERIFY {day}",
         "",
         f"- ref: `{report['ref']}` @ `{report['commit'][:12]}`",
+        f"- 抽检时刻: `{report['verified_at']}`",
         f"- 技能数: **{report['count']}**（SKILL/SOURCE 成对）",
         f"- 阻断: **{len(blockers)}**  警告: **{len(warns)}**",
         f"- 方向分布: {', '.join(f'{k}={v}' for k,v in report['dirs'].items())}",
@@ -405,7 +435,10 @@ def render(report: dict) -> str:
         b for b in blockers if any("yaml-unquoted-colon" in i for i in b["issues"])
     ]
     if yaml_blockers:
-        lines.append("这 8 条 skill 的 description 没加引号又含冒号，YAML 非法。修复：把 description 改成 `|` 或多行引号。")
+        lines.append(
+            f"这 {len(yaml_blockers)} 条 skill 的 description 没加引号又含冒号，YAML 非法。"
+            "修复：把 description 改成 `|` 或多行引号。"
+        )
         lines.append("不在验证环里直接改侦察分支，避免和 SkillSearch 抢写。")
         for b in yaml_blockers:
             lines.append(f"- `{b['dir']}`")
@@ -481,6 +514,7 @@ def main() -> int:
 
     report = {
         "date": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d"),
+        "verified_at": dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "ref": ref,
         "commit": commit,
         "count": len(results),
@@ -545,6 +579,7 @@ def main() -> int:
             esc_lines.append("")
         if yaml_blockers or pending or misses:
             esc.write_text("\n".join(esc_lines), encoding="utf-8")
+        append_runlog(report, commit, blockers, warns, verdict)
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)
     return 1 if (blockers or dead or missing_introduces) else 0
