@@ -26,7 +26,9 @@ FORBIDDEN = re.compile(
     r"\b(aimbot|wallhack|esp\b|cheat engine|凭证窃取|盗号|外挂)\b",
     re.I,
 )
-FRONTMATTER = re.compile(r"\A(?:\ufeff)?---\n(.*?)\n---", re.S)
+FRONTMATTER = re.compile(r"\A(?:\ufeff)?---\r?\n(.*?)\r?\n---", re.S)
+NAME_LINE = re.compile(r"^name:\s*[\"']?([^\"'\n]+)", re.M)
+DESC_LINE = re.compile(r"^description:\s*[\"']?(.*)$", re.M)
 URL_RE = re.compile(r"https?://[^\s)>\"]+")
 LICENSE_RE = re.compile(
     r"(MIT|Apache-2\.0|Apache 2|BSD-3|BSD-2|ISC|CC0|CC-BY|GPL-3|GPL-2|MPL-2|"
@@ -85,24 +87,37 @@ def check_one(ref: str, skill_dir: str) -> dict:
     skill_text = skill.lstrip("\ufeff") if skill else ""
     fm = FRONTMATTER.search(skill_text) if skill_text else None
     fm_name = fm_desc = ""
+    yaml_ok = False
     if not fm:
         issues.append("SKILL.md 无 YAML frontmatter")
     else:
+        raw = fm.group(1)
         try:
-            meta = yaml.safe_load(fm.group(1)) or {}
-        except yaml.YAMLError as e:
-            issues.append(f"frontmatter YAML 无法解析: {e}")
+            meta = yaml.safe_load(raw) or {}
+            yaml_ok = True
+        except yaml.YAMLError:
+            issues.append(
+                "yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；"
+                "Cursor 加载该 skill 也可能失败"
+            )
             meta = {}
-        if not isinstance(meta, dict):
-            issues.append("frontmatter 不是 mapping")
-            meta = {}
-        fm_name = str(meta.get("name") or "").strip()
-        fm_desc = str(meta.get("description") or "").strip()
+            nm = NAME_LINE.search(raw)
+            ds = DESC_LINE.search(raw)
+            if nm:
+                fm_name = nm.group(1).strip()
+            if ds:
+                fm_desc = ds.group(1).strip().strip("\"'")
+        if yaml_ok:
+            if not isinstance(meta, dict):
+                issues.append("frontmatter 不是 mapping")
+                meta = {}
+            fm_name = str(meta.get("name") or "").strip()
+            fm_desc = str(meta.get("description") or "").strip()
         if not fm_name:
             issues.append("frontmatter 缺 name")
         elif fm_name != name:
             warns.append(f"name={fm_name} 与目录 {name} 不一致")
-        if not fm_desc or len(fm_desc) < 20:
+        if yaml_ok and (not fm_desc or len(fm_desc) < 20):
             issues.append("description 过短或缺失")
 
     if skill and len(skill) > 180_000:
@@ -215,6 +230,19 @@ def render(report: dict) -> str:
     else:
         for n, paths in report["dupes"].items():
             lines.append(f"- `{n}`: " + ", ".join(f"`{p}`" for p in paths))
+    lines += ["", "## 升级给昴", ""]
+    yaml_blockers = [
+        b for b in blockers if any("yaml-unquoted-colon" in i for i in b["issues"])
+    ]
+    if yaml_blockers:
+        lines.append("这 8 条 skill 的 description 没加引号又含冒号，YAML 非法。修复：把 description 改成 `|` 或多行引号。")
+        lines.append("不在验证环里直接改侦察分支，避免和 SkillSearch 抢写。")
+        for b in yaml_blockers:
+            lines.append(f"- `{b['dir']}`")
+    elif blockers:
+        lines.append("见上方阻断项，需人工决定修、降级还是移出侦察库。")
+    else:
+        lines.append("无阻断，不必升级。")
     lines += ["", "## 未覆盖", "",
               "- 不执行 skill 内脚本，不做运行时功能测试。",
               "- 不把 CursorSkillSearch 合进 main。",
@@ -292,6 +320,24 @@ def main() -> int:
         out.write_text(md, encoding="utf-8")
         latest = ROOT / "records" / "verify" / "LATEST.md"
         latest.write_text(md, encoding="utf-8")
+        esc = ROOT / "records" / "verify" / "ESCALATION.md"
+        yaml_blockers = [
+            b for b in blockers if any("yaml-unquoted-colon" in i for i in b["issues"])
+        ]
+        if yaml_blockers:
+            esc_lines = [
+                f"# 升级 · {report['date']}",
+                "",
+                "给昴：侦察库有 skill 的 YAML frontmatter 非法，加载可能失败。",
+                "验证环不直接改 `CursorSkillSearch`，避免和 SkillSearch 抢写。",
+                "",
+                "建议：把 description 改成 `|` 块或整段加引号。",
+                "",
+            ]
+            for b in yaml_blockers:
+                esc_lines.append(f"- `{b['dir']}`")
+            esc_lines.append("")
+            esc.write_text("\n".join(esc_lines), encoding="utf-8")
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)
     return 1 if (blockers or dead) else 0

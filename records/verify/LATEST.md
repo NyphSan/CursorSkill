@@ -2,7 +2,7 @@
 
 - ref: `origin/CursorSkillSearch` @ `aa2d7074e7ad`
 - 技能数: **322**（SKILL/SOURCE 成对）
-- 阻断: **8**  警告: **178**
+- 阻断: **8**  警告: **179**
 - 方向分布: 2d=28, 3d=30, game-design=119, ui-design=25, unreal=95, workflow=25
 - DIGEST 建议引入: schepetkov-ue-ui, schepetkov-ue-assets, fagemx-game-direction, rundesk-designing-game-levels, rundesk-playtesting-games
 
@@ -12,38 +12,14 @@
 
 ## 阻断项
 
-- `skills/2d/omer-concept-art`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 298:
-     ... ethodologies of industry masters: Feng Zhu's efficient design pr ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/2d/omer-weapon-design`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 489:
-     ...  and proportion tells the player: what this weapon does, how pow ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/game-design/omer-ai-world-building`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 38:
-     ... iption: The ultimate brand asset: a consistent, explorable unive ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/game-design/omer-narrative-design`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 169:
-     ... que challenges of game narrative: branching structures that resp ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/game-design/omer-procedural-generation`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 415:
-     ... m academic papers.  Core insight: The best PCG systems are heavi ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/ui-design/nextlevelbuilder-ui-ux-pro-max`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 556:
-     ...  asks for any visual design task: pages, components, palettes, t ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/unreal/unreal-design-patterns`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 1463:
-     ... mplements the unreal-solid skill: patterns are how you realize t ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
-- `skills/unreal/unreal-replication`: frontmatter YAML 无法解析: mapping values are not allowed here
-  in "<unicode string>", line 2, column 154:
-     ... sign lens for networked gameplay: who is authoritative, where ne ... 
-                                         ^; frontmatter 缺 name; description 过短或缺失
+- `skills/2d/omer-concept-art`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/2d/omer-weapon-design`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/game-design/omer-ai-world-building`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/game-design/omer-narrative-design`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/game-design/omer-procedural-generation`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/ui-design/nextlevelbuilder-ui-ux-pro-max`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/unreal/unreal-design-patterns`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
+- `skills/unreal/unreal-replication`: yaml-unquoted-colon：description 含未加引号的冒号，标准 YAML 失败；Cursor 加载该 skill 也可能失败
 
 ## 警告
 
@@ -87,7 +63,7 @@
 - `skills/game-design/fagemx-balance-review`: name=balance-review 与目录 fagemx-balance-review 不一致
 - `skills/game-design/fagemx-build-playability-review`: name=build-playability-review 与目录 fagemx-build-playability-review 不一致
 - `skills/game-design/fagemx-feel-pass`: name=feel-pass 与目录 fagemx-feel-pass 不一致
-- …另有 138 条警告未展开
+- …另有 139 条警告未展开
 
 ## 来源抽检（HTTP HEAD）
 
@@ -109,10 +85,24 @@
 - `shader-programming`: `skills/3d/omer-shader-programming`, `skills/game-design/gamedev-shader-programming`
 - `combat-design`: `skills/game-design/combat-design`, `skills/game-design/omer-combat-design`, `skills/game-design/wzhian-combat-design`
 - `level-design`: `skills/game-design/gamedev-level-design`, `skills/game-design/level-design`, `skills/game-design/omer-level-design`
+- `narrative-design`: `skills/game-design/narrative-design`, `skills/game-design/omer-narrative-design`
 - `game-ui-design`: `skills/ui-design/game-ui-design-principles`, `skills/ui-design/omer-game-ui-design`
 - `unreal-blueprints`: `skills/unreal/dcc-unreal-blueprints`, `skills/unreal/unreal-blueprints`
 - `unreal-niagara`: `skills/unreal/dcc-unreal-niagara`, `skills/unreal/unreal-niagara`
 - `unreal-engine`: `skills/unreal/omer-unreal-engine`, `skills/unreal/ue-project-discovery`
+
+## 升级给昴
+
+这 8 条 skill 的 description 没加引号又含冒号，YAML 非法。修复：把 description 改成 `|` 或多行引号。
+不在验证环里直接改侦察分支，避免和 SkillSearch 抢写。
+- `skills/2d/omer-concept-art`
+- `skills/2d/omer-weapon-design`
+- `skills/game-design/omer-ai-world-building`
+- `skills/game-design/omer-narrative-design`
+- `skills/game-design/omer-procedural-generation`
+- `skills/ui-design/nextlevelbuilder-ui-ux-pro-max`
+- `skills/unreal/unreal-design-patterns`
+- `skills/unreal/unreal-replication`
 
 ## 未覆盖
 
