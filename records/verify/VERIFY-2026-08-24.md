@@ -8,7 +8,7 @@
 
 ## 一屏结论
 
-未通过：存在结构阻断或失效来源，需人工看阻断项。
+未通过：8 条结构阻断。
 
 ## 阻断项
 
@@ -65,20 +65,37 @@
 - `skills/game-design/fagemx-feel-pass`: name=feel-pass 与目录 fagemx-feel-pass 不一致
 - …另有 139 条警告未展开
 
-## 来源抽检（HTTP HEAD）
+## 许可分布
 
-- `gamedev-create-game-assets` https://github.com/gamedev-skills/awesome-gamedev-agent-skills → **200**
+- MIT: 150
+- Apache-2.0: 80
+- 见原仓 LICENSE: 78
+- 未声明/待核: 14
+
+## DIGEST 引入是否在库里
+
+建议引入项都能在 `skills/` 下找到同名目录。
+
+## 相对上次差量
+
+新增阻断 0：无；消失 0：无。
+
+## 来源抽检（HTTP HEAD，独立仓库）
+
+独立来源 61，可访问 61，失效 0。
 - `heycat-animated-sprite-generation` https://github.com/0xheycat/isometric-game-skills → **200**
-- `heycat-asset-pipeline-automation` https://github.com/0xheycat/isometric-game-skills → **200**
-- `heycat-autotiling-transitions` https://github.com/0xheycat/isometric-game-skills → **200**
-- `heycat-camera-pan-zoom-controls` https://github.com/0xheycat/isometric-game-skills → **200**
-- `heycat-canvas-performance-optimization` https://github.com/0xheycat/isometric-game-skills → **200**
-- `heycat-canvas2d-isometric-renderer` https://github.com/0xheycat/isometric-game-skills → **200**
-- `fagemx-game-direction` https://github.com/fagemx/gstack-game → **200**
-- `rundesk-designing-game-levels` https://github.com/rundesk-ai/rundesk-skills-gamedev → **200**
-- `rundesk-playtesting-games` https://github.com/rundesk-ai/rundesk-skills-gamedev → **200**
-- `schepetkov-ue-assets` https://github.com/Schepetkov/claude-skills-game-UE → **200**
-- `schepetkov-ue-ui` https://github.com/Schepetkov/claude-skills-game-UE → **200**
+- `hlsl-shader` https://github.com/18163623522/ue-shader-skills → **200**
+- `design-game-ui` https://github.com/888wing/game-ui-skill → **200**
+- `epic-unreal-mcp` https://github.com/EpicGames/unreal-engine-skills-for-claude-code-plugin → **200**
+- `unrealsharp-operations` https://github.com/Extreme11111/unrealsharp-syntax-skill → **200**
+- `ue-build` https://github.com/GuangminJu/UnrealSkills → **200**
+- `blender-cinematic-scene` https://github.com/HabrielStark/brilliant-blender-skill → **200**
+- `roguelike-game-designer` https://github.com/Hanjo92/roguelike-game-designer-skill → **200**
+- `unreal-client-protocol` https://github.com/Italink/UnrealClientProtocol → **200**
+- `ue-af-blueprint-authoring` https://github.com/JanVogelsang/UE-AgentFramework → **200**
+- `jetbrains-ue-code-authoring` https://github.com/JetBrains/rider-skills → **200**
+- `leonxlnx-taste-skill` https://github.com/Leonxlnx/taste-skill → **200**
+- …其余 49 条均为 2xx/3xx
 
 ## 重复 name
 
@@ -108,5 +125,5 @@
 
 - 不执行 skill 内脚本，不做运行时功能测试。
 - 不把 CursorSkillSearch 合进 main。
-- 来源 URL 只抽检 DIGEST 引入 + 随机样本。
+- 来源 URL 对独立 github 仓库做 HEAD；同一仓下多条 skill 不重复打。
 

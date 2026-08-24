@@ -9,7 +9,7 @@
 - 非目标：不去 GitHub 再搜新技能（那是 Automation `SkillSearch`）；不把侦察库合进 main；不发邮件
 - 决策权：阻断项升级给昴；警告可自行记入报告
 - 写域：`records/verify/` · 本文件 · `scripts/verify-collected-skills.py`
-- 交付物：`records/verify/VERIFY-YYYY-MM-DD.md` + 对话一屏结论
+- 交付物：`records/verify/VERIFY-YYYY-MM-DD.md`、`ESCALATION.md`（有阻断时）+ 对话一屏结论
 - 退出：昴说停，或关掉本会话 timer / Automation
 
 ## 节奏
@@ -19,7 +19,7 @@ SkillSearch 每天 **01:00 UTC** 写 `DIGEST.md`。本环默认 **04:00 UTC** �
 ```text
 fetch origin CursorSkillSearch
   → python3 scripts/verify-collected-skills.py
-  → 抽检 DIGEST「建议引入」的来源 URL
+  → 独立 github 仓 HEAD、许可归一、DIGEST 目录对账、相对上次差量
   → 写 VERIFY 报告并推本验证分支
   → 对话里给昴一屏结论
 ```
@@ -33,7 +33,7 @@ fetch origin CursorSkillSearch
 3. SKILL frontmatter 有 `name` + 足够长的 `description`
 4. SOURCE 写明 GitHub URL 和 LICENSE
 5. 无外挂/作弊/凭证窃取
-6. DIGEST 引入项的来源 URL 抽检应返回 2xx/3xx
+6. 独立 github 来源 HEAD 为 2xx/3xx；DIGEST 建议引入项在 `skills/` 下有同名目录
 
 失败 = 报告标「未通过」，不自动删技能、不合 main。
 

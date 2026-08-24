@@ -4,5 +4,6 @@
 
 - `LATEST.md`：最近一次
 - `VERIFY-YYYY-MM-DD.md`：按日归档
+- `ESCALATION.md`：当前要升级给昴的阻断（YAML 非法等）
 
 对象分支：`origin/CursorSkillSearch`。不把侦察库合进 main。

@@ -17,6 +17,7 @@ import sys
 import urllib.error
 import urllib.request
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 import yaml
@@ -29,7 +30,7 @@ FORBIDDEN = re.compile(
 FRONTMATTER = re.compile(r"\A(?:\ufeff)?---\r?\n(.*?)\r?\n---", re.S)
 NAME_LINE = re.compile(r"^name:\s*[\"']?([^\"'\n]+)", re.M)
 DESC_LINE = re.compile(r"^description:\s*[\"']?(.*)$", re.M)
-URL_RE = re.compile(r"https?://[^\s)>\"]+")
+URL_RE = re.compile(r"https://github.com/[\w.-]+/[\w.-]+")
 LICENSE_RE = re.compile(
     r"(MIT|Apache-2\.0|Apache 2|BSD-3|BSD-2|ISC|CC0|CC-BY|GPL-3|GPL-2|MPL-2|"
     r"Unlicense|许可[：:][^\n]+)",
@@ -46,7 +47,7 @@ def git(*args: str) -> str:
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser()
     p.add_argument("--ref", default="origin/CursorSkillSearch")
-    p.add_argument("--spot-check", type=int, default=12)
+    p.add_argument("--spot-check", type=int, default=0, help="0 = HEAD 全部独立 github 来源")
     p.add_argument("--stdout-only", action="store_true")
     p.add_argument("--report", default="")
     return p.parse_args()
@@ -66,6 +67,23 @@ def show(ref: str, path: str) -> str:
         return git("show", f"{ref}:{path}")
     except subprocess.CalledProcessError:
         return ""
+
+
+def normalize_license(raw: str) -> str:
+    s = raw.strip()
+    if re.search(r"未声明|无 LICENSE|NOASSERTION|未明示", s, re.I):
+        return "未声明/待核"
+    m = re.search(
+        r"(Apache-2\.0|MIT|BSD-3|BSD-2|ISC|CC0|CC-BY|GPL-3|GPL-2|MPL-2|Unlicense)",
+        s,
+        re.I,
+    )
+    if m:
+        tok = m.group(1)
+        return "MIT" if tok.lower() == "mit" else tok
+    if "原仓" in s or "原仓库" in s:
+        return "见原仓 LICENSE"
+    return s[:48] or "（未写明）"
 
 
 def check_one(ref: str, skill_dir: str) -> dict:
@@ -131,7 +149,13 @@ def check_one(ref: str, skill_dir: str) -> dict:
     github_urls = [u.rstrip(".,") for u in urls if "github.com" in u]
     if not github_urls and not urls:
         issues.append("SOURCE.md 无来源 URL")
-    if source and not LICENSE_RE.search(source):
+    license_name = ""
+    lm = re.search(r"许可[：:]\s*([^\n]+)", source or "")
+    if lm:
+        license_name = normalize_license(lm.group(1))
+    elif source and LICENSE_RE.search(source):
+        license_name = normalize_license(LICENSE_RE.search(source).group(1))
+    if source and not license_name:
         issues.append("SOURCE.md 未写明 LICENSE/许可")
 
     digest = hashlib.sha256(skill.encode()).hexdigest()[:12] if skill else ""
@@ -143,12 +167,14 @@ def check_one(ref: str, skill_dir: str) -> dict:
         "issues": issues,
         "warns": warns,
         "urls": github_urls or urls,
+        "license": license_name,
         "sha": digest,
         "skill_bytes": len(skill),
     }
 
 
 def head_url(url: str, timeout: float = 8.0) -> str:
+    url = URL_RE.search(url).group(0) if URL_RE.search(url) else url
     req = urllib.request.Request(url, method="HEAD", headers={"User-Agent": "CursorSkill-verify"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
@@ -164,6 +190,47 @@ def head_url(url: str, timeout: float = 8.0) -> str:
         return str(e.code)
     except Exception as e:
         return f"err:{e.__class__.__name__}"
+
+
+def unique_github_urls(results: list[dict]) -> list[tuple[str, str]]:
+    seen: dict[str, str] = {}
+    for r in results:
+        for u in r["urls"]:
+            if "github.com" not in u:
+                continue
+            key = "/".join(u.rstrip("/").split("/")[:5])
+            if key not in seen:
+                seen[key] = r["name"]
+    return sorted((url, name) for url, name in seen.items())
+
+
+def head_unique_urls(pairs: list[tuple[str, str]], limit: int) -> list[dict]:
+    chosen = pairs if limit == 0 else pairs[:limit]
+    out = []
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futs = {pool.submit(head_url, url): (url, name) for url, name in chosen}
+        for fut in as_completed(futs):
+            url, name = futs[fut]
+            out.append({"name": name, "url": url, "status": fut.result()})
+    out.sort(key=lambda r: r["url"])
+    return out
+
+
+def previous_blockers() -> set[str]:
+    latest = ROOT / "records" / "verify" / "LATEST.md"
+    if not latest.exists():
+        return set()
+    found = set()
+    in_block = False
+    for line in latest.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## 阻断项"):
+            in_block = True
+            continue
+        if in_block and line.startswith("## "):
+            break
+        if in_block and line.startswith("- `skills/"):
+            found.add(line.split("`")[1])
+    return found
 
 
 def digest_introduces(ref: str) -> list[str]:
@@ -218,12 +285,35 @@ def render(report: dict) -> str:
             lines.append(f"- `{w['dir']}`: " + "; ".join(w["warns"]))
         if len(warns) > 40:
             lines.append(f"- …另有 {len(warns)-40} 条警告未展开")
-    lines += ["", "## 来源抽检（HTTP HEAD）", ""]
+    lines += ["", "## 许可分布", ""]
+    if not report["licenses"]:
+        lines.append("无。")
+    else:
+        for k, v in report["licenses"].items():
+            lines.append(f"- {k}: {v}")
+    lines += ["", "## DIGEST 引入是否在库里", ""]
+    if not report["introduces"]:
+        lines.append("DIGEST 无引入表。")
+    elif not report["missing_introduces"]:
+        lines.append("建议引入项都能在 `skills/` 下找到同名目录。")
+    else:
+        lines.append("下列 DIGEST 引入在侦察库找不到目录：")
+        for n in report["missing_introduces"]:
+            lines.append(f"- `{n}`")
+    lines += ["", "## 相对上次差量", ""]
+    lines.append(report["delta"] or "无上次报告可比。")
+    lines += ["", "## 来源抽检（HTTP HEAD，独立仓库）", ""]
     if not report["url_checks"]:
         lines.append("本轮未抽检。")
     else:
-        for row in report["url_checks"]:
+        dead_rows = [row for row in report["url_checks"] if row["status"] not in {"200", "301", "302"}]
+        ok_n = len(report["url_checks"]) - len(dead_rows)
+        lines.append(f"独立来源 {len(report['url_checks'])}，可访问 {ok_n}，失效 {len(dead_rows)}。")
+        show_rows = dead_rows or report["url_checks"][:12]
+        for row in show_rows:
             lines.append(f"- `{row['name']}` {row['url']} → **{row['status']}**")
+        if not dead_rows and len(report["url_checks"]) > 12:
+            lines.append(f"- …其余 {len(report['url_checks'])-12} 条均为 2xx/3xx")
     lines += ["", "## 重复 name", ""]
     if not report["dupes"]:
         lines.append("无。")
@@ -246,7 +336,7 @@ def render(report: dict) -> str:
     lines += ["", "## 未覆盖", "",
               "- 不执行 skill 内脚本，不做运行时功能测试。",
               "- 不把 CursorSkillSearch 合进 main。",
-              "- 来源 URL 只抽检 DIGEST 引入 + 随机样本。",
+              "- 来源 URL 对独立 github 仓库做 HEAD；同一仓下多条 skill 不重复打。",
               ""]
     return "\n".join(lines) + "\n"
 
@@ -270,31 +360,33 @@ def main() -> int:
         by_name[key].append(r["dir"])
     dupes = {k: v for k, v in by_name.items() if len(v) > 1}
     introduces = digest_introduces(ref)
+    names_on_disk = {r["name"] for r in results}
+    missing_introduces = [n for n in introduces if n not in names_on_disk]
+    licenses = Counter((r.get("license") or "（未写明）") for r in results)
+    prev = previous_blockers()
+    now_block = {b["dir"] for b in blockers}
+    added = sorted(now_block - prev)
+    gone = sorted(prev - now_block)
+    if prev:
+        delta = f"新增阻断 {len(added)}：{', '.join(f'`{x}`' for x in added) or '无'}；消失 {len(gone)}：{', '.join(f'`{x}`' for x in gone) or '无'}。"
+    else:
+        delta = "无上次报告可比。"
 
-    spot_names = list(introduces)
-    remaining = [r for r in results if r["name"] not in spot_names and r["urls"]]
-    remaining.sort(key=lambda r: r["dir"])
-    for r in remaining:
-        if len(spot_names) >= args.spot_check:
-            break
-        spot_names.append(r["name"])
-    url_checks = []
-    wanted = {n for n in spot_names}
-    for r in results:
-        if r["name"] not in wanted or not r["urls"]:
-            continue
-        status = head_url(r["urls"][0])
-        url_checks.append({"name": r["name"], "url": r["urls"][0], "status": status})
-        if len(url_checks) >= args.spot_check:
-            break
-
+    url_checks = head_unique_urls(unique_github_urls(results), args.spot_check)
     dead = [u for u in url_checks if u["status"] not in {"200", "301", "302"}]
     # Duplicate YAML names are expected when vendors are namespaced by folder.
     if dupes:
         for n, paths in dupes.items():
             warns.append({"dir": n, "warns": [f"重复 name → {', '.join(paths)}"], "issues": []})
-    if blockers or dead:
-        verdict = "未通过：存在结构阻断或失效来源，需人工看阻断项。"
+    fail_bits = []
+    if blockers:
+        fail_bits.append(f"{len(blockers)} 条结构阻断")
+    if dead:
+        fail_bits.append(f"{len(dead)} 个失效来源")
+    if missing_introduces:
+        fail_bits.append("DIGEST 引入不在库中")
+    if fail_bits:
+        verdict = "未通过：" + "，".join(fail_bits) + "。"
     elif warns:
         verdict = "有条件通过：结构完整，但有 name/体积/重名警告，下一轮优先处理。"
     else:
@@ -311,6 +403,9 @@ def main() -> int:
         "dupes": dupes,
         "introduces": introduces,
         "url_checks": url_checks,
+        "licenses": dict(licenses.most_common()),
+        "missing_introduces": missing_introduces,
+        "delta": delta,
         "verdict": verdict,
     }
     md = render(report)
@@ -340,7 +435,7 @@ def main() -> int:
             esc.write_text("\n".join(esc_lines), encoding="utf-8")
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)
-    return 1 if (blockers or dead) else 0
+    return 1 if (blockers or dead or missing_introduces) else 0
 
 
 if __name__ == "__main__":
