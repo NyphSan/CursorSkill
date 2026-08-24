@@ -73,6 +73,12 @@ def parse_skill_yaml(raw: str) -> tuple[dict, str | None]:
     return meta, None
 
 
+def suggested_yaml(name: str, desc: str) -> str:
+    """Quote-safe frontmatter: description as a `|` block."""
+    indented = "\n".join(("  " + ln) if ln else "  " for ln in (desc or "").splitlines())
+    return f"---\nname: {name}\ndescription: |\n{indented}\n---"
+
+
 def git(*args: str) -> str:
     return subprocess.check_output(["git", *args], cwd=ROOT, text=True).strip()
 
@@ -203,6 +209,7 @@ def check_one(ref: str, skill_dir: str) -> dict:
         "direction": direction,
         "name": name,
         "fm_name": fm_name,
+        "fm_desc": fm_desc,
         "issues": issues,
         "warns": warns,
         "urls": github_urls or urls,
@@ -573,7 +580,22 @@ def main() -> int:
             ]
             for b in yaml_blockers:
                 esc_lines.append(f"- `{b['dir']}`")
-            esc_lines.append("")
+            esc_lines += [
+                "",
+                "## 可贴修法（验证环不改侦察分支）",
+                "",
+                "把 `description:` 改成 `|` 块。下面已用标准 YAML 可解析的写法列出，给 SkillSearch 下次入库或昴在侦察分支手改。",
+                "",
+            ]
+            for b in yaml_blockers:
+                esc_lines += [
+                    f"### `{b['dir']}/SKILL.md`",
+                    "",
+                    "```yaml",
+                    suggested_yaml(b.get("fm_name") or b.get("name") or "", b.get("fm_desc") or ""),
+                    "```",
+                    "",
+                ]
         if pending:
             probe_by_url = {p.get("url"): p for p in license_probes}
             esc_lines += [

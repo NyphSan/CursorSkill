@@ -56,6 +56,14 @@ class YamlFrontmatter(unittest.TestCase):
         self.assertIsNone(err)
         self.assertIn("when drawing", meta["description"])
 
+    def test_suggested_yaml_parses_colon(self) -> None:
+        blob = self.m.suggested_yaml("concept-art", "Use this: when drawing")
+        body = "\n".join(blob.splitlines()[1:-1])
+        meta, err = self.m.parse_skill_yaml(body)
+        self.assertIsNone(err)
+        self.assertEqual(meta["name"], "concept-art")
+        self.assertIn("when drawing", meta["description"])
+
 
 class LicenseNorm(unittest.TestCase):
     def setUp(self) -> None:
