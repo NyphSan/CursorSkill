@@ -71,6 +71,7 @@
 - Apache-2.0: 80
 - 见原仓 LICENSE: 78
 - 未声明/待核: 14
+未声明/待核 14 条已写入 `records/verify/ESCALATION.md`，升格前先核原仓 LICENSE。
 
 ## DIGEST 引入是否在库里
 

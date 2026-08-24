@@ -291,6 +291,9 @@ def render(report: dict) -> str:
     else:
         for k, v in report["licenses"].items():
             lines.append(f"- {k}: {v}")
+    pending_n = report["licenses"].get("未声明/待核", 0)
+    if pending_n:
+        lines.append(f"未声明/待核 {pending_n} 条已写入 `records/verify/ESCALATION.md`，升格前先核原仓 LICENSE。")
     lines += ["", "## DIGEST 引入是否在库里", ""]
     if not report["introduces"]:
         lines.append("DIGEST 无引入表。")
@@ -419,19 +422,29 @@ def main() -> int:
         yaml_blockers = [
             b for b in blockers if any("yaml-unquoted-colon" in i for i in b["issues"])
         ]
+        pending = [r for r in results if r.get("license") == "未声明/待核"]
+        esc_lines = [f"# 升级 · {report['date']}", ""]
         if yaml_blockers:
-            esc_lines = [
-                f"# 升级 · {report['date']}",
-                "",
-                "给昴：侦察库有 skill 的 YAML frontmatter 非法，加载可能失败。",
+            esc_lines += [
+                "给昴：以下 skill 的 YAML frontmatter 非法，加载可能失败。",
                 "验证环不直接改 `CursorSkillSearch`，避免和 SkillSearch 抢写。",
-                "",
                 "建议：把 description 改成 `|` 块或整段加引号。",
                 "",
             ]
             for b in yaml_blockers:
                 esc_lines.append(f"- `{b['dir']}`")
             esc_lines.append("")
+        if pending:
+            esc_lines += [
+                "许可待核（SOURCE 写了未声明 SPDX / NOASSERTION / 无 LICENSE）。",
+                "升格进权威库前先核对原仓 LICENSE；验证环不改侦察分支。",
+                "",
+            ]
+            for r in pending:
+                url = (r["urls"] or ["（无 URL）"])[0]
+                esc_lines.append(f"- `{r['dir']}` — {url}")
+            esc_lines.append("")
+        if yaml_blockers or pending:
             esc.write_text("\n".join(esc_lines), encoding="utf-8")
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)
