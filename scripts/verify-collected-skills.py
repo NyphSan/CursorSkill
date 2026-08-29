@@ -243,39 +243,86 @@ def head_url(url: str, timeout: float = 8.0) -> str:
 REPO_RE = re.compile(r"https://github.com/([\w.-]+)/([\w.-]+)")
 
 
+def _gh_api_json(path: str) -> tuple[int, dict]:
+    """Authenticated GitHub REST via `gh`. Returns (status, payload)."""
+    proc = subprocess.run(
+        ["gh", "api", "-H", "Accept: application/vnd.github+json", path],
+        capture_output=True,
+        text=True,
+    )
+    body = proc.stdout or ""
+    try:
+        data = json.loads(body) if body.lstrip().startswith("{") else {}
+    except json.JSONDecodeError:
+        data = {}
+    if not isinstance(data, dict):
+        data = {}
+    if proc.returncode == 0:
+        return 200, data
+    status = data.get("status")
+    if status:
+        try:
+            return int(status), data
+        except (TypeError, ValueError):
+            pass
+    err = (proc.stderr or "") + body
+    if "404" in err or "Not Found" in err:
+        return 404, data
+    if "403" in err:
+        return 403, data
+    return 1, data
+
+
+def verdict_from_license_payload(url: str, repo: str, data: dict) -> dict:
+    spdx = (data.get("license") or {}).get("spdx_id") or ""
+    html = data.get("html_url") or ""
+    if spdx and spdx not in {"NOASSERTION", "NONE"}:
+        return {"url": url, "repo": repo, "verdict": f"GitHub SPDX={spdx}", "html": html}
+    raw = data.get("download_url") or ""
+    text = ""
+    if raw:
+        try:
+            req = urllib.request.Request(raw, headers={"User-Agent": "CursorSkill-verify"})
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                text = resp.read(800).decode("utf-8", "replace")
+        except Exception:
+            text = ""
+    if re.search(r"MIT License", text, re.I):
+        return {"url": url, "repo": repo, "verdict": "文件是 MIT，GitHub SPDX=NOASSERTION", "html": html}
+    if re.search(r"Apache License", text, re.I):
+        return {"url": url, "repo": repo, "verdict": "文件是 Apache-2.0，GitHub SPDX=NOASSERTION", "html": html}
+    return {"url": url, "repo": repo, "verdict": f"有 LICENSE 文件但 SPDX={spdx or '未知'}", "html": html}
+
+
 def probe_github_license(url: str) -> dict:
     m = REPO_RE.search(url or "")
     if not m:
         return {"url": url, "repo": "", "verdict": "无法解析仓库"}
     repo = f"{m.group(1)}/{m.group(2)}"
-    api = f"https://api.github.com/repos/{repo}/license"
-    req = urllib.request.Request(api, headers={"User-Agent": "CursorSkill-verify", "Accept": "application/vnd.github+json"})
+    status: int | None = None
+    data: dict = {}
     try:
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            data = json.loads(resp.read().decode())
-        spdx = (data.get("license") or {}).get("spdx_id") or ""
-        html = data.get("html_url") or ""
-        if spdx and spdx not in {"NOASSERTION", "NONE"}:
-            return {"url": url, "repo": repo, "verdict": f"GitHub SPDX={spdx}", "html": html}
-        raw = data.get("download_url") or ""
-        text = ""
-        if raw:
-            try:
-                with urllib.request.urlopen(raw, timeout=10) as resp:
-                    text = resp.read(800).decode("utf-8", "replace")
-            except Exception:
-                text = ""
-        if re.search(r"MIT License", text, re.I):
-            return {"url": url, "repo": repo, "verdict": "文件是 MIT，GitHub SPDX=NOASSERTION", "html": html}
-        if re.search(r"Apache License", text, re.I):
-            return {"url": url, "repo": repo, "verdict": "文件是 Apache-2.0，GitHub SPDX=NOASSERTION", "html": html}
-        return {"url": url, "repo": repo, "verdict": f"有 LICENSE 文件但 SPDX={spdx or '未知'}", "html": html}
-    except urllib.error.HTTPError as e:
-        if e.code == 404:
-            return {"url": url, "repo": repo, "verdict": "原仓无 GitHub 可识别 LICENSE（404）", "html": f"https://github.com/{repo}"}
-        return {"url": url, "repo": repo, "verdict": f"api err {e.code}", "html": f"https://github.com/{repo}"}
-    except Exception as e:
-        return {"url": url, "repo": repo, "verdict": f"err:{e.__class__.__name__}", "html": f"https://github.com/{repo}"}
+        status, data = _gh_api_json(f"repos/{repo}/license")
+    except FileNotFoundError:
+        status = None
+    if status is None:
+        api = f"https://api.github.com/repos/{repo}/license"
+        req = urllib.request.Request(
+            api, headers={"User-Agent": "CursorSkill-verify", "Accept": "application/vnd.github+json"}
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                data = json.loads(resp.read().decode())
+                status = 200
+        except urllib.error.HTTPError as e:
+            status = e.code
+        except Exception as e:
+            return {"url": url, "repo": repo, "verdict": f"err:{e.__class__.__name__}", "html": f"https://github.com/{repo}"}
+    if status == 404:
+        return {"url": url, "repo": repo, "verdict": "原仓无 GitHub 可识别 LICENSE（404）", "html": f"https://github.com/{repo}"}
+    if status != 200:
+        return {"url": url, "repo": repo, "verdict": f"api err {status}", "html": f"https://github.com/{repo}"}
+    return verdict_from_license_payload(url, repo, data)
 
 
 def unique_github_urls(results: list[dict]) -> list[tuple[str, str]]:

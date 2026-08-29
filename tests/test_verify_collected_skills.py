@@ -78,6 +78,14 @@ class LicenseNorm(unittest.TestCase):
     def test_upstream(self) -> None:
         self.assertEqual(self.m.normalize_license("见原仓 LICENSE"), "见原仓 LICENSE")
 
+    def test_verdict_spdx(self) -> None:
+        out = self.m.verdict_from_license_payload(
+            "https://github.com/o/r",
+            "o/r",
+            {"license": {"spdx_id": "MIT"}, "html_url": "https://github.com/o/r/LICENSE"},
+        )
+        self.assertEqual(out["verdict"], "GitHub SPDX=MIT")
+
 
 class Runlog(unittest.TestCase):
     def test_append_and_blockers(self) -> None:
