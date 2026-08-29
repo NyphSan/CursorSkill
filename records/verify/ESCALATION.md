@@ -1,4 +1,4 @@
-# 升级 · 2026-08-28
+# 升级 · 2026-08-29
 
 给昴：以下 skill 的 YAML frontmatter 非法，加载可能失败。
 验证环不直接改 `CursorSkillSearch`，避免和 SkillSearch 抢写。
@@ -96,6 +96,12 @@ description: |
   Design and review Unreal Engine multiplayer replication and server-authoritative architecture in C++. The design lens for networked gameplay: who is authoritative, where networked state should live (GameState vs PlayerState vs PlayerController vs GameInstance), which replication primitive fits each need (replicated variables, RepNotify, Server/Client/Multicast RPCs), ownership and RPC routing, relevancy and bandwidth tuning, net roles and authority checks, and the discipline of never trusting the client. Use this skill proactively whenever planning, building, or reviewing anything that touches multiplayer, authority, or "who is allowed to do what", and raise authority/replication concerns even when code looks single-player but will run in multiplayer, for example "how should I replicate the player's health or score", "this needs to work in multiplayer", "should this run on the server or the client", "how do I sync this across clients", "players can cheat by doing X", "how do I handle player input authoritatively", or "design a multiplayer X". Includes the Gameplay Ability System replication model (ASC replication modes, predicted abilities, attributes, GameplayCues). Equally, call out when something should NOT be replicated and can stay local or be derived. Not for non-Unreal networking, raw socket/transport programming, line-level code style, or Blueprint-only scripting. Complements unreal-solid and unreal-design-patterns: this is where "where does state live" becomes a networking decision.
 ---
 ```
+
+## 失效来源（HEAD 非 2xx/3xx）
+
+原仓 URL 已不可访问。验证环不改 `CursorSkillSearch`。升格进权威库应拦下；SkillSearch 下次入库应改 SOURCE 或移出。
+
+- `skills/unreal/arg-games-unreal-cqtest` — https://github.com/arg-games/Unreal-Skill → **404**
 
 许可待核。下面是本轮对原仓 GitHub license API 的探测结果。
 无 LICENSE 的仓，升格进权威库应拦下；有文件但 SPDX=NOASSERTION 的，SOURCE 可改记实际许可证。
