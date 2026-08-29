@@ -99,6 +99,17 @@ class Runlog(unittest.TestCase):
             encoding="utf-8",
         )
         self.assertEqual(m.previous_blockers(), {"skills/2d/omer-concept-art"})
+        self.assertEqual(m.previous_dead(), set())
+        latest.write_text(
+            latest.read_text(encoding="utf-8")
+            + "\n## 来源抽检（HTTP HEAD，独立仓库）\n\n"
+            "- `arg-games-unreal-cqtest` https://github.com/arg-games/Unreal-Skill → **404**\n"
+            "- `heycat-animated-sprite-generation` https://github.com/0xheycat/isometric-game-skills → **200**\n",
+            encoding="utf-8",
+        )
+        self.assertEqual(
+            m.previous_dead(), {"https://github.com/arg-games/Unreal-Skill"}
+        )
         report = {"verified_at": "2026-08-24T05:00:00Z", "count": 322}
         m.append_runlog(report, "aa2d7074e7ad", [{"dir": "a"}] * 8, [{"dir": "w"}], "未通过：8 条结构阻断。")
         text = (tmp / "records" / "verify" / "RUNLOG.md").read_text(encoding="utf-8")

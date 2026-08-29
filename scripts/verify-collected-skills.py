@@ -378,6 +378,12 @@ def append_runlog(
     runlog.write_text(text.rstrip() + "\n" + row, encoding="utf-8")
 
 
+HEAD_ROW = re.compile(
+    r"^- `[^`]+` (https://github\.com/\S+) → \*\*(\S+)\*\*"
+)
+OK_HEAD = {"200", "301", "302"}
+
+
 def previous_blockers() -> set[str]:
     latest = ROOT / "records" / "verify" / "LATEST.md"
     if not latest.exists():
@@ -392,6 +398,27 @@ def previous_blockers() -> set[str]:
             break
         if in_block and line.startswith("- `skills/"):
             found.add(line.split("`")[1])
+    return found
+
+
+def previous_dead() -> set[str]:
+    """Repo URLs whose last LATEST 来源抽检 status was not 2xx/3xx."""
+    latest = ROOT / "records" / "verify" / "LATEST.md"
+    if not latest.exists():
+        return set()
+    found = set()
+    in_src = False
+    for line in latest.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## 来源抽检"):
+            in_src = True
+            continue
+        if in_src and line.startswith("## "):
+            break
+        if not in_src:
+            continue
+        m = HEAD_ROW.match(line)
+        if m and m.group(2) not in OK_HEAD:
+            found.add(m.group(1))
     return found
 
 
@@ -489,7 +516,7 @@ def render(report: dict) -> str:
     if not report["url_checks"]:
         lines.append("本轮未抽检。")
     else:
-        dead_rows = [row for row in report["url_checks"] if row["status"] not in {"200", "301", "302"}]
+        dead_rows = [row for row in report["url_checks"] if row["status"] not in OK_HEAD]
         ok_n = len(report["url_checks"]) - len(dead_rows)
         lines.append(f"独立来源 {len(report['url_checks'])}，可访问 {ok_n}，失效 {len(dead_rows)}。")
         show_rows = dead_rows or report["url_checks"][:12]
@@ -510,7 +537,7 @@ def render(report: dict) -> str:
     dead_rows = [
         row
         for row in report.get("url_checks") or []
-        if row["status"] not in {"200", "301", "302"}
+        if row["status"] not in OK_HEAD
     ]
     wrote_upgrade = False
     if yaml_blockers:
@@ -655,16 +682,26 @@ def main() -> int:
     missing_introduces = [n for n in introduces if n not in names_on_disk]
     licenses = Counter((r.get("license") or "（未写明）") for r in results)
     prev = previous_blockers()
+    prev_dead = previous_dead()
     now_block = {b["dir"] for b in blockers}
     added = sorted(now_block - prev)
     gone = sorted(prev - now_block)
-    if prev:
-        delta = f"新增阻断 {len(added)}：{', '.join(f'`{x}`' for x in added) or '无'}；消失 {len(gone)}：{', '.join(f'`{x}`' for x in gone) or '无'}。"
-    else:
-        delta = "无上次报告可比。"
+    has_latest = (ROOT / "records" / "verify" / "LATEST.md").exists()
 
     url_checks = head_unique_urls(unique_github_urls(results), args.spot_check)
-    dead = [u for u in url_checks if u["status"] not in {"200", "301", "302"}]
+    dead = [u for u in url_checks if u["status"] not in OK_HEAD]
+    now_dead = {u["url"] for u in dead}
+    dead_added = sorted(now_dead - prev_dead)
+    dead_gone = sorted(prev_dead - now_dead)
+    if has_latest:
+        delta = (
+            f"新增阻断 {len(added)}：{', '.join(f'`{x}`' for x in added) or '无'}；"
+            f"消失 {len(gone)}：{', '.join(f'`{x}`' for x in gone) or '无'}。"
+            f" 失效来源新增 {len(dead_added)}：{', '.join(f'`{x}`' for x in dead_added) or '无'}；"
+            f"消失 {len(dead_gone)}：{', '.join(f'`{x}`' for x in dead_gone) or '无'}。"
+        )
+    else:
+        delta = "无上次报告可比。"
     pending = [r for r in results if r.get("license") == "未声明/待核"]
     pending_repos: dict[str, dict] = {}
     for r in pending:

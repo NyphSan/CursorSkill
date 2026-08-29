@@ -87,7 +87,7 @@
 
 ## 相对上次差量
 
-新增阻断 0：无；消失 0：无。
+新增阻断 0：无；消失 0：无。 失效来源新增 1：`https://github.com/arg-games/Unreal-Skill`；消失 0：无。
 
 ## 来源抽检（HTTP HEAD，独立仓库）
 
