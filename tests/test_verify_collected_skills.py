@@ -98,5 +98,42 @@ class Runlog(unittest.TestCase):
         self.assertIn("未通过：8 条结构阻断", text)
 
 
+class Escalation(unittest.TestCase):
+    def test_dead_source_section(self) -> None:
+        m = load_mod()
+        text = m.build_escalation(
+            date="2026-08-29",
+            yaml_blockers=[],
+            pending=[],
+            license_probes=[],
+            misses=[],
+            dead_rows=[
+                {
+                    "name": "arg-games-unreal-cqtest",
+                    "url": "https://github.com/arg-games/Unreal-Skill",
+                    "status": "404",
+                }
+            ],
+            results=[
+                {
+                    "dir": "skills/unreal/arg-games-unreal-cqtest",
+                    "urls": ["https://github.com/arg-games/Unreal-Skill"],
+                }
+            ],
+        )
+        self.assertIsNotNone(text)
+        assert text is not None
+        self.assertIn("失效来源", text)
+        self.assertIn("skills/unreal/arg-games-unreal-cqtest", text)
+        self.assertIn("https://github.com/arg-games/Unreal-Skill", text)
+        self.assertIn("404", text)
+
+    def test_empty_returns_none(self) -> None:
+        m = load_mod()
+        self.assertIsNone(
+            m.build_escalation("2026-08-29", [], [], [], [], [], [])
+        )
+
+
 if __name__ == "__main__":
     unittest.main()

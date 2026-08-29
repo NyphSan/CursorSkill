@@ -460,6 +460,12 @@ def render(report: dict) -> str:
     yaml_blockers = [
         b for b in blockers if any("yaml-unquoted-colon" in i for i in b["issues"])
     ]
+    dead_rows = [
+        row
+        for row in report.get("url_checks") or []
+        if row["status"] not in {"200", "301", "302"}
+    ]
+    wrote_upgrade = False
     if yaml_blockers:
         lines.append(
             f"这 {len(yaml_blockers)} 条 skill 的 description 没加引号又含冒号，YAML 非法。"
@@ -468,16 +474,115 @@ def render(report: dict) -> str:
         lines.append("不在验证环里直接改侦察分支，避免和 SkillSearch 抢写。")
         for b in yaml_blockers:
             lines.append(f"- `{b['dir']}`")
-    elif blockers:
-        lines.append("见上方阻断项，需人工决定修、降级还是移出侦察库。")
-    else:
-        lines.append("无阻断，不必升级。")
+        wrote_upgrade = True
+    if dead_rows:
+        if wrote_upgrade:
+            lines.append("")
+        lines.append(
+            f"失效来源 {len(dead_rows)} 个：原仓 HEAD 非 2xx/3xx。升格应拦；验证环不改侦察分支。"
+        )
+        for row in dead_rows:
+            lines.append(f"- `{row['name']}` {row['url']} → **{row['status']}**")
+        wrote_upgrade = True
+    if not wrote_upgrade:
+        if blockers:
+            lines.append("见上方阻断项，需人工决定修、降级还是移出侦察库。")
+        else:
+            lines.append("无阻断，不必升级。")
     lines += ["", "## 未覆盖", "",
               "- 不执行 skill 内脚本，不做运行时功能测试。",
               "- 不把 CursorSkillSearch 合进 main。",
               "- 来源 URL 对独立 github 仓库做 HEAD；同一仓下多条 skill 不重复打。",
               ""]
     return "\n".join(lines) + "\n"
+
+
+def dirs_for_repo_url(results: list[dict], url: str) -> list[str]:
+    key = "/".join((url or "").rstrip("/").split("/")[:5])
+    found: list[str] = []
+    for r in results:
+        for u in r.get("urls") or []:
+            if "/".join(u.rstrip("/").split("/")[:5]) == key:
+                found.append(r["dir"])
+                break
+    return found
+
+
+def build_escalation(
+    date: str,
+    yaml_blockers: list[dict],
+    pending: list[dict],
+    license_probes: list[dict],
+    misses: list[str],
+    dead_rows: list[dict],
+    results: list[dict],
+) -> str | None:
+    """Markdown for ESCALATION.md, or None when there is nothing to escalate."""
+    if not (yaml_blockers or pending or misses or dead_rows):
+        return None
+    esc_lines = [f"# 升级 · {date}", ""]
+    if yaml_blockers:
+        esc_lines += [
+            "给昴：以下 skill 的 YAML frontmatter 非法，加载可能失败。",
+            "验证环不直接改 `CursorSkillSearch`，避免和 SkillSearch 抢写。",
+            "建议：把 description 改成 `|` 块或整段加引号。",
+            "",
+        ]
+        for b in yaml_blockers:
+            esc_lines.append(f"- `{b['dir']}`")
+        esc_lines += [
+            "",
+            "## 可贴修法（验证环不改侦察分支）",
+            "",
+            "把 `description:` 改成 `|` 块。下面已用标准 YAML 可解析的写法列出，给 SkillSearch 下次入库或昴在侦察分支手改。",
+            "",
+        ]
+        for b in yaml_blockers:
+            esc_lines += [
+                f"### `{b['dir']}/SKILL.md`",
+                "",
+                "```yaml",
+                suggested_yaml(b.get("fm_name") or b.get("name") or "", b.get("fm_desc") or ""),
+                "```",
+                "",
+            ]
+    if dead_rows:
+        esc_lines += [
+            "## 失效来源（HEAD 非 2xx/3xx）",
+            "",
+            "原仓 URL 已不可访问。验证环不改 `CursorSkillSearch`。升格进权威库应拦下；SkillSearch 下次入库应改 SOURCE 或移出。",
+            "",
+        ]
+        for row in dead_rows:
+            dirs = dirs_for_repo_url(results, row.get("url") or "")
+            label = ", ".join(f"`{d}`" for d in dirs) or f"`{row.get('name')}`"
+            esc_lines.append(
+                f"- {label} — {row.get('url')} → **{row.get('status')}**"
+            )
+        esc_lines.append("")
+    if pending:
+        probe_by_url = {p.get("url"): p for p in license_probes}
+        esc_lines += [
+            "许可待核。下面是本轮对原仓 GitHub license API 的探测结果。",
+            "无 LICENSE 的仓，升格进权威库应拦下；有文件但 SPDX=NOASSERTION 的，SOURCE 可改记实际许可证。",
+            "",
+        ]
+        for r in pending:
+            u = (r["urls"] or [""])[0]
+            probe = probe_by_url.get(u) or {}
+            esc_lines.append(f"- `{r['dir']}` — {u} — {probe.get('verdict', '未探测')}")
+        esc_lines.append("")
+    if misses:
+        esc_lines += [
+            "目标命中弱（目录方向和正文关键词对不上，警告不阻断）：",
+            "",
+        ]
+        for d in misses[:20]:
+            esc_lines.append(f"- `{d}`")
+        if len(misses) > 20:
+            esc_lines.append(f"- …另有 {len(misses)-20} 条")
+        esc_lines.append("")
+    return "\n".join(esc_lines)
 
 
 def main() -> int:
@@ -570,57 +675,18 @@ def main() -> int:
             b for b in blockers if any("yaml-unquoted-colon" in i for i in b["issues"])
         ]
         pending = [r for r in results if r.get("license") == "未声明/待核"]
-        esc_lines = [f"# 升级 · {report['date']}", ""]
-        if yaml_blockers:
-            esc_lines += [
-                "给昴：以下 skill 的 YAML frontmatter 非法，加载可能失败。",
-                "验证环不直接改 `CursorSkillSearch`，避免和 SkillSearch 抢写。",
-                "建议：把 description 改成 `|` 块或整段加引号。",
-                "",
-            ]
-            for b in yaml_blockers:
-                esc_lines.append(f"- `{b['dir']}`")
-            esc_lines += [
-                "",
-                "## 可贴修法（验证环不改侦察分支）",
-                "",
-                "把 `description:` 改成 `|` 块。下面已用标准 YAML 可解析的写法列出，给 SkillSearch 下次入库或昴在侦察分支手改。",
-                "",
-            ]
-            for b in yaml_blockers:
-                esc_lines += [
-                    f"### `{b['dir']}/SKILL.md`",
-                    "",
-                    "```yaml",
-                    suggested_yaml(b.get("fm_name") or b.get("name") or "", b.get("fm_desc") or ""),
-                    "```",
-                    "",
-                ]
-        if pending:
-            probe_by_url = {p.get("url"): p for p in license_probes}
-            esc_lines += [
-                "许可待核。下面是本轮对原仓 GitHub license API 的探测结果。",
-                "无 LICENSE 的仓，升格进权威库应拦下；有文件但 SPDX=NOASSERTION 的，SOURCE 可改记实际许可证。",
-                "",
-            ]
-            for r in pending:
-                u = (r["urls"] or [""])[0]
-                probe = probe_by_url.get(u) or {}
-                esc_lines.append(f"- `{r['dir']}` — {u} — {probe.get('verdict', '未探测')}")
-            esc_lines.append("")
         misses = [r["dir"] for r in results if r.get("target_miss")]
-        if misses:
-            esc_lines += [
-                "目标命中弱（目录方向和正文关键词对不上，警告不阻断）：",
-                "",
-            ]
-            for d in misses[:20]:
-                esc_lines.append(f"- `{d}`")
-            if len(misses) > 20:
-                esc_lines.append(f"- …另有 {len(misses)-20} 条")
-            esc_lines.append("")
-        if yaml_blockers or pending or misses:
-            esc.write_text("\n".join(esc_lines), encoding="utf-8")
+        esc_md = build_escalation(
+            report["date"],
+            yaml_blockers,
+            pending,
+            license_probes,
+            misses,
+            dead,
+            results,
+        )
+        if esc_md:
+            esc.write_text(esc_md, encoding="utf-8")
         append_runlog(report, commit, blockers, warns, verdict)
         print(f"wrote {out}", file=sys.stderr)
     sys.stdout.write(md)
