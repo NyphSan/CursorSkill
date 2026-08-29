@@ -44,8 +44,25 @@ GitHub Action 合进默认分支后每天 04:20 UTC 抽检：上传产物，并�
 
 Cloud Agent 用 timer（`/loop`）：
 
+- 名称：`verify-collected-skills-daily`
 - cron：`0 4 * * *`（04:00 UTC）
-- prompt：见下方
+- 到期约 7 天。距 `expiresAt` 不足 3 天时：**先退订再按下述提示词续订**（同名 timer 去重会保留旧到期时间）。续订后立刻 `list_subscriptions` 核对名称、cron、提示词和到期日。
+
+会话 timer 提示词：
+
+```text
+你是本仓技能验证环（岗位 ID: verify-collected-skills）。这不是新任务，继续每日验证 CursorSkillSearch 上已收集的技能。
+
+执行：
+1. 读 Skill/VERIFY.md 和 records/verify/LATEST.md
+2. git fetch origin CursorSkillSearch
+3. python3 scripts/verify-collected-skills.py
+4. 把新报告提交并 push 到本验证分支 cursor/skill-verify-loop-f9ea（更新 PR #33）
+5. 回复给昴一屏结论：技能数、阻断/警告数、独立来源 HEAD 结果、DIGEST 引入是否在库、许可待核数、是否有新增 YAML 断裂
+6. YAML 非法、失效来源和许可待核写进 records/verify/ESCALATION.md 并在回复里升级
+
+禁止：不合 main、不发邮件、不去搜新技能、不删仓里技能。阻断项升级；警告只记账。跑完确认 timer verify-collected-skills-daily 仍在，然后结束回合。
+```
 
 Cursor.com Automation **不能由 MCP 代建**。昴若要会话关掉后仍跑，到 https://cursor.com/automations 新建，提示词：
 
@@ -61,7 +78,8 @@ python3 scripts/verify-collected-skills.py
 ## timer 唤醒后做什么
 
 1. `git fetch origin CursorSkillSearch`
-2. `python3 scripts/verify-collected-skills.py`
-3. 若脚本退出码非 0：读阻断项，对失效 URL 再人工看一次 SOURCE
-4. 提交 `records/verify/`（本验证分支 `cursor/skill-verify-loop-f9ea`），推送，更新 PR
-5. 回复一屏结论；然后重新确认 timer 仍在，结束回合
+2. 若侦察 SHA 与 `records/verify/LATEST.md` 已记录的 ref 相同、且当日报告已存在：不要重跑抽检；只确认 timer 仍在后结束回合
+3. `python3 scripts/verify-collected-skills.py`
+4. 若脚本退出码非 0：读阻断项，对失效 URL 再人工看一次 SOURCE，写入 `ESCALATION.md`
+5. 提交 `records/verify/`（本验证分支 `cursor/skill-verify-loop-f9ea`），推送，更新 PR
+6. 回复一屏结论；确认 timer 仍在（临期续订），结束回合。目标保持打开，不要标 complete
