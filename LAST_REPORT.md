@@ -1,8 +1,8 @@
-﻿# LAST_REPORT — 2026-08-24
+﻿# LAST_REPORT — 2026-08-31
 
 - 分支：`CursorSkillSearch`
-- 基线：317 → **322** SKILL（+5）；JetBrains UE code/test 实质同步
-- 引入：schepetkov-ue-ui / schepetkov-ue-assets / fagemx-game-direction / rundesk-designing-game-levels / rundesk-playtesting-games
+- 基线：322 → **335** SKILL（+13）
+- 引入：wilson×5 / gamedev-ai-behavior-trees-utility-ai / snooy-unreal-coding / unrealxu-ue5-module-router / rundesk-cameras / rundesk-2d-art / bbroeking×2 / mengto-no-ai-design-slop
 - PR：https://github.com/NyphSan/CursorSkill/pull/31
 - DIGEST：https://github.com/NyphSan/CursorSkill/blob/CursorSkillSearch/DIGEST.md
-- 下轮：Schepetkov ue-mcp；teixasalone 对比；rundesk 2d/cameras；Yuki/Murdle LICENSE
+- 下轮：unrealxu 余项择优；Schepetkov ue-mcp；bbroeking character-creator；rainerpj LICENSE；Yuki/Murdle LICENSE
