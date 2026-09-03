@@ -1,4 +1,4 @@
-# 升级 · 2026-09-02
+# 升级 · 2026-09-03
 
 给昴：以下 skill 的 YAML frontmatter 非法，加载可能失败。
 验证环不直接改 `CursorSkillSearch`，避免和 SkillSearch 抢写。
