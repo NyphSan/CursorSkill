@@ -1,0 +1,74 @@
+name: verify-collected-skills
+
+# schedule 只在默认分支生效。本 PR 合进 main 后才会每天跑。
+# 在 PR 上 push 时也会跑一次，用来验脚本。
+on:
+  schedule:
+    - cron: "20 4 * * *"
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - "scripts/verify-collected-skills.py"
+      - "Skill/VERIFY.md"
+      - ".github/workflows/verify-collected-skills.yml"
+      - "tests/test_verify_collected_skills.py"
+
+jobs:
+  selftest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --user pyyaml
+      - name: Run verifier self-tests
+        run: python3 tests/test_verify_collected_skills.py
+
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install PyYAML
+        run: python3 -m pip install --user pyyaml
+      - name: Fetch scout branch
+        run: git fetch origin CursorSkillSearch:CursorSkillSearch
+      - name: Run verifier
+        id: verify
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/verify-collected-skills.py --ref CursorSkillSearch
+        continue-on-error: true
+      - name: Upload report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-report
+          path: records/verify/
+          if-no-files-found: error
+      # PR 上只上传产物。合进默认分支后，schedule / 手动触发会把报告写回仓库。
+      - name: Commit reports to default branch
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add records/verify/
+          if git diff --cached --quiet; then
+            echo "reports unchanged"
+            exit 0
+          fi
+          git commit -m "docs: VERIFY $(date -u +%Y-%m-%d) 抽检（Action）"
+          git push
+      - name: Job summary
+        if: always()
+        run: |
+          {
+            echo "## VERIFY 抽检"
+            echo
+            head -n 16 records/verify/LATEST.md
+          } >> "$GITHUB_STEP_SUMMARY"
+      # PR 上不因侦察库阻断而失败，避免挡住验证环自身合入。
+      # 合进默认分支后的 schedule / workflow_dispatch 仍会标红，作为升级信号。
+      - name: Fail if verifier failed
+        if: steps.verify.outcome == 'failure' && github.event_name != 'pull_request'
+        run: exit 1
